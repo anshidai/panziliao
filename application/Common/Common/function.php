@@ -1,5 +1,133 @@
 <?php 
 
+function randStr($len=6, $format = 'all') 
+{ 
+	switch($format) { 
+		case 'all':
+			$chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-@#~'; break;
+		case 'char':
+			$chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-@#~'; break;
+		case 'number':
+			$chars = '0123456789'; 
+			break;
+		default :
+			$chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-@#~'; 
+			break;
+	}
+	mt_srand((double)microtime()*1000000*getmypid()); 
+	$password = '';
+	while(strlen($password)<$len) {
+		$password .= substr($chars,(mt_rand()%strlen($chars)), 1);
+	}
+	return $password;
+} 
+
+
+function getPanBDShareInfo($url)
+{
+	$data = array();
+	
+	//$header[] = "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"; 
+	$header[] = "Accept: */*"; 
+	$header[] = "Accept-Encoding: gzip, deflate, sdch"; 
+	$header[] = "Accept-Language: zh-CN,zh;q=0.8"; 
+	$header[] = "Cache-Control: max-age=0"; 
+	$header[] = "Connection: keep-alive"; 
+	$header[] = "Host: pan.baidu.com";  
+	$header[] = "X-Requested-With: XMLHttpRequest";  
+	$header[] = "Referer: http://pan.baidu.com/share/home?uk=".rand(1000, 10000);  
+	$header[] = "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0";
+	
+	$html = curl_http($url, $header,'', true);
+	$content = $html['content'];
+	if($content) {
+		$content = json_decode($content, true);
+		if($content['errno'] == 0 && $content['records']) {
+			
+			foreach($content['records'] as $val) {
+				$data[$val['shareid']]['uid'] = $val['uk'];
+				$data[$val['shareid']]['title'] = $val['title'];
+				$data[$val['shareid']]['catid'] = parsePanCategory($val['category']);
+				$data[$val['shareid']]['filetype'] = getFileType($val['title']);
+				$data[$val['shareid']]['filesize'] = $val['filelist'][0]['size'];
+				$data[$val['shareid']]['shareid'] = $val['shareid'];
+				$data[$val['shareid']]['fs_id'] = $val['filelist'][0]['fs_id'];
+				$data[$val['shareid']]['sharetime'] = $val['feed_time'];
+				$data[$val['shareid']]['sharedown'] = $val['dCnt']? $val['dCnt']: 0; //下载次数
+				$data[$val['shareid']]['sharesave'] = $val['tCnt']? $val['tCnt']: 0; //保存次数
+				$data[$val['shareid']]['shareviews'] = $val['vCnt']? $val['vCnt']: 0; //查看次数
+				$data[$val['shareid']]['addtime'] = time();
+				$data[$val['shareid']]['hits'] = 0;
+				$data[$val['shareid']]['source'] = 'baidu';
+			}
+		}
+	}
+	unset($html, $content);
+	return $data;
+}
+
+function parsePanCategory($type = 0)
+{
+	switch($type) {
+		case 1: 
+			$cid = 2;break; //视频
+		case 2: 
+			$cid = 4;break; //音乐
+		case 3: 
+			$cid = 5;break; //图片
+		case 6: 
+			$cid = 9;break; //其他
+		case 10: 
+			$cid = 7;break; //专辑
+		default: 
+			$cid = 7;break;
+	}
+}
+
+
+function getPanBDUserInfo($url)
+{
+	$data = array();
+	
+	//$header[] = "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"; 
+	$header[] = "Accept: */*"; 
+	$header[] = "Accept-Encoding: gzip, deflate, sdch"; 
+	$header[] = "Accept-Language: zh-CN,zh;q=0.8"; 
+	$header[] = "Cache-Control: max-age=0"; 
+	$header[] = "Connection: keep-alive"; 
+	$header[] = "Host: pan.baidu.com";  
+	$header[] = "X-Requested-With: XMLHttpRequest";  
+	$header[] = "Referer: http://pan.baidu.com/share/home?uk=".rand(1000, 10000);  
+	$header[] = "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0";
+	
+	$html = curl_http($url, $header,'', true);
+	$content = $html['content'];
+	if($content) {
+		$content = json_decode($content, true);
+		if($content['errno'] == 0) {
+			$data['uid'] = $content['user_info']['uk'];
+			$data['uname'] = $content['user_info']['uname']? $content['user_info']['uname']: '';
+			$data['avatar'] = $content['user_info']['avatar_url']? $content['user_info']['avatar_url']: '';
+			$data['intro'] = $content['user_info']['intro']? $content['user_info']['intro']: '';
+			$data['source'] = 'baidu';
+			$data['share_count'] = $content['user_info']['pubshare_count']? $content['user_info']['pubshare_count']: 0;
+			$data['fans_count'] = $content['user_info']['fans_count']? $content['user_info']['fans_count']: 0;
+			$data['follow_count'] = $content['user_info']['follow_count']? $content['user_info']['follow_count']: 0;
+			$data['hits'] = 0;
+			$data['addtime'] = time();
+			$data['cj_url'] = $url;
+		}
+	}
+	unset($html, $content);
+	return $data;
+}
+
+function getFileType($filename)
+{
+	$path_parts = pathinfo($filename);
+	return $path_parts['extension'];
+}
+
 /**
 * 
 * 返回一定位数的时间戳，多少位由参数决定

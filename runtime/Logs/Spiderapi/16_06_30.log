@@ -1,0 +1,376 @@
+[ 2016-06-30T14:16:21+08:00 ]  
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: REQUEST_METHOD E:\wwwroot\panziliao.com\thinkphp\Library\Think\App.class.php 第 31 行.
+NOTIC: [8] Undefined index: REQUEST_URI E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 137 行.
+NOTIC: [8] Use of undefined constant _PHP_FILE_ - assumed '_PHP_FILE_' E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 191 行.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+NOTIC: [2048] Declaration of Think\Db\Driver\Mongo::connect() should be compatible with Think\Db\Driver::connect($config = '', $linkNum = 0, $autoConnection = false) E:\wwwroot\panziliao.com\thinkphp\Library\Think\Db\Driver\Mongo.class.php 第 18 行.
+NOTIC: [2048] Declaration of Think\Db\Driver\Mongo::insertAll() should be compatible with Think\Db\Driver::insertAll($dataSet, $options = Array, $replace = false) E:\wwwroot\panziliao.com\thinkphp\Library\Think\Db\Driver\Mongo.class.php 第 18 行.
+SQL: panziliao.getCollection(pre_resource_user) [ RunTime:0.0000s ]
+SQL: panziliao.pre_resource_user.findOne() [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+
+[ 2016-06-30T14:17:16+08:00 ]  
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8] Undefined index: REQUEST_METHOD E:\wwwroot\panziliao.com\thinkphp\Library\Think\App.class.php 第 31 行.
+NOTIC: [8] Undefined index: REQUEST_URI E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 137 行.
+NOTIC: [8] Use of undefined constant _PHP_FILE_ - assumed '_PHP_FILE_' E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 191 行.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [2048] Declaration of Think\Db\Driver\Mongo::connect() should be compatible with Think\Db\Driver::connect($config = '', $linkNum = 0, $autoConnection = false) E:\wwwroot\panziliao.com\thinkphp\Library\Think\Db\Driver\Mongo.class.php 第 18 行.
+NOTIC: [2048] Declaration of Think\Db\Driver\Mongo::insertAll() should be compatible with Think\Db\Driver::insertAll($dataSet, $options = Array, $replace = false) E:\wwwroot\panziliao.com\thinkphp\Library\Think\Db\Driver\Mongo.class.php 第 18 行.
+SQL: panziliao.getCollection(pre_resource_user) [ RunTime:0.0000s ]
+SQL: panziliao.pre_resource_user.findOne() [ RunTime:0.0030s ]
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+
+[ 2016-06-30T14:17:38+08:00 ]  
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8] Undefined index: REQUEST_METHOD E:\wwwroot\panziliao.com\thinkphp\Library\Think\App.class.php 第 31 行.
+NOTIC: [8] Undefined index: REQUEST_URI E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 137 行.
+NOTIC: [8] Use of undefined constant _PHP_FILE_ - assumed '_PHP_FILE_' E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 191 行.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [2048] Declaration of Think\Db\Driver\Mongo::connect() should be compatible with Think\Db\Driver::connect($config = '', $linkNum = 0, $autoConnection = false) E:\wwwroot\panziliao.com\thinkphp\Library\Think\Db\Driver\Mongo.class.php 第 18 行.
+NOTIC: [2048] Declaration of Think\Db\Driver\Mongo::insertAll() should be compatible with Think\Db\Driver::insertAll($dataSet, $options = Array, $replace = false) E:\wwwroot\panziliao.com\thinkphp\Library\Think\Db\Driver\Mongo.class.php 第 18 行.
+SQL: panziliao.getCollection(pre_resource_user) [ RunTime:0.0000s ]
+SQL: panziliao.pre_resource_user.findOne() [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+SQL: panziliao.pre_resource_user.find({}, {"id":1}).sort({"id":-1}).limit(1) [ RunTime:0.0000s ]
+
+[ 2016-06-30T14:19:50+08:00 ]  
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8] Undefined index: REQUEST_METHOD E:\wwwroot\panziliao.com\thinkphp\Library\Think\App.class.php 第 31 行.
+NOTIC: [8] Undefined index: REQUEST_URI E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 137 行.
+NOTIC: [8] Use of undefined constant _PHP_FILE_ - assumed '_PHP_FILE_' E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 191 行.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [2048] Declaration of Think\Db\Driver\Mongo::connect() should be compatible with Think\Db\Driver::connect($config = '', $linkNum = 0, $autoConnection = false) E:\wwwroot\panziliao.com\thinkphp\Library\Think\Db\Driver\Mongo.class.php 第 18 行.
+NOTIC: [2048] Declaration of Think\Db\Driver\Mongo::insertAll() should be compatible with Think\Db\Driver::insertAll($dataSet, $options = Array, $replace = false) E:\wwwroot\panziliao.com\thinkphp\Library\Think\Db\Driver\Mongo.class.php 第 18 行.
+SQL: panziliao.getCollection(pre_resource_user) [ RunTime:0.0000s ]
+SQL: panziliao.pre_resource_user.findOne() [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+SQL: panziliao.pre_resource_user.find({}, {"id":1}).sort({"id":-1}).limit(1) [ RunTime:0.0000s ]
+
+[ 2016-06-30T14:20:41+08:00 ]  
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8] Undefined index: REQUEST_METHOD E:\wwwroot\panziliao.com\thinkphp\Library\Think\App.class.php 第 31 行.
+NOTIC: [8] Undefined index: REQUEST_URI E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 137 行.
+NOTIC: [8] Use of undefined constant _PHP_FILE_ - assumed '_PHP_FILE_' E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 191 行.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [2048] Declaration of Think\Db\Driver\Mongo::connect() should be compatible with Think\Db\Driver::connect($config = '', $linkNum = 0, $autoConnection = false) E:\wwwroot\panziliao.com\thinkphp\Library\Think\Db\Driver\Mongo.class.php 第 18 行.
+NOTIC: [2048] Declaration of Think\Db\Driver\Mongo::insertAll() should be compatible with Think\Db\Driver::insertAll($dataSet, $options = Array, $replace = false) E:\wwwroot\panziliao.com\thinkphp\Library\Think\Db\Driver\Mongo.class.php 第 18 行.
+SQL: panziliao.getCollection(pre_resource_user) [ RunTime:0.0000s ]
+SQL: panziliao.pre_resource_user.findOne() [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+
+[ 2016-06-30T14:21:11+08:00 ]  
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: REQUEST_METHOD E:\wwwroot\panziliao.com\thinkphp\Library\Think\App.class.php 第 31 行.
+NOTIC: [8] Undefined index: REQUEST_URI E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 137 行.
+NOTIC: [8] Use of undefined constant _PHP_FILE_ - assumed '_PHP_FILE_' E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 191 行.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+NOTIC: [2048] Declaration of Think\Db\Driver\Mongo::connect() should be compatible with Think\Db\Driver::connect($config = '', $linkNum = 0, $autoConnection = false) E:\wwwroot\panziliao.com\thinkphp\Library\Think\Db\Driver\Mongo.class.php 第 18 行.
+NOTIC: [2048] Declaration of Think\Db\Driver\Mongo::insertAll() should be compatible with Think\Db\Driver::insertAll($dataSet, $options = Array, $replace = false) E:\wwwroot\panziliao.com\thinkphp\Library\Think\Db\Driver\Mongo.class.php 第 18 行.
+SQL: panziliao.getCollection(pre_resource_user) [ RunTime:0.0000s ]
+SQL: panziliao.pre_resource_user.findOne() [ RunTime:0.0020s ]
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+
+[ 2016-06-30T14:21:48+08:00 ]  
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: REQUEST_METHOD E:\wwwroot\panziliao.com\thinkphp\Library\Think\App.class.php 第 31 行.
+NOTIC: [8] Undefined index: REQUEST_URI E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 137 行.
+NOTIC: [8] Use of undefined constant _PHP_FILE_ - assumed '_PHP_FILE_' E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 191 行.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [2048] Declaration of Think\Db\Driver\Mongo::connect() should be compatible with Think\Db\Driver::connect($config = '', $linkNum = 0, $autoConnection = false) E:\wwwroot\panziliao.com\thinkphp\Library\Think\Db\Driver\Mongo.class.php 第 18 行.
+NOTIC: [2048] Declaration of Think\Db\Driver\Mongo::insertAll() should be compatible with Think\Db\Driver::insertAll($dataSet, $options = Array, $replace = false) E:\wwwroot\panziliao.com\thinkphp\Library\Think\Db\Driver\Mongo.class.php 第 18 行.
+SQL: panziliao.getCollection(pre_resource_user) [ RunTime:0.0000s ]
+SQL: panziliao.pre_resource_user.findOne() [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+SQL: panziliao.pre_resource_user.find({}, {"id":1}).sort({"id":-1}).limit(1) [ RunTime:0.0010s ]
+
+[ 2016-06-30T14:22:42+08:00 ]  
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8] Undefined index: REQUEST_METHOD E:\wwwroot\panziliao.com\thinkphp\Library\Think\App.class.php 第 31 行.
+NOTIC: [8] Undefined index: REQUEST_URI E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 137 行.
+NOTIC: [8] Use of undefined constant _PHP_FILE_ - assumed '_PHP_FILE_' E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 191 行.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+NOTIC: [2048] Declaration of Think\Db\Driver\Mongo::connect() should be compatible with Think\Db\Driver::connect($config = '', $linkNum = 0, $autoConnection = false) E:\wwwroot\panziliao.com\thinkphp\Library\Think\Db\Driver\Mongo.class.php 第 18 行.
+NOTIC: [2048] Declaration of Think\Db\Driver\Mongo::insertAll() should be compatible with Think\Db\Driver::insertAll($dataSet, $options = Array, $replace = false) E:\wwwroot\panziliao.com\thinkphp\Library\Think\Db\Driver\Mongo.class.php 第 18 行.
+SQL: panziliao.getCollection(pre_resource_user) [ RunTime:0.0000s ]
+SQL: panziliao.pre_resource_user.findOne() [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+SQL: panziliao.pre_resource_user.find({}, {"id":1}).sort({"id":-1}).limit(1) [ RunTime:0.0000s ]
+
+[ 2016-06-30T14:23:30+08:00 ]  
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8] Undefined index: REQUEST_METHOD E:\wwwroot\panziliao.com\thinkphp\Library\Think\App.class.php 第 31 行.
+NOTIC: [8] Undefined index: REQUEST_URI E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 137 行.
+NOTIC: [8] Use of undefined constant _PHP_FILE_ - assumed '_PHP_FILE_' E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 191 行.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+NOTIC: [2048] Declaration of Think\Db\Driver\Mongo::connect() should be compatible with Think\Db\Driver::connect($config = '', $linkNum = 0, $autoConnection = false) E:\wwwroot\panziliao.com\thinkphp\Library\Think\Db\Driver\Mongo.class.php 第 18 行.
+NOTIC: [2048] Declaration of Think\Db\Driver\Mongo::insertAll() should be compatible with Think\Db\Driver::insertAll($dataSet, $options = Array, $replace = false) E:\wwwroot\panziliao.com\thinkphp\Library\Think\Db\Driver\Mongo.class.php 第 18 行.
+SQL: panziliao.getCollection(pre_resource_user) [ RunTime:0.0000s ]
+SQL: panziliao.pre_resource_user.findOne() [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+NOTIC: [8] Undefined index: primary E:\wwwroot\panziliao.com\thinkphp\Library\Think\Model.class.php 第 143 行.
+SQL: panziliao.pre_resource_user.find({}, {"id":1}).sort({"id":-1}).limit(1) [ RunTime:0.0000s ]
+SQL: panziliao.pre_resource_user.insert({"id":2,"uid":656039880,"uname":"\u6751\u5c71\u7531\u5f71","avatar":"http:\/\/himg.bdimg.com\/sys\/portrait\/item\/1127171e.jpg","intro":"","source":"baidu","share_count":79,"fans_count":599,"follow_count":0,"cj_url":"http:\/\/pan.baidu.com\/pcloud\/user\/getinfo?bdstoken=null&query_uk=656039880&t=1467267808467&channel=chunlei&clienttype=0&web=1","hits":0,"addtime":1467267809}) [ RunTime:0.1070s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2016-06-30T15:06:32+08:00 ]  
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.023001s ]
+NOTIC: [8] Undefined index: REQUEST_METHOD E:\wwwroot\panziliao.com\thinkphp\Library\Think\App.class.php 第 31 行.
+NOTIC: [8] Undefined index: REQUEST_URI E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 137 行.
+NOTIC: [8] Use of undefined constant _PHP_FILE_ - assumed '_PHP_FILE_' E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 191 行.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+NOTIC: [8] Undefined variable: header E:\wwwroot\panziliao.com\application\Spiderapi\Controller\BaidupanController.class.php 第 18 行.
+NOTIC: [2] Illegal string offset 'ip' E:\wwwroot\panziliao.com\application\Common\Common\function.php 第 161 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wwwroot\panziliao.com\application\Common\Common\function.php 第 161 行.
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.003000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003000s ]
+
+[ 2016-06-30T15:09:58+08:00 ]  
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8] Undefined index: REQUEST_METHOD E:\wwwroot\panziliao.com\thinkphp\Library\Think\App.class.php 第 31 行.
+NOTIC: [8] Undefined index: REQUEST_URI E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 137 行.
+NOTIC: [8] Use of undefined constant _PHP_FILE_ - assumed '_PHP_FILE_' E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 191 行.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8] Undefined variable: header E:\wwwroot\panziliao.com\application\Spiderapi\Controller\BaidupanController.class.php 第 18 行.
+NOTIC: [2] Illegal string offset 'ip' E:\wwwroot\panziliao.com\application\Common\Common\function.php 第 161 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wwwroot\panziliao.com\application\Common\Common\function.php 第 161 行.
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.003001s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003001s ]
+
+[ 2016-06-30T15:15:40+08:00 ]  
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8] Undefined index: REQUEST_METHOD E:\wwwroot\panziliao.com\thinkphp\Library\Think\App.class.php 第 31 行.
+NOTIC: [8] Undefined index: REQUEST_URI E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 137 行.
+NOTIC: [8] Use of undefined constant _PHP_FILE_ - assumed '_PHP_FILE_' E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 191 行.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8] Undefined variable: header E:\wwwroot\panziliao.com\application\Spiderapi\Controller\BaidupanController.class.php 第 20 行.
+NOTIC: [2] Illegal string offset 'ip' E:\wwwroot\panziliao.com\application\Common\Common\function.php 第 161 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wwwroot\panziliao.com\application\Common\Common\function.php 第 161 行.
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2016-06-30T15:16:35+08:00 ]  
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8] Undefined index: REQUEST_METHOD E:\wwwroot\panziliao.com\thinkphp\Library\Think\App.class.php 第 31 行.
+NOTIC: [8] Undefined index: REQUEST_URI E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 137 行.
+NOTIC: [8] Use of undefined constant _PHP_FILE_ - assumed '_PHP_FILE_' E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 191 行.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [2] Illegal string offset 'ip' E:\wwwroot\panziliao.com\application\Common\Common\function.php 第 161 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wwwroot\panziliao.com\application\Common\Common\function.php 第 161 行.
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2016-06-30T15:18:01+08:00 ]  
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001001s ]
+NOTIC: [8] Undefined index: REQUEST_METHOD E:\wwwroot\panziliao.com\thinkphp\Library\Think\App.class.php 第 31 行.
+NOTIC: [8] Undefined index: REQUEST_URI E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 137 行.
+NOTIC: [8] Use of undefined constant _PHP_FILE_ - assumed '_PHP_FILE_' E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 191 行.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+NOTIC: [2] Illegal string offset 'ip' E:\wwwroot\panziliao.com\application\Common\Common\function.php 第 161 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wwwroot\panziliao.com\application\Common\Common\function.php 第 161 行.
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2016-06-30T15:24:06+08:00 ]  
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: REQUEST_METHOD E:\wwwroot\panziliao.com\thinkphp\Library\Think\App.class.php 第 31 行.
+NOTIC: [8] Undefined index: REQUEST_URI E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 137 行.
+NOTIC: [8] Use of undefined constant _PHP_FILE_ - assumed '_PHP_FILE_' E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 191 行.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [2] Illegal string offset 'ip' E:\wwwroot\panziliao.com\application\Common\Common\function.php 第 161 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wwwroot\panziliao.com\application\Common\Common\function.php 第 161 行.
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2016-06-30T15:24:27+08:00 ]  
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8] Undefined index: REQUEST_METHOD E:\wwwroot\panziliao.com\thinkphp\Library\Think\App.class.php 第 31 行.
+NOTIC: [8] Undefined index: REQUEST_URI E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 137 行.
+NOTIC: [8] Use of undefined constant _PHP_FILE_ - assumed '_PHP_FILE_' E:\wwwroot\panziliao.com\thinkphp\Library\Think\Dispatcher.class.php 第 191 行.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+NOTIC: [2] Illegal string offset 'ip' E:\wwwroot\panziliao.com\application\Common\Common\function.php 第 161 行.
+NOTIC: [8] Uninitialized string offset: 0 E:\wwwroot\panziliao.com\application\Common\Common\function.php 第 161 行.
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
