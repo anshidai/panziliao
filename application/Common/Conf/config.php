@@ -10,7 +10,7 @@ return array(
 	'DB_DEPLOY_TYPE'	=> 0,
 	
     'DB_TYPE'             => 'mongo', //数据库类型
-    'DB_HOST'             => 'localhost', //数据库地址
+    'DB_HOST'             => '172.100.22.100', //数据库地址
     'DB_NAME'             => 'panziliao', //数据库名称
     'DB_USER'             => '', //数据库账号
     'DB_PWD'             => '', //数据库密码

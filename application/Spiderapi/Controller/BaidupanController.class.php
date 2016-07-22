@@ -6,7 +6,41 @@ use Think\Controller;
 
 class BaidupanController extends Controller {
 	
-	public function test()
+	public function libaoan()
+    {
+        
+        declare(ticks=1);
+        $bWaitFlag = false; //是否等待进程结束
+        $intNum = 3; //进程总数
+        $pids = array(); //进程PID数组
+        for($i = 0; $i < $intNum; $i++) {
+            $pids[$i] = pcntl_fork(); //产生子进程，而且从当前行之下开试运行代码，而且不继承父进程的数据信息   
+        
+            //子进程得到的是0
+            if(!$pids[$i]) {
+                //里面执行子进程代码
+                $uk = rand(1080322, 2008322);
+                $timestamp = getTimestamp(13);
+                $url = "http://pan.baidu.com/pcloud/user/getinfo?bdstoken=null&query_uk=108322&t={$timestamp}&channel=chunlei&clienttype=0&web=1";;
+                
+                $data[$i] = getPanBDShareInfo($url);
+                var_dump($data[$i]);
+                
+                sleep(1);
+                //exit();    
+            }
+        }
+        
+        if($bWaitFlag) {
+            for($i = 0; $i < $intNum; $i++) {
+                pcntl_waitpid($pids[$i], $status, WUNTRACED); //等待或返回fork的子进程状态
+                echo "wait $i -> {$status} " . time() . "\n";
+            }    
+        }
+        
+    }
+    
+    public function test()
 	{
 		
 		$timestamp = getTimestamp(13);
