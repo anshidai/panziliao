@@ -42,6 +42,7 @@ function getPanBDShareInfo($url)
 	$content = $html['content'];
 	if($content) {
 		$content = json_decode($content, true);
+        var_dump($url);exit;
 		if($content['errno'] == 0 && $content['records']) {
 			
 			foreach($content['records'] as $val) {
@@ -85,41 +86,32 @@ function parsePanCategory($type = 0)
 }
 
 
-function getPanBDUserInfo($url)
+function getPanBDUserInfo($data = array())
 {
-	$data = array();
-	
-	//$header[] = "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"; 
-	$header[] = "Accept: */*"; 
-	$header[] = "Accept-Encoding: gzip, deflate, sdch"; 
-	$header[] = "Accept-Language: zh-CN,zh;q=0.8"; 
-	$header[] = "Cache-Control: max-age=0"; 
-	$header[] = "Connection: keep-alive"; 
-	$header[] = "Host: pan.baidu.com";  
-	$header[] = "X-Requested-With: XMLHttpRequest";  
-	$header[] = "Referer: http://pan.baidu.com/share/home?uk=".rand(1000, 10000);  
-	$header[] = "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0";
-	
-	$html = curl_http($url, $header,'', true);
-	$content = $html['content'];
-	if($content) {
-		$content = json_decode($content, true);
-		if($content['errno'] == 0) {
-			$data['uid'] = $content['user_info']['uk'];
-			$data['uname'] = $content['user_info']['uname']? $content['user_info']['uname']: '';
-			$data['avatar'] = $content['user_info']['avatar_url']? $content['user_info']['avatar_url']: '';
-			$data['intro'] = $content['user_info']['intro']? $content['user_info']['intro']: '';
-			$data['source'] = 'baidu';
-			$data['share_count'] = $content['user_info']['pubshare_count']? $content['user_info']['pubshare_count']: 0;
-			$data['fans_count'] = $content['user_info']['fans_count']? $content['user_info']['fans_count']: 0;
-			$data['follow_count'] = $content['user_info']['follow_count']? $content['user_info']['follow_count']: 0;
-			$data['hits'] = 0;
-			$data['addtime'] = time();
-			$data['cj_url'] = $url;
-		}
-	}
-	unset($html, $content);
-	return $data;
+	if(empty($data)) return false;
+    
+    foreach($data as $key=>$val) {
+        $jsondata = json_decode($val['results'], true);
+        if($jsondata['errno'] != '0' || empty($jsondata['user_info'])) {
+            continue;
+        }
+        $userinfo = $jsondata['user_info'];
+        $res[$key] = array(
+            'uid' => $userinfo['uk'],
+            'uname' => $userinfo['uname']? $userinfo['uname']: '',
+            'avatar' => $userinfo['avatar_url']? $userinfo['avatar_url']: '',
+            'intro' => $userinfo['intro']? $userinfo['intro']: '',
+            'source' => 'baidu',
+            'share_count' => $userinfo['pubshare_count']? $userinfo['pubshare_count']: 0,
+            'fans_count' => $userinfo['fans_count']? $userinfo['fans_count']: 0,
+            'follow_count' => $userinfo['follow_count']? $userinfo['follow_count']: 0,
+            'hits' => 0,
+            'addtime' => time(),
+            'cj_url' => $key,
+        );        
+    }
+	unset($data);
+	return $res;
 }
 
 function getFileType($filename)
@@ -289,4 +281,50 @@ function curl_post($url, $post = array(), $header = array(), $proxy = array(), $
     
     return $data;
     
+}
+
+function curl_multi($urls, $header = array(), $gzip = false)
+{
+    $queue = curl_multi_init();
+    $map = array();
+    foreach($urls as $key => $url) {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //将curl_exec()获取的信息以文件流的形式返回，而不是直接输出
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1); //是否抓取跳转后的页面 
+        curl_setopt($ch, CURLOPT_HEADER, 0); //是否取得头信息
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30); //设置超时 秒 
+        //curl_setopt($ch, CURLOPT_NOSIGNAL, true);
+        
+        if($gzip) {
+            curl_setopt($ch, CURLOPT_ENCODING, 'gzip'); //针对已gzip压缩过的进行解压，不然返回内容会是乱码
+        }
+        
+        if(!empty($header[$key])) {
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $header[$key]); //设置http请求头信息
+        }
+        
+        curl_multi_add_handle($queue, $ch);
+        $map[(string) $ch] = $url;
+    }
+    $responses = array();
+    do{
+        while(($code = curl_multi_exec($queue, $active)) == CURLM_CALL_MULTI_PERFORM);
+        if($code != CURLM_OK) {
+            break; 
+        }
+        while($done = curl_multi_info_read($queue)) {
+            $error = curl_error($done['handle']);
+            $results = curl_multi_getcontent($done['handle']);
+            $responses[$map[(string) $done['handle']]] = compact('error', 'results');
+            curl_multi_remove_handle($queue, $done['handle']);
+            curl_close($done['handle']);
+        }
+        if($active > 0) {
+            curl_multi_select($queue, 0.5);
+        }
+    }while($active);
+    
+    curl_multi_close($queue);
+    return $responses;    
 }

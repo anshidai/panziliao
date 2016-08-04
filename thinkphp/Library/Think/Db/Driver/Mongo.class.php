@@ -74,7 +74,12 @@ class Mongo extends Driver {
                 // 当前MongoDb对象
                 $this->_dbName  =  $db;
                 $this->_mongo = $this->_linkID->selectDb($db);
+            }elseif(empty($db) && !$this->_mongo){
+                // 当前MongoDb对象
+                $this->_dbName = $this->config['database'];
+                $this->_mongo = $this->_linkID->selectDb($this->_dbName);
             }
+            
             // 当前MongoCollection对象
             if($this->config['debug']) {
                 $this->queryStr   =  $this->_dbName.'.getCollection('.$collection.')';

@@ -6,69 +6,49 @@ use Think\Controller;
 
 class BaidupanController extends Controller {
 	
-	public function libaoan()
+    public $threadNum = 3; //并发数
+    private $userUrls = array(); //用户信息请求url 
+    private $userShareUrl = array(); //用户分享信息请求url 
+    private $headers = array(); //请求头信息 
+    
+    public function init()
     {
+
+        $this->createUserUrl();
         
-        declare(ticks=1);
-        $bWaitFlag = false; //是否等待进程结束
-        $intNum = 3; //进程总数
-        $pids = array(); //进程PID数组
-        for($i = 0; $i < $intNum; $i++) {
-            $pids[$i] = pcntl_fork(); //产生子进程，而且从当前行之下开试运行代码，而且不继承父进程的数据信息   
-        
-            //子进程得到的是0
-            if(!$pids[$i]) {
-                //里面执行子进程代码
-                $uk = rand(1080322, 2008322);
-                $timestamp = getTimestamp(13);
-                $url = "http://pan.baidu.com/pcloud/user/getinfo?bdstoken=null&query_uk=108322&t={$timestamp}&channel=chunlei&clienttype=0&web=1";;
+        if($this->userUrls) {
+            $data = curl_multi($this->userUrls, $this->headers, true);
+            if($users = getPanBDUserInfo($data)) {
+                //var_dump($users);exit;
                 
-                $data[$i] = getPanBDShareInfo($url);
-                var_dump($data[$i]);
-                
-                sleep(1);
-                //exit();    
-            }
-        }
-        
-        if($bWaitFlag) {
-            for($i = 0; $i < $intNum; $i++) {
-                pcntl_waitpid($pids[$i], $status, WUNTRACED); //等待或返回fork的子进程状态
-                echo "wait $i -> {$status} " . time() . "\n";
-            }    
+                $this->insertUser($users);    
+            }  
         }
         
     }
     
-    public function test()
-	{
-		
-		$timestamp = getTimestamp(13);
-		$timestamp2 = getTimestamp(13).'0';
-		
-		$rand = randStr(16, 'number');
-		$hash = base64_encode($timestamp2.'.'.$rand);
-		
-		$header[] = "Accept: */*"; 
-		$header[] = "Accept-Encoding: gzip, deflate, sdch"; 
-		$header[] = "Accept-Language: zh-CN,zh;q=0.8"; 
-		$header[] = "Cache-Control: max-age=0"; 
-		$header[] = "Connection: keep-alive"; 
-		$header[] = "Host: pan.baidu.com";  
-		$header[] = "X-Requested-With: XMLHttpRequest";  
-		$header[] = "Referer: http://pan.baidu.com/share/home?uk=".rand(1000, 10000);  
-		$header[] = "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0";
-		
-		$url = "http://pan.baidu.com/pcloud/feed/getsharelist?t={$timestamp}&category=0&auth_type=1&request_location=share_home&start=0&limit=60&query_uk=556952615&channel=chunlei&clienttype=0&web=1&logid={$hash}&bdstoken=null";
-		$html = curl_http($url, $header,'', true);
-		$content = $html['content'];
-		
-		file_put_contents(__ROOT__.'/dd.txt', var_export(json_decode($content,true), true));
-		
-		unset($html);
-		
-	}
-	
+    private function createUserUrl()
+    {
+        $startid = 1;
+        
+        for($uid = $startid; $uid<=$this->threadNum; $uid++) {
+            $timestamp = getTimestamp(13);
+            $this->userUrls[$uid] = "http://pan.baidu.com/pcloud/user/getinfo?bdstoken=null&query_uk={$uid}&t={$timestamp}&channel=chunlei&clienttype=0&web=1";
+            
+            $header = array();
+            $header[] = "Accept: */*"; 
+            $header[] = "Accept-Encoding: gzip, deflate, sdch"; 
+            $header[] = "Accept-Language: zh-CN,zh;q=0.8"; 
+            $header[] = "Cache-Control: max-age=0"; 
+            $header[] = "Connection: keep-alive"; 
+            $header[] = "Host: pan.baidu.com";  
+            $header[] = "X-Requested-With: XMLHttpRequest";  
+            $header[] = "Referer: http://pan.baidu.com/share/home?uk=".$uid+rand(1000, 10000);  
+            $header[] = "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0";
+            $this->headers[$uid] = $header;
+        }    
+    }
+    
 	public function addshareinfo()
 	{
 		
@@ -121,13 +101,19 @@ class BaidupanController extends Controller {
 		$userModel = D('ResourceUser');
 		
 		foreach($data as $val) {
+            
+            $count = $userModel->where("uid={$val['uid']}")->count();
+            var_dump($userModel->_sql());
+            
+            var_dump($count,$val['uid'], 2222);exit;
+            
 			$result = $userModel->field('id')->order('id desc')->limit(1)->select();
 			if(!empty($result)) {
 				$result = array_values($result);
 				$nextId = $result[0]['id'];
 			}
 			$nextId = $nextId? $nextId+1: 1;
-			
+
 			$userModel->create();
 			$userModel->id = $nextId;
 			$userModel->uid = $val['uid'];
@@ -143,7 +129,7 @@ class BaidupanController extends Controller {
 			$userModel->addtime = time(); 
 			$userModel->add();
 			
-			echo "insert {$nextId}";
+			echo "insert {$nextId}\r\n";
 		}
 	}
 	
