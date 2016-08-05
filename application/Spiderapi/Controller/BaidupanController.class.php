@@ -7,13 +7,16 @@ use Think\Controller;
 class BaidupanController extends Controller {
 	
     public $threadNum = 3; //并发数
+	private $startId; //开始id
     private $userUrls = array(); //用户信息请求url 
     private $userShareUrl = array(); //用户分享信息请求url 
-    private $headers = array(); //请求头信息 
-    
+    private $headers = array(); //请求头信息
+	
     public function init()
     {
-
+		
+		
+		/*
         $this->createUserUrl();
         
         if($this->userUrls) {
@@ -24,8 +27,18 @@ class BaidupanController extends Controller {
                 $this->insertUser($users);    
             }  
         }
+		*/
         
     }
+	
+	
+	public function getMaxId()
+	{
+		$userModel = D('ResourceUser');
+		
+		//$res = $userModel->getMongoNextId('uid');
+		var_dump($userModel);
+	}
     
     private function createUserUrl()
     {
@@ -57,44 +70,10 @@ class BaidupanController extends Controller {
 	public function adduser()
 	{
 		$userdata = $this->getUserInfo(656039880, 656039880);
-		$this->insertUser($userdata);
+		$this->_insertUser($userdata);
 	}
 	
-	protected function getUserInfo($start_uid, $end_uid)
-	{
-		$data = array();
-		
-		if($end_uid < $start_uid) {
-			$end_uid = $start_uid;
-		}
-		
-		import('Spiderapi.Org.WorkThread');
-		for($i = $start_uid; $i <=$end_uid; $i++) {
-			$timestamp = getTimestamp(13);
-			$url = "http://pan.baidu.com/pcloud/user/getinfo?bdstoken=null&query_uk={$i}&t={$timestamp}&channel=chunlei&clienttype=0&web=1";;
-			$thread_array[$i] = new \WorkThread($url, 'getPanBDUserInfo');
-			$thread_array[$i]->start();
-		}
-		
-		//检查线程是否执行结束
-		foreach($thread_array as $thread_array_key => $thread_array_value) {
-			while($thread_array[$thread_array_key]->isRunning()) {
-				usleep(5000);
-			}
-			//如果执行结束，取出结果
-			if($thread_array[$thread_array_key]->join()) {
-				$temp = $thread_array[$thread_array_key]->data;
-				if(!empty($temp)) {
-					$data[] = $temp;
-				}
-				$thread_array[$thread_array_key]->kill();
-			}
-		}
-		return $data;
-	}
-	
-	
-	protected function insertUser($data = array())
+	protected function _insertUser($data = array())
 	{
 		if(empty($data)) return false;
 		
