@@ -36,8 +36,8 @@ class BaidupanController extends Controller {
 	{
 		$userModel = D('ResourceUser');
 		
-		//$res = $userModel->getMongoNextId('uid');
-		var_dump($userModel);
+		$res = $userModel->getMongoNextId('uid');
+		var_dump($res);
 	}
     
     private function createUserUrl()
