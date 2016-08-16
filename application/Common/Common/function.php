@@ -22,51 +22,6 @@ function randStr($len=6, $format = 'all')
 	return $password;
 } 
 
-
-function getPanBDShareInfo($url)
-{
-	$data = array();
-	
-	//$header[] = "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"; 
-	$header[] = "Accept: */*"; 
-	$header[] = "Accept-Encoding: gzip, deflate, sdch"; 
-	$header[] = "Accept-Language: zh-CN,zh;q=0.8"; 
-	$header[] = "Cache-Control: max-age=0"; 
-	$header[] = "Connection: keep-alive"; 
-	$header[] = "Host: pan.baidu.com";  
-	$header[] = "X-Requested-With: XMLHttpRequest";  
-	$header[] = "Referer: http://pan.baidu.com/share/home?uk=".rand(1000, 10000);  
-	$header[] = "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0";
-	
-	$html = curl_http($url, $header,'', true);
-	$content = $html['content'];
-	if($content) {
-		$content = json_decode($content, true);
-        var_dump($url);exit;
-		if($content['errno'] == 0 && $content['records']) {
-			
-			foreach($content['records'] as $val) {
-				$data[$val['shareid']]['uid'] = $val['uk'];
-				$data[$val['shareid']]['title'] = $val['title'];
-				$data[$val['shareid']]['catid'] = parsePanCategory($val['category']);
-				$data[$val['shareid']]['filetype'] = getFileType($val['title']);
-				$data[$val['shareid']]['filesize'] = $val['filelist'][0]['size'];
-				$data[$val['shareid']]['shareid'] = $val['shareid'];
-				$data[$val['shareid']]['fs_id'] = $val['filelist'][0]['fs_id'];
-				$data[$val['shareid']]['sharetime'] = $val['feed_time'];
-				$data[$val['shareid']]['sharedown'] = $val['dCnt']? $val['dCnt']: 0; //下载次数
-				$data[$val['shareid']]['sharesave'] = $val['tCnt']? $val['tCnt']: 0; //保存次数
-				$data[$val['shareid']]['shareviews'] = $val['vCnt']? $val['vCnt']: 0; //查看次数
-				$data[$val['shareid']]['addtime'] = time();
-				$data[$val['shareid']]['hits'] = 0;
-				$data[$val['shareid']]['source'] = 'baidu';
-			}
-		}
-	}
-	unset($html, $content);
-	return $data;
-}
-
 function parsePanCategory($type = 0)
 {
 	switch($type) {
@@ -83,35 +38,6 @@ function parsePanCategory($type = 0)
 		default: 
 			$cid = 7;break;
 	}
-}
-
-
-function getPanBDUserInfo($data = array())
-{
-	if(empty($data)) return false;
-    
-    foreach($data as $key=>$val) {
-        $jsondata = json_decode($val['results'], true);
-        if($jsondata['errno'] != '0' || empty($jsondata['user_info'])) {
-            continue;
-        }
-        $userinfo = $jsondata['user_info'];
-        $res[$key] = array(
-            'uid' => $userinfo['uk'],
-            'uname' => $userinfo['uname']? $userinfo['uname']: '',
-            'avatar' => $userinfo['avatar_url']? $userinfo['avatar_url']: '',
-            'intro' => $userinfo['intro']? $userinfo['intro']: '',
-            'source' => 'baidu',
-            'share_count' => $userinfo['pubshare_count']? $userinfo['pubshare_count']: 0,
-            'fans_count' => $userinfo['fans_count']? $userinfo['fans_count']: 0,
-            'follow_count' => $userinfo['follow_count']? $userinfo['follow_count']: 0,
-            'hits' => 0,
-            'addtime' => time(),
-            'cj_url' => $key,
-        );        
-    }
-	unset($data);
-	return $res;
 }
 
 function getFileType($filename)
@@ -327,4 +253,45 @@ function curl_multi($urls, $header = array(), $gzip = false)
     
     curl_multi_close($queue);
     return $responses;    
+}
+
+/**
+* 解析url参数到数组
+*/
+function convertUrlQuery($query)
+{
+	$queryParts = explode('&', $query);
+    $params = array();
+    foreach ($queryParts as $param) {
+        $item = explode('=', $param);
+        $params[$item[0]] = $item[1];
+    }
+    return $params;
+}
+
+/**
+* 获取文件扩展名
+*/
+function getFileExt($filename)
+{
+	$arr = pathinfo($filename);
+	return $arr['extension']? $arr['extension']: '';
+}
+
+/**
+* 转换字节数为其他单位
+* @param   string $filesize  字节大小
+* @return  string 返回大小
+*/
+function sizecount($filesize) {
+   if ($filesize >= 1073741824) {
+      $filesize = round($filesize / 1073741824 * 100) / 100 .' GB';
+   } elseif ($filesize >= 1048576) {
+      $filesize = round($filesize / 1048576 * 100) / 100 .' MB';
+   } elseif($filesize >= 1024) {
+      $filesize = round($filesize / 1024 * 100) / 100 . ' KB';
+   } else {
+      $filesize = $filesize.' Bytes';
+   }
+   return $filesize;
 }

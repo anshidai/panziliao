@@ -44,7 +44,7 @@ CREATE TABLE `pre_category` (
 -- ----------------------------
 DROP TABLE IF EXISTS `pre_resource`;
 CREATE TABLE `pre_resource` (
-  `resid` bigint(13) unsigned NOT NULL AUTO_INCREMENT COMMENT '资源id',
+  `id` bigint(13) unsigned NOT NULL AUTO_INCREMENT COMMENT '资源id',
   `title` varchar(200) NOT NULL DEFAULT '' COMMENT '标题',
   `catid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '所属分类',
   `hits` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '浏览次数',
