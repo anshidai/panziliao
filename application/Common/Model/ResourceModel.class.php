@@ -31,7 +31,9 @@ class ResourceModel extends MongoModel
 		'down_num', //下次次数
 		'save_num', //保存次数
 		'sharetime', //分享时间
-		'addtime', //分享时间
+		'addtime', //添加时间
+		'cj_status', //采集状态 0-默认 1-部分数据入库 2-采集完成
+		'cj_url', //采集url
 	);
 	
 	/**

@@ -4,6 +4,8 @@
 * 百度网盘数据抓取
 */
 
+use Components\Http;
+
 class BaiduPan
 {
 	//用户表模型
@@ -43,7 +45,7 @@ class BaiduPan
 		for($i = 1; $i<=$loop; $i++) {
 			$this->_createUserHeaderUrl();
 			if($this->urls) {
-				$data = curl_multi($this->urls, $this->headers, true);
+				$data = Http::curl_multi($this->urls, $this->headers, true);
 				if($users = $this->_parseUserData($data)) {
 					if($res = $this->addUser($users, $this->userModel)) {
 						echo "insert {$res}\n";
@@ -90,6 +92,18 @@ class BaiduPan
 	{
 		$this->headers = $this->urls = array();
 		
+		
+		$header[] = "Accept: */*"; 
+		$header[] = "Accept-Encoding: gzip, deflate, sdch"; 
+		$header[] = "Accept-Language: zh-CN,zh;q=0.8"; 
+		$header[] = "Cache-Control: max-age=0"; 
+		$header[] = "Connection: keep-alive"; 
+		$header[] = "Host: pan.baidu.com";  
+		$header[] = "X-Requested-With: XMLHttpRequest";  
+		$header[] = "Referer: http://pan.baidu.com/share/home?uk=".$uid+rand(1000, 10000);  
+		$header[] = "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0";
+		
+		
 		$nextid = $this->userModel->getNextId();
 		for($uid = $nextid; $uid<=$nextid + $this->thread; $uid++) {
             $header = array();
@@ -135,6 +149,7 @@ class BaiduPan
 				'hits' => 0,
 				'addtime' => time(),
 				'cj_url' => $key,
+				'cj_status' => 2,
 			);        
 		}
 		unset($data);
@@ -157,7 +172,7 @@ class BaiduPan
 		$header[] = "Referer: http://pan.baidu.com/share/home?uk=".rand(1000, 10000);  
 		$header[] = "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0";
 		
-		$html = curl_http($url, $header,'', true);
+		$html = Http::curl_http($url, $header,'', true);
 		$content = $html['content'];
 		if($content) {
 			$content = json_decode($content, true);

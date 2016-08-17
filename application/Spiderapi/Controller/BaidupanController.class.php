@@ -13,6 +13,7 @@ class BaidupanController extends Controller
 	
 	public function test()
 	{
+		
 		import('Spiderapi.Org.Panduoduo');
 		$cj = new \Panduoduo();
 		$cj->run();
