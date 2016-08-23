@@ -28,6 +28,13 @@ class BaiduPan
 	
 	//延时 毫秒
 	public $delay = 1000;
+    
+    //连续请求出错最大次数
+    public $errorNum = 5;
+    
+    private $error = 0;
+    
+    public $logfile = './baiduPan.txt';
 	
 	public function __construct()
 	{
@@ -48,7 +55,7 @@ class BaiduPan
 				$data = Http::curl_multi($this->urls, $this->headers, true);
 				if($users = $this->_parseUserData($data)) {
 					if($res = $this->addUser($users, $this->userModel)) {
-						echo "insert {$res}\n";
+                        $this->writeLog(" insert {$res}");
 					}    
 				}
 				unset($data,$users);
@@ -133,9 +140,20 @@ class BaiduPan
     
 		foreach($data as $key=>$val) {
 			$jsondata = json_decode($val['results'], true);
+            
+            if($this->erro > $this->errorNum) {
+                $this->writeLog('请求过快强制退出');
+                exit;        
+            }
+            if($jsondata['error_msg'] == 'too fast') {
+                $this->erro += 1;    
+            }
+            
 			if($jsondata['errno'] != '0' || empty($jsondata['user_info'])) {
+                $this->writeLog("错误信息 {$jsondata['error_msg']}");
 				continue;
 			}
+
 			$userinfo = $jsondata['user_info'];
 			$res[$key] = array(
 				'uid' => $userinfo['uk'],
@@ -237,6 +255,12 @@ class BaiduPan
 		}
 		return $_insert_ids? implode(', ', $_insert_ids): false;
 	}
+    
+    
+    private function writeLog($msg = '')
+    {
+        file_put_contents($this->logfile, date('Y-m-d H:i:s')." {$msg}\n", FILE_APPEND);    
+    }
 	
 	
 }

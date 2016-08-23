@@ -16,8 +16,10 @@ class BaidupanController extends Controller
 		import('Spiderapi.Org.BaiduPan');
 		
 		$cj = new \BaiduPan();
-		$cj->total = 100;
-		$cj->thread = 10;
+        $cj->logfile = "/home/libaoan/baiduPan_".date('Ymd').".txt";
+		$cj->total = 10000;
+        $cj->thread = 5;
+		$cj->delay = 2000;
 		$cj->run();
 	}
 	
@@ -30,9 +32,9 @@ class BaidupanController extends Controller
 	
 	public function test()
 	{
-		import('Spiderapi.Org.Panduoduo');
-		$cj = new \Panduoduo();
-		$cj->run();
+		//import('Spiderapi.Org.Panduoduo');
+		//$cj = new \Panduoduo();
+		//$cj->run();
 	}
 	
 }
