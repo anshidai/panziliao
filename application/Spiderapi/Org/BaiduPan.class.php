@@ -70,6 +70,7 @@ class BaiduPan
 	
 	public function run()
 	{
+		$cj->writeLog('开始采集');
 		
 		if($this->allowProxy) {
 			$this->changeProxy();
