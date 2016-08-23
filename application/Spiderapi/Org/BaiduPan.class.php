@@ -64,6 +64,11 @@ class BaiduPan
 	
 	public function run()
 	{
+		
+		if($this->allowProxy) {
+			$this->changeProxy();
+		}
+		
 		$loop = ceil($this->total/$this->thread);
 		for($i = 1; $i<=$loop; $i++) {
 			$this->_createUserHeaderUrl();
