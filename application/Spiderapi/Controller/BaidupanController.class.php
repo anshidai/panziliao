@@ -28,7 +28,7 @@ class BaidupanController extends Controller
 		$cj = new \BaiduPan();
 		$cj->logfile = "/home/libaoan/baiduPan_".date('Ymd').".txt";
 		//$cj->logfile = "./baiduPan_".date('Ymd').".txt";
-		$cj->total = 1000;
+		$cj->total = 10000;
         $cj->thread = 20;
 		$cj->delay = 1000;
 		
