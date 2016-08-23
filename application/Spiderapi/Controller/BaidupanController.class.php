@@ -28,14 +28,14 @@ class BaidupanController extends Controller
 		$cj = new \BaiduPan();
 		$cj->logfile = "/home/libaoan/baiduPan_".date('Ymd').".txt";
 		//$cj->logfile = "./baiduPan_".date('Ymd').".txt";
-		$cj->total = 1000;
+		$cj->total = 10000;
         $cj->thread = 20;
 		$cj->delay = 1000;
 		
 		$cj->allowProxy = true;
 		if($cj->allowProxy) {
-			$proxy_ip_1 = HttpProxy::cj_xicidaili_ip(2);
-			$proxy_ip_2 = HttpProxy::cj_66ip_ip(2);
+			$proxy_ip_1 = HttpProxy::cj_xicidaili_ip(1);
+			$proxy_ip_2 = HttpProxy::cj_66ip_ip(1);
 			$proxy_ip = array_merge($proxy_ip_1, $proxy_ip_2);
 			$proxy_ip = HttpProxy::filter_proxy_ips($proxy_ip, 2);
 			
