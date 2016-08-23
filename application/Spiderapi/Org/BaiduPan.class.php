@@ -32,7 +32,7 @@ class BaiduPan
 	public function __construct()
 	{
 		$this->userModel = D('ResourceUser');
-		$this->resourceModel = D('Resource');
+		//$this->resourceModel = D('Resource');
 		
 		if($this->total < $this->thread) {
 			$this->total = $this->thread;

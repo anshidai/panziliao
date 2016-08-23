@@ -11,35 +11,28 @@ class BaidupanController extends Controller
         header('Content-Type:text/html; charset="utf-8"');
     } 
 	
-	public function test()
+	public function cjUser()
 	{
+		import('Spiderapi.Org.BaiduPan');
 		
+		$cj = new \BaiduPan();
+		$cj->total = 100;
+		$cj->thread = 10;
+		$cj->run();
+	}
+	
+	public function cjDetail()
+	{
 		import('Spiderapi.Org.Panduoduo');
 		$cj = new \Panduoduo();
 		$cj->run();
 	}
 	
-    public function init()
-    {
-		$act = $GLOBALS['argv'][2];
-		//$act = 'baidupanUser';
-		
-		if($act == 'baidupanUser') {
-			import('Spiderapi.Org.BaiduPan');
-			
-			$cj = new \BaiduPan();
-			$cj->total = 1;
-			$cj->thread = 1;
-			$cj->run();
-			
-		} else if($act == 'baidupanDetail') {
-			
-			
-			
-		}
-		
-		
-		
-    }
+	public function test()
+	{
+		import('Spiderapi.Org.Panduoduo');
+		$cj = new \Panduoduo();
+		$cj->run();
+	}
 	
 }
