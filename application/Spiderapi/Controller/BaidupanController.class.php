@@ -8,13 +8,21 @@ use Components\HttpProxy;
 
 class BaidupanController extends Controller 
 {
+	private $configModel = null;
+	
 	protected function _initialize()
     {
         header('Content-Type:text/html; charset="utf-8"');
+		
+		$this->configModel = D('Config');
     } 
 	
 	public function cjUser()
 	{
+		if($this->configModel->getValue('CJUSERLOCK') == '1') {
+			die('当前进程还未结束');
+		}
+		
 		import('Spiderapi.Org.BaiduPan');
 		
 		$cj = new \BaiduPan();
@@ -51,10 +59,8 @@ class BaidupanController extends Controller
 		//$cj = new \Panduoduo();
 		//$cj->run();
 		
-		$proxy_ip = array();
-
-		$proxy_ip_1 = HttpProxy::cj_xicidaili_ip(2);
-		var_dump($proxy_ip_1);
+		//var_dump($this->configModel->getValue('CJUSERLOCK'));
+		var_dump($this->configModel->setValue('CJUSERLOCK', 1));
 
 		
 	}

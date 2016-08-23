@@ -1,5 +1,7 @@
 <?php
 
+use Components\Http;
+
 /**
 * 盘多多数据抓取
 */

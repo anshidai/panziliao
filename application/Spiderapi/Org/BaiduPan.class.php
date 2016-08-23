@@ -14,6 +14,9 @@ class BaiduPan
 	//资源表模型
 	private $resourceModel = null;
 	
+	//配置表模型
+	private $configModel = null;
+	
 	//请求header头
 	private $headers = array();
 	
@@ -56,10 +59,13 @@ class BaiduPan
 	{
 		$this->userModel = D('ResourceUser');
 		//$this->resourceModel = D('Resource');
+		$this->configModel = D('Config');
 		
 		if($this->total < $this->thread) {
 			$this->total = $this->thread;
 		}
+		
+		$this->configModel->setValue('CJUSERLOCK', 1);
 	}
 	
 	public function run()
@@ -79,6 +85,7 @@ class BaiduPan
 				if($this->allowProxy) {
 					if(!$this->proxyIP) {
 						$this->writeLog('当前没有可用的代理ip退出');
+						$this->configModel->setValue('CJUSERLOCK', 2);
 						exit;
 					}
 					if($this->_isblock) {
@@ -89,6 +96,7 @@ class BaiduPan
 				}else {
 					if($this->currError > $this->errorNum) {
 						$this->writeLog('请求过快强制退出');
+						$this->configModel->setValue('CJUSERLOCK', 2);
 						exit;        
 					}
 				}
@@ -320,6 +328,6 @@ class BaiduPan
 		
         return true;
     }
-	
+
 	
 }
