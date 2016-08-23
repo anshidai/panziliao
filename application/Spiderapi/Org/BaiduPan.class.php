@@ -1,10 +1,10 @@
 <?php
 
+use Components\Http;
+
 /**
 * 百度网盘数据抓取
 */
-
-use Components\Http;
 
 class BaiduPan
 {
@@ -32,9 +32,25 @@ class BaiduPan
     //连续请求出错最大次数
     public $errorNum = 5;
     
-    private $error = 0;
+	//当前累计错误次数
+    private $currError = 0;
     
     public $logfile = './baiduPan.txt';
+	
+	//代理ip集合
+	public $proxyIP = array(); 
+	
+	//当前正在使用代理ip
+    protected $currProxyIp = ''; 
+	
+	//当前正在使用代理ip端口
+    protected $currProxyPort = '';
+
+	//是否开启代理 默认不开启	
+    public $allowProxy = false; 
+	
+	//请求阻塞 true-是 false-否
+	private $_isblock = false;
 	
 	public function __construct()
 	{
@@ -52,7 +68,27 @@ class BaiduPan
 		for($i = 1; $i<=$loop; $i++) {
 			$this->_createUserHeaderUrl();
 			if($this->urls) {
-				$data = Http::curl_multi($this->urls, $this->headers, true);
+				
+				//设置代理ip
+				$proxy = array();
+				if($this->allowProxy) {
+					if(!$this->proxyIP) {
+						$this->writeLog('当前没有可用的代理ip退出');
+						exit;
+					}
+					if($this->_isblock) {
+						$this->changeProxy();
+					}
+					$proxy['ip'] = $this->currProxyIp;
+					$proxy['port'] = $this->currProxyPort;
+				}else {
+					if($this->currError > $this->errorNum) {
+						$this->writeLog('请求过快强制退出');
+						exit;        
+					}
+				}
+				
+				$data = Http::curl_multi($this->urls, $this->headers, true, $proxy);
 				if($users = $this->_parseUserData($data)) {
 					if($res = $this->addUser($users, $this->userModel)) {
                         $this->writeLog(" insert {$res}");
@@ -110,7 +146,6 @@ class BaiduPan
 		$header[] = "Referer: http://pan.baidu.com/share/home?uk=".$uid+rand(1000, 10000);  
 		$header[] = "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0";
 		
-		
 		$nextid = $this->userModel->getNextId();
 		for($uid = $nextid; $uid<=$nextid + $this->thread; $uid++) {
             $header = array();
@@ -140,20 +175,13 @@ class BaiduPan
     
 		foreach($data as $key=>$val) {
 			$jsondata = json_decode($val['results'], true);
-            
-            if($this->erro > $this->errorNum) {
-                $this->writeLog('请求过快强制退出');
-                exit;        
-            }
-            if($jsondata['error_msg'] == 'too fast') {
-                $this->erro += 1;    
-            }
-            
-			if($jsondata['errno'] != '0' || empty($jsondata['user_info'])) {
-                $this->writeLog("错误信息 {$jsondata['error_msg']}");
+            if($jsondata['errno'] != '0' || empty($jsondata['user_info']) || $jsondata['error_msg'] == 'too fast') {
+				$this->_isblock = true;
+                $this->currError += 1;   
+				$this->writeLog("错误信息 {$jsondata['error_msg']}");
 				continue;
-			}
-
+            }
+			
 			$userinfo = $jsondata['user_info'];
 			$res[$key] = array(
 				'uid' => $userinfo['uk'],
@@ -257,9 +285,35 @@ class BaiduPan
 	}
     
     
-    private function writeLog($msg = '')
+    public function writeLog($msg = '')
     {
         file_put_contents($this->logfile, date('Y-m-d H:i:s')." {$msg}\n", FILE_APPEND);    
+    }
+	
+	
+	/**
+    * 每次获取一个代理ip
+    */
+    protected function changeProxy()
+    {
+        if(empty($this->proxyIP)) return false;
+
+        //如果有代理ip则删除当前，取下一个
+        if($this->currProxyIp) {
+            unset($this->proxyIP[$this->currProxyIp]);
+        }
+        
+        if(empty($this->proxyIP)) return false;
+        
+        foreach($this->proxyIP as $val) {
+            $this->currProxyIp = $val['ip'];
+            $this->currProxyPort = $val['port'];
+            $this->writeLog("当前代理ip {$this->currProxyIp}:{$this->currProxyPort}  剩余代理IP数量：".count($this->proxyIP));
+            break;
+        }
+		$this->_isblock = false;
+		
+        return true;
     }
 	
 	

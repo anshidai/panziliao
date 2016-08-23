@@ -133,7 +133,7 @@ class Http
 	/**
 	* curl多线程
 	*/
-	public static function curl_multi($urls, $header = array(), $gzip = false)
+	public static function curl_multi($urls, $header = array(), $gzip = false, $proxy = array())
 	{
 		$queue = curl_multi_init();
 		$map = array();
@@ -152,6 +152,16 @@ class Http
 			
 			if(!empty($header[$key])) {
 				curl_setopt($ch, CURLOPT_HTTPHEADER, $header[$key]); //设置http请求头信息
+			}
+			
+			if($proxy['ip'] && $proxy['port']) {
+				curl_setopt($ch, CURLOPT_PROXYTYPE, 'HTTP');
+				curl_setopt($ch, CURLOPT_PROXY, $proxy['ip']); //设置代理ip
+				curl_setopt($ch, CURLOPT_PROXYPORT, $proxy['port']); //设置代理端口号
+				
+				if($proxy['loginpwd']) {
+					curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxy['loginpwd']); //设置代理密码   
+				}
 			}
 			
 			curl_multi_add_handle($queue, $ch);
@@ -177,6 +187,25 @@ class Http
 		
 		curl_multi_close($queue);
 		return $responses;    
+	}
+	
+	public static function pos_html($start_tag, $end_tag, $html = '', $addslashes = false)
+	{
+		//$start_tag = str_replace('"', '\"', $start_tag);
+		//$end_tag = str_replace('"', '\"', $end_tag);
+		
+		if($addslashes) {
+			$start_tag = str_replace(array('"', '/', '(', ')'), array('\"', '\/', '\(', '\)'), $start_tag);
+			$end_tag = str_replace(array('"', '/', '(', ')'), array('\"', '\/', '\(', '\)'), $end_tag);
+			
+			//$start_tag = addslashes($start_tag);
+			//$end_tag = addslashes($end_tag);
+		}
+		$start_pos = strpos($html, $start_tag) + strlen($start_tag);
+		$end_pos = strpos($html, $end_tag);
+
+		return substr($html, $start_pos, $end_pos - $start_pos);
+		
 	}
 	
 	
