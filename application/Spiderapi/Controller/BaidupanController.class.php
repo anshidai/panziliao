@@ -30,19 +30,18 @@ class BaidupanController extends Controller
 		//$cj->logfile = "./baiduPan_".date('Ymd').".txt";
 		$cj->total = 10000;
         $cj->thread = 20;
-		$cj->delay = 1000;
-		
+		$cj->delay = 2000;
 		$cj->allowProxy = true;
 		if($cj->allowProxy) {
-			$proxy_ip_1 = HttpProxy::cj_xicidaili_ip(1);
-			$proxy_ip_2 = HttpProxy::cj_66ip_ip(1);
+			$proxy_ip_1 = HttpProxy::cj_xicidaili_ip(2);
+			$proxy_ip_2 = HttpProxy::cj_66ip_ip(2);
 			$proxy_ip = array_merge($proxy_ip_1, $proxy_ip_2);
 			$proxy_ip = HttpProxy::filter_proxy_ips($proxy_ip, 2);
 			
 			$cj->writeLog("采集代理ip完成 记录总数: ".count($proxy_ip));
 		}
 		$cj->proxyIP = $proxy_ip? $proxy_ip: array();
-		
+        $cj->init();
 		$cj->run();
 	}
 	

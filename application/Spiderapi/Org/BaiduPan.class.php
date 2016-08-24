@@ -65,17 +65,17 @@ class BaiduPan
 			$this->total = $this->thread;
 		}
 		
-		$this->configModel->setValue('CJUSERLOCK', 1);
 	}
+    
+    public function init()
+    {
+        $this->configModel->setValue('CJUSERLOCK', 1);   
+    }
 	
 	public function run()
 	{
-		$cj->writeLog('开始采集');
-		
-		if($this->allowProxy) {
-			$this->changeProxy();
-		}
-		
+		$this->writeLog('开始采集');
+        
 		$loop = ceil($this->total/$this->thread);
 		for($i = 1; $i<=$loop; $i++) {
 			$this->_createUserHeaderUrl();
@@ -89,9 +89,11 @@ class BaiduPan
 						$this->configModel->setValue('CJUSERLOCK', 2);
 						exit;
 					}
+                    /*
 					if($this->_isblock) {
 						$this->changeProxy();
 					}
+                    */
 					$proxy['ip'] = $this->currProxyIp;
 					$proxy['port'] = $this->currProxyPort;
 				}else {
@@ -123,6 +125,10 @@ class BaiduPan
 	{
 		$this->headers = $this->urls = array();
 		
+        if($this->allowProxy) {
+            $this->changeProxy();
+        }
+        
 		$nextid = $this->userModel->getNextId();
 		for($uid = $nextid; $uid<=$nextid + $this->thread; $uid++) {
             $header = array();
