@@ -17,7 +17,24 @@ class BaidupanController extends Controller
 		$this->configModel = D('Config');
     } 
 	
-	public function cjUser()
+	public function cjPanduoduoUser()
+	{
+		/*
+		if($this->configModel->getValue('CJUSERLOCK') == '1') {
+			die('当前进程还未结束');
+		}
+		*/
+		
+		require_once MODULE_PATH.'Org/simple_html_dom.php';
+		
+		import('Spiderapi.Org.Panduoduo');
+		$cj = new \Panduoduo();
+		$cj->logfile = "/home/libaoan/panduoduo_".date('Ymd').".txt";
+		$cj->init();
+		$cj->cjUserList();
+	}
+	
+	public function cjBaiduPanUser()
 	{
 		if($this->configModel->getValue('CJUSERLOCK') == '1') {
 			die('当前进程还未结束');
@@ -44,24 +61,9 @@ class BaidupanController extends Controller
         $cj->init();
 		$cj->run();
 	}
-	
-	public function cjDetail()
-	{
-		import('Spiderapi.Org.Panduoduo');
-		$cj = new \Panduoduo();
-		$cj->run();
-	}
-	
+
 	public function test()
 	{
-		//import('Spiderapi.Org.Panduoduo');
-		//$cj = new \Panduoduo();
-		//$cj->run();
-		
-		//var_dump($this->configModel->getValue('CJUSERLOCK'));
-		var_dump($this->configModel->setValue('CJUSERLOCK', 1));
-
-		
 	}
 	
 }

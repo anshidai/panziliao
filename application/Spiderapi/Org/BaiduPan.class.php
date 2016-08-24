@@ -38,7 +38,7 @@ class BaiduPan
 	//当前累计错误次数
     private $currError = 0;
     
-    public $logfile = './baiduPan.txt';
+    public $logfile = '';
 	
 	//代理ip集合
 	public $proxyIP = array(); 
@@ -307,7 +307,12 @@ class BaiduPan
     
     public function writeLog($msg = '')
     {
-        file_put_contents($this->logfile, date('Y-m-d H:i:s')." {$msg}\n", FILE_APPEND);    
+        $msg = date('Y-m-d H:i:s')." {$msg}\n";
+		if($this->logfile) {
+			file_put_contents($this->logfile, $msg, FILE_APPEND);    
+		}else {
+			echo $msg;
+		}
     }
 	
 	

@@ -1,6 +1,7 @@
 <?php
 
 use Components\Http;
+use Components\FetchHtml;
 
 /**
 * 盘多多数据抓取
@@ -13,6 +14,9 @@ class Panduoduo
 	//资源表模型
 	private $resourceModel = null;
 	
+	//配置表模型
+	private $configModel = null;
+	
 	//请求header头
 	private $headers = array();
 	
@@ -23,7 +27,7 @@ class Panduoduo
 	private $homeUrls = array();
 	
 	//列表页最大页码
-	private $pageMax = 1;
+	public $pageMax = 0;
 	
 	//总共请求次数
 	public $total = 100;
@@ -34,86 +38,103 @@ class Panduoduo
 	//延时 毫秒
 	public $delay = 1000;
 	
+	public $logfile = '';
+	
 	public $domain = 'http://www.panduoduo.net';
 	
-	public function __construct()
+	public $UserListParam = array(
+		'node' => array(
+			'element' => 'ul.u-list',
+			'index' => 0,
+		),
+		'items' => array(
+			'url' => array(
+				'element' => 'div.user>a.left-',
+				'node' => 'all',
+				'index' => 0,
+				'attr' => 'href',
+			),
+			'uname' => array(
+				'element' => 'div.info>a',
+				'node' => 'all',
+				'index' => 1,
+			),
+			'avatar' => array(
+				'element' => 'div.user>img.avatar',
+				'node' => 'all',
+				'index' => 0,
+				'attr' => 'src',
+			),
+			'share_count' => array(
+				'element' => 'p.status>b',
+				'node' => 'all',
+				'index' => 0,
+			),
+			'follow_count' => array(
+				'element' => 'p.status>b',
+				'node' => 'all',
+				'index' => 1,
+			),
+			'fans_count' => array(
+				'element' => 'p.status>b',
+				'node' => 'all',
+				'index' => 2,
+			),
+			'intro' => array(
+				'element' => 'div.desc',
+				'node' => 'all',
+				'index' => 0,
+			),
+		),
+	);
+	
+	
+	public function __construct(){}
+	
+	public function init()
 	{
-		$this->resourceModel = D('Resource');
-		
 		if($this->total < $this->thread) {
 			$this->total = $this->thread;
 		}
+		
+		$this->resourceModel = D('Resource');
+		$this->userModel = D('ResourceUser');
+		$this->configModel = D('Config');
 	}
 	
-	public function run()
+	public function test()
 	{
 		
-		$url = $this->domain.'/u/bd/%d';
-		$this->getListMaxPage(sprintf($url, 1));
-		for($i=1; $i<=$this->pageMax; $i++) {
-			$userUrls[] = sprintf($url, $i);
-		}
-		
-		$this->getUserHomeUrl($userUrls);
-		
-		/*
-		$this->_reset();
-		$url = $this->domain.'/u/bd-%d';
-		$this->getListMaxPage(sprintf($url, 1));
-		for($i=1; $i<=$this->pageMax; $i++) {
-			$listUrls[] = sprintf($url, $i);
-		}
-		$this->getListUrl($listUrls);
-		if(!empty($this->urls)) {
-			$loop = array_chunk($this->urls, $this->thread);
-			for($i = 0; $i<count($loop); $i++) {
-				$data = Http::curl_multi($loop[$i], '', '', true);
-				if($res = $this->_parseShartData($data)) {
-					//var_dump(count($res));
-					file_put_contents(__ROOT__.'/dds.txt',var_export($res,true), FILE_APPEND);
-				}
-				unset($data);
-			}
-		}
-		*/
 	}
 	
-	
-	private function getUserHomeUrl($urls)
+	/**
+	* 采集用户列表页
+	*/
+	public function cjUserList()
 	{
-		if(empty($urls)) {
-			return false;
-		}
+		$urlFormat = $this->domain.'/u/bd/%d';
 		
-		$loop = array_chunk($urls, $this->thread);
-		for($i = 0; $i<count($loop); $i++) {
-			
-			$this->homeUrls = array();
-			
-			$data = Http::curl_multi($loop[$i], '', '', true);
-			if($data) {
-				foreach($data as $key=>$val) {
-					if(empty($val['results'])) {
-						continue;
-					}
-					$content = $val['results'];
-					if(preg_match_all('/<div class=\"info\"><a href=\"(.*)\" target=\"_blank\" class=\"goto-uk-page\">进入主页<\/a>/iUs', $content, $url_match)) {
-						foreach($url_match[1] as $url) {
-							if(strpos($url, '/u/bd-') !== false) {
-								$this->homeUrls[$url] = $this->domain.$url;
-							}
-						}
-					}
+		$this->getMaxPage(sprintf($urlFormat, 1));
+		for($i=1; $i<=$this->pageMax; $i++) {
+			$url = sprintf($urlFormat, $i);
+			$html = Http::curl_http(sprintf($urlFormat, $i), '', '', true);
+			if($html['content']) {
+				$fetch = new FetchHtml('', $html['content']);
+				$res = $fetch->getNodeAttribute($this->UserListParam);
+				if($res) {
+					$users = $this->parseUserData($res);
+					$insert_ids = $this->addUser($users, $this->userModel);
+					$this->writeLog(" insert {$insert_ids}");
 				}
 			}
-			unset($data);
+			unset($html);
 			if($this->delay) {
 				usleep($this->delay * 1000);
 			}
 		}
 	}
 	
-	
+
 	/**
 	* 获取详情页链接
 	*/
@@ -147,33 +168,27 @@ class Panduoduo
 	/**
 	* 获取列表页最大页码
 	*/
-	private function getListMaxPage($url)
+	private function getMaxPage()
 	{
+		if($this->pageMax) {
+			return $this->pageMax;
+		}
+		
 		$html = Http::curl_http($url, '', '', true);
 		if(empty($html['content'])) {
-			return false;
+			return 1;
 		}
-		
 		if(preg_match('/<span class=\"pcount\">(.*)<\/span>/iUs', $html['content'], $match)) {
-			$maxpage = str_replace(array('&nbsp;','共','页'), '', strip_tags($match[1]));
+			$this->pageMax = str_replace(array('&nbsp;','共','页'), '', strip_tags($match[1]));
 		}
 		unset($html);
-		
-		$this->pageMax = max((int)$maxpage, 1);
-	}
-	
-	/**
-	* 解析用户主页数据
-	*/
-	private function _parseHomeData()
-	{
-		
+		return max((int)$this->pageMax, 1);
 	}
 	
 	/**
 	* 解析分享详情页数据
 	*/
-	private function _parseShartData($data, $uid, $uname)
+	private function parseShartData($data, $uid, $uname)
 	{
 		if(empty($data)) return false;
 		
@@ -210,22 +225,50 @@ class Panduoduo
 				$res[$key]['source_id'] = $urladder['shareid'];
 				$res[$key]['fs_id'] = $urladder['fid'];
 			}
-			
 			$res[$key]['cj_url'] = $key;
 			$res[$key]['uid'] = $uid;
 			$res[$key]['uname'] = $uname;
 		}
-		//file_put_contents(__ROOT__.'/dd.txt',var_export($data,true));
 		unset($data);
 		
 		return $res;
 	}
 	
-	
-	private function _reset()
+	/**
+	* 解析用户数据
+	*/
+	private function parseUserData($res)
 	{
-		$this->urls = array();
-		$this->pageMax = 1;
+		$data = array();
+		if($res['url']) {
+			for($i=0; $i<count($res['url']); $i++) {
+				$data[$i]['uid'] = $this->getUid($res['url'][$i]);;
+				$data[$i]['uname'] = $res['uname'][$i]? $res['uname'][$i]: '';
+				$data[$i]['avatar'] = $res['avatar'][$i]? $res['avatar'][$i]: '';
+				$data[$i]['intro'] = str_replace(array('说明：暂无说明','说明：'), '', $res['intro'][$i]);
+				$data[$i]['share_count'] = str_replace(array('--', '-'), '', $res['share_count'][$i]);
+				$data[$i]['share_count'] = $data[$i]['share_count']? (int)$data[$i]['share_count']: 0;
+				
+				$data[$i]['fans_count'] = str_replace(array('--', '-'), '', $res['fans_count'][$i]);
+				$data[$i]['fans_count'] = $data[$i]['fans_count']? (int)$data[$i]['fans_count']: 0;
+				
+				$data[$i]['follow_count'] = str_replace(array('--', '-'), '', $res['follow_count'][$i]);
+				$data[$i]['follow_count'] = $data[$i]['follow_count']? (int)$data[$i]['follow_count']: 0;
+				
+				$data[$i]['source'] = 'baidu';
+				$data[$i]['hits'] = 0;
+				$data[$i]['addtime'] = time();
+				$data[$i]['cj_url'] = 'http://www.panduoduo.net/u/bd-'.$data[$i]['uid'];
+				$data[$i]['cj_status'] = 2;
+			}
+		}
+		return $data;
+	}
+	
+	private function getUid($url)
+	{
+		$arr = explode('-', $url);
+		return $arr[1]? (int)$arr[1]: 0;
 	}
 	
 	/**
@@ -256,7 +299,7 @@ class Panduoduo
 	public function addUser($data, $model)
 	{
 		if(empty($data) || !is_object($model)) return false;
-		
+
 		$_insert_ids = '';
 		foreach($data as $val) {
 			if($insert_id = $this->_add($val, $model, array('uid'=>$val['uid']))) {
@@ -266,7 +309,15 @@ class Panduoduo
 		return $_insert_ids? implode(', ', $_insert_ids): false;
 	}
 	
-	
+	public function writeLog($msg = '')
+    {
+        $msg = date('Y-m-d H:i:s')." {$msg}\n";
+		if($this->logfile) {
+			file_put_contents($this->logfile, $msg, FILE_APPEND);    
+		}else {
+			echo $msg;
+		}
+    }
 	
 	
 	

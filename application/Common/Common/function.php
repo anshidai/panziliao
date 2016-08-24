@@ -26,17 +26,17 @@ function getFileCategory($type = '')
 {
 	switch($type) {
 		case 1: 
-			$cid = 2;break; //视频
+			$cid = 1;break; //视频
 		case 2: 
-			$cid = 4;break; //音乐
+			$cid = 2;break; //音乐
 		case 3: 
-			$cid = 5;break; //图片
-		case 6: 
-			$cid = 9;break; //其他
+			$cid = 3;break; //图片
 		case 10: 
-			$cid = 7;break; //专辑
+			$cid = 4;break; //专辑
+		case 6: 
+			$cid = 5;break; //其他
 		default: 
-			$cid = 9;break;
+			$cid = 5;break;
 	}
 	return $cid;
 }
