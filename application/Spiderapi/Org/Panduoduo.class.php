@@ -196,7 +196,7 @@ class Panduoduo
 		}
 		
 		if($this->pageMax = $this->configModel->getValue('USERMAXPAGE')) {
-			return $this->pageMax;
+			return (int)$this->pageMax;
 		}
 		
 		$html = Http::curl_http($url, '', '', true);
