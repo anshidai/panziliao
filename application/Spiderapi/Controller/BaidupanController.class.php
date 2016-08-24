@@ -19,17 +19,12 @@ class BaidupanController extends Controller
 	
 	public function cjPanduoduoUser()
 	{
-		/*
-		if($this->configModel->getValue('CJUSERLOCK') == '1') {
-			die('当前进程还未结束');
-		}
-		*/
-		
 		require_once MODULE_PATH.'Org/simple_html_dom.php';
 		
 		import('Spiderapi.Org.Panduoduo');
 		$cj = new \Panduoduo();
 		$cj->logfile = "/home/libaoan/panduoduo_".date('Ymd').".txt";
+		$cj->thread = 100;
 		$cj->init();
 		$cj->cjUserList();
 	}

@@ -40,6 +40,12 @@ class Panduoduo
 	
 	public $logfile = '';
 	
+	//连续请求出错最大次数
+    public $errorNum = 5;
+    
+	//当前累计错误次数
+    private $currError = 0;
+	
 	public $domain = 'http://www.panduoduo.net';
 	
 	public $UserListParam = array(
@@ -114,10 +120,19 @@ class Panduoduo
 	{
 		$urlFormat = $this->domain.'/u/bd/%d';
 		
-		$this->getMaxPage(sprintf($urlFormat, 1));
-		for($i=1; $i<=$this->pageMax; $i++) {
-			$url = sprintf($urlFormat, $i);
-			$html = Http::curl_http(sprintf($urlFormat, $i), '', '', true);
+		$pageMax = $this->getMaxPage(sprintf($urlFormat, 1));
+		for($page=$pageMax+1,$i=0; $page<=$pageMax + $this->thread; $page++, $i++) {
+			if($this->currError > $this->errorNum) {
+				$this->writeLog('请求过快强制退出');
+				exit;        
+			}
+			if($i > $this->thread) {
+				$this->writeLog('超过最大请求页总数强制退出');
+				exit; 
+			}
+			
+			$url = sprintf($urlFormat, $page);
+			$html = Http::curl_http(sprintf($urlFormat, $page), '', '', true);
 			if($html['content']) {
 				$fetch = new FetchHtml('', $html['content']);
 				$res = $fetch->getNodeAttribute($this->UserListParam);
@@ -126,8 +141,14 @@ class Panduoduo
 					$insert_ids = $this->addUser($users, $this->userModel);
 					$this->writeLog(" insert {$insert_ids}");
 				}
+			}else {
+				$this->currError += 1;   
+				$this->writeLog("错误信息 {$html}");
+				continue;
 			}
+			
 			unset($html);
+			$this->configModel->setValue('USERMAXPAGE', (int)$page);  
 			if($this->delay) {
 				usleep($this->delay * 1000);
 			}
@@ -166,22 +187,27 @@ class Panduoduo
 	}
 	
 	/**
-	* 获取列表页最大页码
+	* 获取最大页码
 	*/
-	private function getMaxPage()
+	private function getMaxPage($url = '')
 	{
 		if($this->pageMax) {
 			return $this->pageMax;
 		}
 		
+		if($this->pageMax = $this->configModel->getValue('USERMAXPAGE')) {
+			return $this->pageMax;
+		}
+		
 		$html = Http::curl_http($url, '', '', true);
 		if(empty($html['content'])) {
-			return 1;
+			$this->pageMax = 1;
+		}else {
+			if(preg_match('/<span class=\"pcount\">(.*)<\/span>/iUs', $html['content'], $match)) {
+				$this->pageMax = str_replace(array('&nbsp;','共','页'), '', strip_tags($match[1]));
+			}
+			unset($html);
 		}
-		if(preg_match('/<span class=\"pcount\">(.*)<\/span>/iUs', $html['content'], $match)) {
-			$this->pageMax = str_replace(array('&nbsp;','共','页'), '', strip_tags($match[1]));
-		}
-		unset($html);
 		return max((int)$this->pageMax, 1);
 	}
 	
