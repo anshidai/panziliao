@@ -179,6 +179,7 @@ class Http
 				$responses[$map[(string) $done['handle']]] = compact('error', 'results');
 				curl_multi_remove_handle($queue, $done['handle']);
 				curl_close($done['handle']);
+				unset($results);
 			}
 			if($active > 0) {
 				curl_multi_select($queue, 0.5);

@@ -27,12 +27,30 @@ class BaidupanController extends Controller
 		
 		import('Spiderapi.Org.Panduoduo');
 		$cj = new \Panduoduo();
-		$cj->logfile = IS_WIN? "./panduoduo".date('Ymd').".txt": "/home/libaoan/panduoduo_".date('Ymd').".txt";
-        $cj->thread = 150;
+		$cj->logfile = IS_WIN? "./panduoduo_user".date('Ymd').".txt": "/home/libaoan/panduoduo_".date('Ymd').".txt";
+        $cj->thread = 50; //采集多少页
 		$cj->delay = 2000;
 		$cj->init();
         $cj->writeLog("采集开始start");
 		$cj->cjUserList();
+        $cj->writeLog("采集结束end");
+	}
+	
+	public function cjPanduoduoDetail()
+	{
+		if($this->configModel->getValue('CJSHARTLOCK') == '1') {
+			die('当前进程还未结束');
+		}
+		
+		import('Spiderapi.Org.Panduoduo');
+		$cj = new \Panduoduo();
+		$cj->logfile = IS_WIN? "./panduoduo_detail".date('Ymd').".txt": "/home/libaoan/panduoduo_".date('Ymd').".txt";
+        $cj->total = 1000;
+        $cj->thread = 5;
+		$cj->delay = 1000;
+		$cj->init();
+        $cj->writeLog("采集开始start");
+		$cj->cjShareDetail();
         $cj->writeLog("采集结束end");
 	}
 	
@@ -66,7 +84,8 @@ class BaidupanController extends Controller
 
 	public function test()
 	{
-		var_dump(IS_WIN);
+		
+		
 	}
 	
 }

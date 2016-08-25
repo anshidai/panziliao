@@ -35,6 +35,8 @@ class Panduoduo
 	//每次请求并发数, 且请求次数不能小于并发数
 	public $thread = 10;
 	
+	public $pagesize = 100;
+	
 	//延时 毫秒
 	public $delay = 1000;
 	
@@ -94,15 +96,10 @@ class Panduoduo
 		),
 	);
 	
-	
 	public function __construct(){}
 	
 	public function init()
 	{
-		if($this->total < $this->thread) {
-			$this->total = $this->thread;
-		}
-		
 		$this->resourceModel = D('Resource');
 		$this->userModel = D('ResourceUser');
 		$this->configModel = D('Config');
@@ -118,156 +115,270 @@ class Panduoduo
 	*/
 	public function cjUserList()
 	{
-		$this->configModel->setValue('CJUSERLOCK', 1);
-		
-		$urlFormat = $this->domain.'/u/bd/%d';
-		
-		$pageMax = $this->getMaxPage(sprintf($urlFormat, 1));
-		for($page=$pageMax+1,$i=0; $page<=$pageMax + $this->thread; $page++, $i++) {
-			if($this->currError > $this->errorNum) {
-				$this->writeLog('请求过快强制退出');
-				$this->configModel->setValue('CJUSERLOCK', 2);
-				exit;        
-			}
-			if($i > $this->thread) {
-				$this->writeLog('超过最大请求页总数强制退出');
-				$this->configModel->setValue('CJUSERLOCK', 2);
-				exit; 
-			}
-			
-			$url = sprintf($urlFormat, $page);
-			$html = Http::curl_http(sprintf($urlFormat, $page), '', '', true);
-			if($html['content']) {
-				$fetch = new FetchHtml('', $html['content']);
-				$res = $fetch->getNodeAttribute($this->UserListParam);
-				if($res) {
-					$users = $this->parseUserData($res);
-					$insert_ids = $this->addUser($users, $this->userModel);
-					$this->writeLog(" insert {$insert_ids}");
+		try{
+			$this->configModel->setValue('CJUSERLOCK', 1);
+			$urlFormat = $this->domain.'/u/bd/{$page}';
+			$pageMax = $this->getMaxPage('USERMAXPAGE');
+			for($page=$pageMax+1,$i=0; $page<=$pageMax + $this->thread; $page++, $i++) {
+				if($this->currError > $this->errorNum) {
+					$this->writeLog('请求过快强制退出');
+					$this->configModel->setValue('CJUSERLOCK', 2);
+					exit;        
 				}
-			}else {
-				$this->currError += 1;   
-				$this->writeLog("错误信息 {$html}");
-				continue;
+				if($i > $this->thread) {
+					$this->writeLog('超过最大请求页总数强制退出');
+					$this->configModel->setValue('CJUSERLOCK', 2);
+					exit; 
+				}
+				
+				$url = str_replace('{$page}', $page, $urlFormat);
+				$html = Http::curl_http($url, '', '', true);
+				if($html['content']) {
+					$fetch = new FetchHtml('', $html['content']);
+					$res = $fetch->getNodeAttribute($this->UserListParam);
+					if($res) {
+						$users = $this->parseUserData($res);
+						$insert_ids = $this->addUser($users, $this->userModel);
+						$this->writeLog(" insert {$insert_ids}");
+					}
+				}else {
+					$this->currError += 1;   
+					$this->writeLog("错误信息 {$html}");
+					continue;
+				}
+				
+				unset($html);
+				$this->configModel->setValue('USERMAXPAGE', (int)$page);  
+				if($this->delay) {
+					usleep($this->delay * 1000);
+				}
 			}
-			
-			unset($html);
-			$this->configModel->setValue('USERMAXPAGE', (int)$page);  
-			if($this->delay) {
-				usleep($this->delay * 1000);
-			}
+			$this->configModel->setValue('CJUSERLOCK', 2);
 		}
-		$this->configModel->setValue('CJUSERLOCK', 2);
+		catch(Exception $e) {
+			$this->writeLog("【异常】 ".$e->getMessage());
+			$this->configModel->setValue('CJUSERLOCK', 2);
+		}
 	}
 	
-	
+	/**
+	* 采集分享信息
+	*/
 	public function cjShareDetail()
 	{
+		try {
+			$this->configModel->setValue('CJSHARTLOCK', 1);
 		
-	}
-	
-
-	/**
-	* 获取详情页链接
-	*/
-	private function getListUrl($urls)
-	{
-		if(empty($urls)) {
-			return false;
-		}
-
-		foreach($urls as $url) {
-			$html = Http::curl_http($url, '', '', true);
-			if(empty($html['content'])) {
-				continue;
+			$currid = $this->configModel->getValue('CJUSERID');
+			if(!$currid) {
+				$currid = 0;
 			}
-			if(preg_match('/<table class=\"list-resource\">(.*)<\/table>/iUs', $html['content'], $match)) {
-				if(preg_match_all('/<a class=\"blue\" target=\"_blank\" title=\".*\" href=\"(.*)\">/iUs', $match[1], $url_match)) {
-					foreach($url_match[1] as $val) {
-						if(strpos($val, '/r/') !== false) {
-							$this->urls[$val] = $this->domain.$val;
+			$map = array('id'=>array('$gt'=>$currid));
+			$total = $this->userModel->where($map)->count();
+			
+			if($total < $this->total) {
+				$this->total = $total;
+			}
+			
+			$pagemax = ceil($this->total/$this->pagesize);
+			for($page=1; $page<=$pagemax; $page++) {
+				$res = $this->userModel->field('id,uid,uname')->where($map)
+						->order('id')->limit(($page-1)*$this->pagesize, $this->pagesize)->select();
+				if($res) {
+					foreach($res as $key=>$val) {
+						$this->configModel->setValue('CJUSERID', $val['id']);
+						
+						$url = str_replace('{$uid}', $val['uid'], $this->domain.'/u/bd-{$uid}');
+						$html = Http::curl_http($url, '', '', true);
+						if(empty($html['content']) || strpos($html['content'], '找不到这个页面') !== false) {
+							$this->writeLog("页面不存在 {$url}");
+							continue;
+						}
+						if(strpos($html['content'], '该用户还没有分享的资源') !== false) {
+							$this->writeLog("该用户还没有分享的资源 {$val['uid']} {$val['uname']} {$url}");
+							continue;
+						}
+						$pageMax = $this->cjPageMax($html['content']);
+						
+						//有分页
+						if($pageMax) {
+							for($page=1; $page<=$pageMax; $page++) {
+								$urls[] = $url.'/'.$page;
+							}
+							$detailUrls = $this->getDetailUrlMulti($urls);
+						}else {
+							$detailUrls = $this->getDetailUrl($html['content']);
+						}
+						unset($html);
+						
+						if(empty($detailUrls)) {
+							continue;
+						}
+						$loop = array_chunk($detailUrls, $this->thread);
+						for($i = 1; $i<=$loop; $i++) {
+							$html = Http::curl_multi($loop[$i], '', true);
+							$data = $this->parseDetailData($html, $val['uid'], $val['uname']);
+							if($data) {
+								$insert_ids = $this->addShare($data, $this->resourceModel);
+								if($insert_ids) {
+									$this->writeLog(" insert {$insert_ids}");
+								}
+							}
+							unset($html,$data);
 						}
 					}
 				}
 			}
-			unset($html);
-			if($this->delay) {
-				usleep($this->delay * 1000);
+			$this->configModel->setValue('CJSHARTLOCK', 2);
+			
+		}catch(Exception $e) {
+			$this->writeLog("【异常】 ".$e->getMessage());
+			$this->configModel->setValue('CJSHARTLOCK', 2);
+		}
+	}
+	
+	/**
+	* 获取详情页链接 - 单页
+	*/
+	private function getDetailUrl($content = '')
+	{
+		if(preg_match('/<table class=\"list-resource\">(.*)<\/table>/iUs', $content, $match)) {
+			if(preg_match_all('/<a class=\"blue\" target=\"_blank\" title=\".*\" href=\"(.*)\">/iUs', $match[1], $url_match)) {
+				foreach($url_match[1] as $val) {
+					if(strpos($val, '/r/') !== false) {
+						$this->urls[$val] = $this->domain.$val;
+					}
+				}
 			}
 		}
+		return $this->urls;
+	}
+	
+	/**
+	* 获取详情页链接 - 多分页
+	*/
+	private function getDetailUrlMulti($urls)
+	{
+		if(empty($urls)) {
+			return false;
+		}
+		
+		$html = Http::curl_multi($urls, '', true);
+		if(empty($html)) return false;
+	
+		foreach($html as $key=>$val) {
+			if(empty($val['results'])) {
+				continue;
+			}
+			$content = $val['results'];
+			if(preg_match('/<table class=\"list-resource\">(.*)<\/table>/iUs', $content, $match)) {
+				if(preg_match_all('/<a class=\"blue\" target=\"_blank\" title=\".*\" href=\"(.*)\">/iUs', $match[1], $url_match)) {
+					foreach($url_match[1] as $url) {
+						if(strpos($url, '/r/') !== false) {
+							$this->urls[$url] = $this->domain.$url;
+						}
+					}
+				}
+			}
+			unset($content);
+		}
+		unset($html);
+		$this->urls;
 	}
 	
 	/**
 	* 获取最大页码
 	*/
-	private function getMaxPage($url = '')
+	private function getMaxPage($name)
 	{
-		if($this->pageMax) {
-			return $this->pageMax;
-		}
-		
-		if($this->pageMax = $this->configModel->getValue('USERMAXPAGE')) {
+		if($this->pageMax = $this->configModel->getValue($name)) {
 			return (int)$this->pageMax;
 		}
+	}
 		
-		$html = Http::curl_http($url, '', '', true);
-		if(empty($html['content'])) {
-			$this->pageMax = 1;
-		}else {
-			if(preg_match('/<span class=\"pcount\">(.*)<\/span>/iUs', $html['content'], $match)) {
-				$this->pageMax = str_replace(array('&nbsp;','共','页'), '', strip_tags($match[1]));
-			}
-			unset($html);
+	private function cjPageMax($content = '')
+	{
+		if(preg_match('/<span class=\"pcount\">(.*)<\/span>/iUs', $content, $match)) {
+			$pageMax = str_replace(array('&nbsp;','共','页'), '', strip_tags($match[1]));
 		}
-		return max((int)$this->pageMax, 1);
+		$this->pageMax = (int)$pageMax;
+		return $this->pageMax? $this->pageMax: 0;
 	}
 	
 	/**
 	* 解析分享详情页数据
 	*/
-	private function parseShartData($data, $uid, $uname)
+	private function parseDetailData($data, $uid, $uname)
 	{
 		if(empty($data)) return false;
-		
 		foreach($data as $key=>$val) {
 			if(empty($val['results'])) {
 				continue;
 			}
 			$content = $val['results'];
-			
+			$row = array();
+			$urlQuery = array();
 			if(preg_match('/<h1 class=\"center\">(.*)<\/h1>/', $content, $title_match)) {
-				$res[$key]['title'] = $title_match[1];
-				$res[$key]['filetype'] = getFileExt($res[$key]['title']);
+				$row['title'] = $title_match[1];
+				$row['filetype'] = getFileExt($row['title']);
 			}
 			if(preg_match('/<dd>文件大小： <b>(.*)<\/b><\/dd>/iUs', $content, $size_match)) {
-				$res[$key]['filesize'] = str_replace(array('--', '-'), '', $size_match[1]);
+				$row['filesize'] = str_replace(array('--', '-'), '', $size_match[1]);
 			}
 			if(preg_match('/<dd>资源分类：<a target=\"_blank\" href=\"(.*)\">.*<\/a><\/dd><dd>/iUs', $content, $category_match)) {
-				$res[$key]['catid'] = getFileCategory(str_replace(array('/c/', 'c/'), '', $category_match[1]));
+				$row['catid'] = getFileCategory(str_replace(array('/c/', 'c/'), '', $category_match[1]));
 			}
 			if(preg_match('/<dd>发布日期：(.*)<\/dd><dd>/iUs', $content, $sharetime_match)) {
-				$res[$key]['sharetime'] = strtotime($sharetime_match[1]);
+				$row['sharetime'] = strtotime($sharetime_match[1]);
 			}
 			if(preg_match('/<dd>浏览次数：(.*)次<\/dd><dd>/iUs', $content, $hits_match)) {
-				$res[$key]['hits'] = $hits_match[1];
+				$row['hits'] = $hits_match[1];
 			}
 			if(preg_match('/<dd>其它：(.*)<\/dd><\/dl>/iUs', $content, $other_match)) {
 				$other = str_replace(array('次下载','次保存'), '', $other_match[1]);
-				list($res[$key]['down_num'], $res[$key]['save_num']) = explode('/', $other);
+				list($row['down_num'], $row['save_num']) = explode('/', $other);
 			}
 			if(preg_match('/<a target=\"_blank\" class=\"dbutton2\" href=\"(.*)\" rel=\"nofollow\">/iUs', $content, $share_match)) {
-				$urladder = pathinfo(urldecode($share_match[1]));
-				$urladder = convertUrlQuery(str_replace(array('link?','link'),'', $urladder['filename']));
-				
-				$res[$key]['source_id'] = $urladder['shareid'];
-				$res[$key]['fs_id'] = $urladder['fid'];
+				$urlparams = getUrlQuery($share_match[1]);
+
+				$row['source_id'] = $urlparams['shareid']? $urlparams['shareid']: 0;
+				$row['album_id'] = $urlparams['album_id']? $urlparams['album_id']: 0;
+				$row['fs_id'] = $urlparams['fsid']? $urlparams['fsid']: 0;
+				$row['fid'] = $urlparams['fid']? $urlparams['fid']: 0;
 			}
-			$res[$key]['cj_url'] = $key;
-			$res[$key]['uid'] = $uid;
-			$res[$key]['uname'] = $uname;
+			
+			$link = 'share/link?';
+			if($row['source_id']) {
+				$urlQuery[] = "shareid={$row['source_id']}";
+			}
+			if($row['album_id']) {
+				$urlQuery[] = "album_id={$row['album_id']}";
+				$link = empty($row['filetype'])? 'pcloud/album/info?': 'pcloud/album/file?';
+			}
+			if($row['fs_id']) {
+				$urlQuery[] = "fsid={$row['fs_id']}";
+			}
+			if($row['fid']) {
+				$urlQuery[] = "fid={$row['fid']}";
+			}
+			if(empty($urlQuery)) {
+				continue;
+			}
+			$urlQuery[] = "uk={$uid}";
+
+			$row['cj_status'] = 2;
+			$row['cj_url'] = $key;
+			$row['addtime'] = time();
+			$row['shorturl'] = '';
+			$row['dynamicurl'] = "http://pan.baidu.com/{$link}".implode('&', $urlQuery);
+			$row['source'] = 'baidu';
+			$row['addtime'] = time();
+			$row['uid'] = $uid;
+			$row['uname'] = $uname;
+			
+			$res[] = $row;
 		}
 		unset($data);
-		
 		return $res;
 	}
 	
@@ -331,7 +442,6 @@ class Panduoduo
 	* 插入用户数据
 	* @param $model 模型实例
 	* @param $data 插入的数据
-	* @param $map where条件
 	*/
 	public function addUser($data, $model)
 	{
@@ -340,6 +450,24 @@ class Panduoduo
 		$_insert_ids = '';
 		foreach($data as $val) {
 			if($insert_id = $this->_add($val, $model, array('uid'=>$val['uid']))) {
+				$_insert_ids[] = $insert_id;
+			}
+		}
+		return $_insert_ids? implode(', ', $_insert_ids): false;
+	}
+	
+	/**
+	* 插入分享数据
+	* @param $model 模型实例
+	* @param $data 插入的数据
+	*/
+	public function addShare($data, $model)
+	{
+		if(empty($data) || !is_object($model)) return false;
+
+		$_insert_ids = '';
+		foreach($data as $val) {
+			if($insert_id = $this->_add($val, $model, array('source_id'=>$val['source_id'],'fs_id'=>$val['fs_id']))) {
 				$_insert_ids[] = $insert_id;
 			}
 		}

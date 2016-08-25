@@ -81,21 +81,6 @@ function pos_html($start_tag, $end_tag, $html = '', $addslashes = false)
     
 }
 
-
-/**
-* 解析url参数到数组
-*/
-function convertUrlQuery($query)
-{
-	$queryParts = explode('&', $query);
-    $params = array();
-    foreach ($queryParts as $param) {
-        $item = explode('=', $param);
-        $params[$item[0]] = $item[1];
-    }
-    return $params;
-}
-
 /**
 * 获取文件扩展名
 */
@@ -121,4 +106,27 @@ function sizeToUnit($filesize) {
       $filesize = $filesize.' Bytes';
    }
    return $filesize;
+}
+
+/**
+* 解析url参数
+* @param   string $url  待解析url
+* @param   string $separator  分隔符
+* @return  array
+*/
+function getUrlQuery($url, $separator = '&')
+{
+	$url = urldecode($url);
+	$arrUrl = parse_url($url);
+	if(strpos($arrUrl['query'], '?') !== false) {
+		$arrUrl = parse_url($arrUrl['query']);
+	}
+	
+	$queryParts = explode($separator, $arrUrl['query']);
+	$params = array();
+	foreach($queryParts as $param) {
+		$item = explode('=', $param);
+		$params[$item[0]] = $item[1];
+	}
+	return $params;
 }

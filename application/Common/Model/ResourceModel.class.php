@@ -25,9 +25,12 @@ class ResourceModel extends MongoModel
 		'source', //来源 baidu weipan
 		'uid', //用户id
 		'uname', //用户名称
-		'shorturl', //短hash url标识
+		'shorturl', //短hash url 例：http://pan.baidu.com/s/1cyYf0M
+		'dynamicurl', //动态url 例：http://pan.baidu.com/share/link?shareid=23781188&uk=422894618
 		'source_id', //分享id
 		'fs_id', //分享fid
+		'fid', //分享fid
+		'album_id', //附件id
 		'down_num', //下次次数
 		'save_num', //保存次数
 		'sharetime', //分享时间
