@@ -118,16 +118,20 @@ class Panduoduo
 	*/
 	public function cjUserList()
 	{
+		$this->configModel->setValue('CJUSERLOCK', 1);
+		
 		$urlFormat = $this->domain.'/u/bd/%d';
 		
 		$pageMax = $this->getMaxPage(sprintf($urlFormat, 1));
 		for($page=$pageMax+1,$i=0; $page<=$pageMax + $this->thread; $page++, $i++) {
 			if($this->currError > $this->errorNum) {
 				$this->writeLog('请求过快强制退出');
+				$this->configModel->setValue('CJUSERLOCK', 2);
 				exit;        
 			}
 			if($i > $this->thread) {
 				$this->writeLog('超过最大请求页总数强制退出');
+				$this->configModel->setValue('CJUSERLOCK', 2);
 				exit; 
 			}
 			
@@ -153,6 +157,13 @@ class Panduoduo
 				usleep($this->delay * 1000);
 			}
 		}
+		$this->configModel->setValue('CJUSERLOCK', 2);
+	}
+	
+	
+	public function cjShareDetail()
+	{
+		
 	}
 	
 

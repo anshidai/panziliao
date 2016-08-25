@@ -19,11 +19,15 @@ class BaidupanController extends Controller
 	
 	public function cjPanduoduoUser()
 	{
+		if($this->configModel->getValue('CJUSERLOCK') == '1') {
+			die('当前进程还未结束');
+		}
+		
 		require_once MODULE_PATH.'Org/simple_html_dom.php';
 		
 		import('Spiderapi.Org.Panduoduo');
 		$cj = new \Panduoduo();
-		$cj->logfile = "/home/libaoan/panduoduo_".date('Ymd').".txt";
+		$cj->logfile = IS_WIN? "./panduoduo".date('Ymd').".txt": "/home/libaoan/panduoduo_".date('Ymd').".txt";
         $cj->thread = 150;
 		$cj->delay = 2000;
 		$cj->init();
@@ -62,6 +66,7 @@ class BaidupanController extends Controller
 
 	public function test()
 	{
+		var_dump(IS_WIN);
 	}
 	
 }
