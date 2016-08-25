@@ -24,10 +24,12 @@ class BaidupanController extends Controller
 		import('Spiderapi.Org.Panduoduo');
 		$cj = new \Panduoduo();
 		$cj->logfile = "/home/libaoan/panduoduo_".date('Ymd').".txt";
-        $cj->thread = 100;
+        $cj->thread = 150;
 		$cj->delay = 2000;
 		$cj->init();
+        $cj->writeLog("采集开始start");
 		$cj->cjUserList();
+        $cj->writeLog("采集结束end");
 	}
 	
 	public function cjBaiduPanUser()
