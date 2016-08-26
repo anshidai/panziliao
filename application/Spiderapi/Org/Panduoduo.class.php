@@ -176,7 +176,7 @@ class Panduoduo
 			if(!$currid) {
 				$currid = 0;
 			}
-			$map = array('id'=>array('$gt'=>$currid));
+			$map = array('id'=>array('$gt'=>(int)$currid));
 			$total = $this->userModel->where($map)->count();
 			
 			if($total < $this->total) {
