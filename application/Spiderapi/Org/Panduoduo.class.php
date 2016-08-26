@@ -187,6 +187,7 @@ class Panduoduo
 			for($page=1; $page<=$pagemax; $page++) {
 				$res = $this->userModel->field('id,uid,uname')->where($map)
 						->order('id')->limit(($page-1)*$this->pagesize, $this->pagesize)->select();
+				$this->writeLog("查询记录 ".count($res)." 执行语句 ".$this->$this->userModel->_sql());
 				if($res) {
 					foreach($res as $key=>$val) {
 						$this->configModel->setValue('CJUSERID', $val['id']);
@@ -198,7 +199,7 @@ class Panduoduo
 							continue;
 						}
 						if(strpos($pagecontent['content'], '该用户还没有分享的资源') !== false) {
-							$this->writeLog("该用户还没有分享的资源 {$val['uid']} {$val['uname']} {$url}");
+							$this->writeLog("该用户还没有分享的资源 {$val['id']} {$val['uid']} {$val['uname']} {$url}");
 							continue;
 						}
 						$pageMax = $this->cjPageMax($pagecontent['content']);
@@ -337,7 +338,7 @@ class Panduoduo
 				$row['sharetime'] = strtotime($sharetime_match[1]);
 			}
 			if(preg_match('/<dd>浏览次数：(.*)次<\/dd><dd>/iUs', $content, $hits_match)) {
-				$row['hits'] = $hits_match[1];
+				$row['hits'] = (int)$hits_match[1];
 			}
 			if(preg_match('/<dd>其它：(.*)<\/dd><\/dl>/iUs', $content, $other_match)) {
 				$other = str_replace(array('次下载','次保存'), '', $other_match[1]);
@@ -346,10 +347,10 @@ class Panduoduo
 			if(preg_match('/<a target=\"_blank\" class=\"dbutton2\" href=\"(.*)\" rel=\"nofollow\">/iUs', $content, $share_match)) {
 				$urlparams = getUrlQuery($share_match[1]);
 
-				$row['source_id'] = $urlparams['shareid']? $urlparams['shareid']: 0;
-				$row['album_id'] = $urlparams['album_id']? $urlparams['album_id']: 0;
-				$row['fs_id'] = $urlparams['fsid']? $urlparams['fsid']: 0;
-				$row['fid'] = $urlparams['fid']? $urlparams['fid']: 0;
+				$row['source_id'] = $urlparams['shareid']? (int)$urlparams['shareid']: 0;
+				$row['album_id'] = $urlparams['album_id']? (int)$urlparams['album_id']: 0;
+				$row['fs_id'] = $urlparams['fsid']? (int)$urlparams['fsid']: 0;
+				$row['fid'] = $urlparams['fid']? (int)$urlparams['fid']: 0;
 			}
 			
 			$link = 'share/link?';
@@ -378,7 +379,7 @@ class Panduoduo
 			$row['dynamicurl'] = "http://pan.baidu.com/{$link}".implode('&', $urlQuery);
 			$row['source'] = 'baidu';
 			$row['addtime'] = time();
-			$row['uid'] = $uid;
+			$row['uid'] = (int)$uid;
 			$row['uname'] = $uname;
 			
 			$res[] = $row;
@@ -454,7 +455,7 @@ class Panduoduo
 
 		$_insert_ids = '';
 		foreach($data as $val) {
-			if($insert_id = $this->_add($val, $model, array('uid'=>$val['uid']))) {
+			if($insert_id = $this->_add($val, $model, array('uid'=>(int)$val['uid']))) {
 				$_insert_ids[] = $insert_id;
 			}
 		}
@@ -472,7 +473,7 @@ class Panduoduo
 
 		$_insert_ids = '';
 		foreach($data as $val) {
-			if($insert_id = $this->_add($val, $model, array('source_id'=>$val['source_id'],'fs_id'=>$val['fs_id']))) {
+			if($insert_id = $this->_add($val, $model, array('source_id'=>(int)$val['source_id'],'fs_id'=>(int)$val['fs_id']))) {
 				$_insert_ids[] = $insert_id;
 			}
 		}
