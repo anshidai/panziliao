@@ -35,6 +35,9 @@ class Panduoduo
 	//每次请求并发数, 且请求次数不能小于并发数
 	public $thread = 10;
 	
+	//列表页请求并发数
+	public $ListThread = 5;
+	
 	public $pagesize = 100;
 	
 	//延时 毫秒
@@ -189,16 +192,16 @@ class Panduoduo
 						$this->configModel->setValue('CJUSERID', $val['id']);
 						
 						$url = str_replace('{$uid}', $val['uid'], $this->domain.'/u/bd-{$uid}');
-						$html = Http::curl_http($url, '', '', true);
-						if(empty($html['content']) || strpos($html['content'], '找不到这个页面') !== false) {
+						$pagecontent = Http::curl_http($url, '', '', true);
+						if(empty($pagecontent['content']) || strpos($pagecontent['content'], '找不到这个页面') !== false) {
 							$this->writeLog("页面不存在 {$url}");
 							continue;
 						}
-						if(strpos($html['content'], '该用户还没有分享的资源') !== false) {
+						if(strpos($pagecontent['content'], '该用户还没有分享的资源') !== false) {
 							$this->writeLog("该用户还没有分享的资源 {$val['uid']} {$val['uname']} {$url}");
 							continue;
 						}
-						$pageMax = $this->cjPageMax($html['content']);
+						$pageMax = $this->cjPageMax($pagecontent['content']);
 						
 						//有分页
 						if($pageMax) {
@@ -207,16 +210,16 @@ class Panduoduo
 							}
 							$detailUrls = $this->getDetailUrlMulti($urls);
 						}else {
-							$detailUrls = $this->getDetailUrl($html['content']);
+							$detailUrls = $this->getDetailUrl($pagecontent['content']);
 						}
-						unset($html);
+						unset($pagecontent);
 						
 						if(empty($detailUrls)) {
 							continue;
 						}
 						$loop = array_chunk($detailUrls, $this->thread);
-						for($i = 1; $i<=$loop; $i++) {
-							$html = Http::curl_multi($loop[$i], '', true);
+						foreach($loop as $urlArr) {
+							$html = Http::curl_multi($urlArr, '', true);
 							$data = $this->parseDetailData($html, $val['uid'], $val['uname']);
 							if($data) {
 								$insert_ids = $this->addShare($data, $this->resourceModel);
@@ -242,6 +245,7 @@ class Panduoduo
 	*/
 	private function getDetailUrl($content = '')
 	{
+		$this->urls = array();
 		if(preg_match('/<table class=\"list-resource\">(.*)<\/table>/iUs', $content, $match)) {
 			if(preg_match_all('/<a class=\"blue\" target=\"_blank\" title=\".*\" href=\"(.*)\">/iUs', $match[1], $url_match)) {
 				foreach($url_match[1] as $val) {
@@ -262,28 +266,29 @@ class Panduoduo
 		if(empty($urls)) {
 			return false;
 		}
-		
-		$html = Http::curl_multi($urls, '', true);
-		if(empty($html)) return false;
-	
-		foreach($html as $key=>$val) {
-			if(empty($val['results'])) {
-				continue;
-			}
-			$content = $val['results'];
-			if(preg_match('/<table class=\"list-resource\">(.*)<\/table>/iUs', $content, $match)) {
-				if(preg_match_all('/<a class=\"blue\" target=\"_blank\" title=\".*\" href=\"(.*)\">/iUs', $match[1], $url_match)) {
-					foreach($url_match[1] as $url) {
-						if(strpos($url, '/r/') !== false) {
-							$this->urls[$url] = $this->domain.$url;
+		$this->urls = array();
+		$loop = array_chunk($urls, $this->ListThread);
+		foreach($loop as $urlArr) {
+			$html = Http::curl_multi($urlArr, '', true);
+			if(empty($html)) return false;
+			
+			foreach($html as $key=>$val) {
+				if(empty($val['results'])) {
+					continue;
+				}
+				if(preg_match('/<table class=\"list-resource\">(.*)<\/table>/iUs', $val['results'], $match)) {
+					if(preg_match_all('/<a class=\"blue\" target=\"_blank\" title=\".*\" href=\"(.*)\">/iUs', $match[1], $url_match)) {
+						foreach($url_match[1] as $url) {
+							if(strpos($url, '/r/') !== false) {
+								$this->urls[$url] = $this->domain.$url;
+							}
 						}
 					}
 				}
 			}
-			unset($content);
+			unset($html);
 		}
-		unset($html);
-		$this->urls;
+		return $this->urls;
 	}
 	
 	/**
