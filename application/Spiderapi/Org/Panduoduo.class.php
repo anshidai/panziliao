@@ -343,6 +343,8 @@ class Panduoduo
 			if(preg_match('/<dd>其它：(.*)<\/dd><\/dl>/iUs', $content, $other_match)) {
 				$other = str_replace(array('次下载','次保存'), '', $other_match[1]);
 				list($row['down_num'], $row['save_num']) = explode('/', $other);
+				$row['down_num'] =  (int)$row['down_num'];
+				$row['save_num'] =  (int)$row['save_num'];
 			}
 			if(preg_match('/<a target=\"_blank\" class=\"dbutton2\" href=\"(.*)\" rel=\"nofollow\">/iUs', $content, $share_match)) {
 				$urlparams = getUrlQuery($share_match[1]);
