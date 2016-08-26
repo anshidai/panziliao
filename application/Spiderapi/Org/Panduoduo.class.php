@@ -187,7 +187,7 @@ class Panduoduo
 			for($page=1; $page<=$pagemax; $page++) {
 				$res = $this->userModel->field('id,uid,uname')->where($map)
 						->order('id')->limit(($page-1)*$this->pagesize, $this->pagesize)->select();
-				$this->writeLog("查询记录 ".count($res)." 执行语句 ".$this->$this->userModel->_sql());
+				$this->writeLog("查询记录 ".count($res)." 执行语句 ".$this->userModel->_sql());
 				if($res) {
 					foreach($res as $key=>$val) {
 						$this->configModel->setValue('CJUSERID', $val['id']);
