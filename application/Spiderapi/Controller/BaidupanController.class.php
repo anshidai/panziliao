@@ -45,8 +45,8 @@ class BaidupanController extends Controller
 		import('Spiderapi.Org.Panduoduo');
 		$cj = new \Panduoduo();
 		$cj->logfile = IS_WIN? "./panduoduo_detail".date('Ymd').".txt": "/home/libaoan/panduoduo_detail".date('Ymd').".txt";
-        $cj->total = IS_WIN? 100: 10000;
-        $cj->thread = 5;
+        $cj->total = IS_WIN? 100: 3000;
+        $cj->thread = 10;
 		$cj->delay = 1000;
 		$cj->init();
         $cj->writeLog("采集开始start");

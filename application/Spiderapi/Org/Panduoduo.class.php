@@ -173,7 +173,7 @@ class Panduoduo
 			if(!$currid) {
 				$currid = 0;
 			}
-			$map = array('id'=>array('$gt'=>$currid));
+			$map = array('id'=>array('$gt'=>(int)$currid));
 			$total = $this->userModel->where($map)->count();
 			
 			if($total < $this->total) {
@@ -210,22 +210,21 @@ class Panduoduo
 							$detailUrls = $this->getDetailUrl($html['content']);
 						}
 						unset($html);
-						
 						if(empty($detailUrls)) {
 							continue;
 						}
 						$loop = array_chunk($detailUrls, $this->thread);
-						for($i = 1; $i<=$loop; $i++) {
-							$html = Http::curl_multi($loop[$i], '', true);
-							$data = $this->parseDetailData($html, $val['uid'], $val['uname']);
-							if($data) {
-								$insert_ids = $this->addShare($data, $this->resourceModel);
-								if($insert_ids) {
-									$this->writeLog(" insert {$insert_ids}");
-								}
-							}
-							unset($html,$data);
-						}
+                        foreach($loop as $urlArr) {
+                            $html = Http::curl_multi($urlArr, '', true);
+                            $data = $this->parseDetailData($html, $val['uid'], $val['uname']);
+                            if($data) {
+                                $insert_ids = $this->addShare($data, $this->resourceModel);
+                                if($insert_ids) {
+                                    $this->writeLog(" insert {$insert_ids}");
+                                }
+                            }
+                            unset($html,$data);    
+                        }
 					}
 				}
 			}
