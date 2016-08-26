@@ -225,7 +225,7 @@ class Panduoduo
 							if($data) {
 								$insert_ids = $this->addShare($data, $this->resourceModel);
 								if($insert_ids) {
-									$this->writeLog(" insert {$insert_ids}");
+									$this->writeLog(" uid:{$val['uid']} insert {$insert_ids}");
 								}
 							}
 							unset($html,$data);
