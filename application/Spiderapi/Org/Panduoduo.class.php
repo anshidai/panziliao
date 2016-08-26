@@ -202,12 +202,12 @@ class Panduoduo
 							$this->writeLog("该用户还没有分享的资源 {$val['id']} {$val['uid']} {$val['uname']} {$url}");
 							continue;
 						}
-						$pageMax = $this->cjPageMax($pagecontent['content']);
+						$listpageMax = $this->cjPageMax($pagecontent['content']);
 						
 						//有分页
-						if($pageMax) {
-							for($page=1; $page<=$pageMax; $page++) {
-								$urls[] = $url.'/'.$page;
+						if($listpageMax) {
+							for($listpage=1; $listpage<=$listpageMax; $listpage++) {
+								$urls[] = $url.'/'.$listpage;
 							}
 							$detailUrls = $this->getDetailUrlMulti($urls);
 						}else {
