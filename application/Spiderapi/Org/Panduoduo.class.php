@@ -121,7 +121,7 @@ class Panduoduo
 		try{
 			$this->configModel->setValue('CJUSERLOCK', 1);
 			$urlFormat = $this->domain.'/u/bd/{$page}';
-			$pageMax = $this->getMaxPage('USERMAXPAGE');
+			$pageMax = $this->pageMax;
 			for($page=$pageMax+1,$i=0; $page<=$pageMax + $this->thread; $page++, $i++) {
 				if($this->currError > $this->errorNum) {
 					$this->writeLog('请求过快强制退出');
@@ -149,9 +149,7 @@ class Panduoduo
 					$this->writeLog("错误信息 {$html}");
 					continue;
 				}
-				
-				unset($html);
-				$this->configModel->setValue('USERMAXPAGE', (int)$page);  
+				unset($html);  
 				if($this->delay) {
 					usleep($this->delay * 1000);
 				}
@@ -163,6 +161,57 @@ class Panduoduo
 			$this->configModel->setValue('CJUSERLOCK', 2);
 		}
 	}
+    
+    /**
+    * 采集用户列表页
+    */
+    public function cjUserPage()
+    {
+        try{
+            $this->configModel->setValue('CJUSERLOCK', 1);
+            $urlFormat = $this->domain.'/u/bd/{$page}';
+            $pageMax = $this->getMaxPage('USERMAXPAGE');
+            for($page=$pageMax+1,$i=0; $page<=$pageMax + $this->thread; $page++, $i++) {
+                if($this->currError > $this->errorNum) {
+                    $this->writeLog('请求过快强制退出');
+                    $this->configModel->setValue('CJUSERLOCK', 2);
+                    exit;        
+                }
+                if($i > $this->thread) {
+                    $this->writeLog('超过最大请求页总数强制退出');
+                    $this->configModel->setValue('CJUSERLOCK', 2);
+                    exit; 
+                }
+                
+                $url = str_replace('{$page}', $page, $urlFormat);
+                $html = Http::curl_http($url, '', '', true);
+                if($html['content']) {
+                    $fetch = new FetchHtml('', $html['content']);
+                    $res = $fetch->getNodeAttribute($this->UserListParam);
+                    if($res) {
+                        $users = $this->parseUserData($res);
+                        $insert_ids = $this->addUser($users, $this->userModel);
+                        $this->writeLog(" insert {$insert_ids}");
+                    }
+                }else {
+                    $this->currError += 1;   
+                    $this->writeLog("错误信息 {$html}");
+                    continue;
+                }
+                
+                unset($html);
+                $this->configModel->setValue('USERMAXPAGE', (int)$page);  
+                if($this->delay) {
+                    usleep($this->delay * 1000);
+                }
+            }
+            $this->configModel->setValue('CJUSERLOCK', 2);
+        }
+        catch(Exception $e) {
+            $this->writeLog("【异常】 ".$e->getMessage());
+            $this->configModel->setValue('CJUSERLOCK', 2);
+        }
+    }
 	
 	/**
 	* 采集分享信息

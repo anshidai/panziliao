@@ -20,7 +20,7 @@ class BaidupanController extends Controller
 	public function cjPanduoduoUser()
 	{
 		if($this->configModel->getValue('CJUSERLOCK') == '1') {
-			die('当前进程还未结束');
+			die(date('Y-m-d H:i:s').' 当前进程还未结束');
 		}
 		
 		require_once MODULE_PATH.'Org/simple_html_dom.php';
@@ -29,23 +29,25 @@ class BaidupanController extends Controller
 		$cj = new \Panduoduo();
 		$cj->logfile = IS_WIN? "./panduoduo_user".date('Ymd').".txt": "/home/libaoan/panduoduo_user".date('Ymd').".txt";
         $cj->thread = IS_WIN? 50: 300; //采集多少页
-		$cj->delay = 2000;
+        $cj->delay = 2000;
+		$cj->pageMax = 4;
 		$cj->init();
         $cj->writeLog("采集开始start");
-		$cj->cjUserList();
+		//$cj->cjUserList();
+        $cj->cjUserList();
         $cj->writeLog("采集结束end");
 	}
 	
 	public function cjPanduoduoDetail()
 	{
 		if($this->configModel->getValue('CJSHARTLOCK') == '1') {
-			die('当前进程还未结束');
+			die(date('Y-m-d H:i:s').'当前进程还未结束');
 		}
 		
 		import('Spiderapi.Org.Panduoduo');
 		$cj = new \Panduoduo();
 		$cj->logfile = IS_WIN? "./panduoduo_detail".date('Ymd').".txt": "/home/libaoan/panduoduo_detail".date('Ymd').".txt";
-        $cj->total = IS_WIN? 100: 3000;
+        $cj->total = IS_WIN? 100: 1000;
         $cj->thread = 5;
         $cj->ListThread = 3;
 		$cj->delay = 1000;
