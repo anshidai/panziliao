@@ -600,9 +600,10 @@ class Panduoduo
         foreach($this->proxyIP as $val) {
             $data['ip'] = $val['ip'];
             $data['port'] = $val['port'];
-            $this->writeLog("当前代理ip ".implode(':', $data)."  剩余代理IP数量：".count($this->proxyIP));
             break;
         }
+		$this->writeLog("当前代理ip ".implode(':', $data)."  剩余代理IP数量：".count($this->proxyIP));
+		
 		return !empty($data)? $data: '';
     }
 	
