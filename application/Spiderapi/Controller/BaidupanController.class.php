@@ -20,14 +20,14 @@ class BaidupanController extends Controller
 	public function cjPanduoduoUser()
 	{
 		if($this->configModel->getValue('CJUSERLOCK') == '1') {
-			die(date('Y-m-d H:i:s').' 当前进程还未结束');
+			//die(date('Y-m-d H:i:s').' 当前进程还未结束');
 		}
 		
 		require_once MODULE_PATH.'Org/simple_html_dom.php';
 		import('Spiderapi.Org.Panduoduo');
 		
 		$cj = new \Panduoduo('user');
-		$cj->logfile = !IS_WIN? "/home/libaoan/panduoduo_user".date('Ym').".txt": '';
+		$cj->logfile = !IS_WIN? "/home/libaoan/panduoduo_user".date('Ym').".txt": "./panduoduo_user".date('Ym').".txt";
         $cj->thread = IS_WIN? 50: 25; //采集多少页
         $cj->delay = 2000;
 		$cj->pageMax = 20;
@@ -46,19 +46,19 @@ class BaidupanController extends Controller
 	public function cjPanduoduoDetail()
 	{
 		if($this->configModel->getValue('CJSHARTLOCK') == '1') {
-			die(date('Y-m-d H:i:s').'当前进程还未结束');
+			//die(date('Y-m-d H:i:s').'当前进程还未结束');
 		}
 		
 		require_once MODULE_PATH.'Org/simple_html_dom.php';
 		import('Spiderapi.Org.Panduoduo');
 		
 		$cj = new \Panduoduo('share');
-		$cj->logfile = !IS_WIN? "/home/libaoan/panduoduo_detail".date('Ym').".txt": '';
+		$cj->logfile = !IS_WIN? "/home/libaoan/panduoduo_detail".date('Ym').".txt": "./panduoduo_detail".date('Ym').".txt";
         $cj->total = IS_WIN? 100: 1000;
         $cj->thread = 5;
         $cj->ListThread = 3;
 		$cj->delay = 1000;
-		$cj->proxyMaxRequestNum = 50;
+		$cj->proxyMaxRequestNum = 100;
 		$cj->init();
 		$cj->allowProxy = true;
 		if($cj->allowProxy) {

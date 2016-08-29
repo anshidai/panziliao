@@ -42,6 +42,10 @@ class Http
 		//执行并获取HTML文档内容
 		$data['content'] = curl_exec($ch);
 		
+		if(curl_errno($ch)) {
+			$data['error'] = curl_error($ch);
+		}
+		
 		//正则匹配 Cookie
 		/*
 		if(preg_match_all('/Set-Cookie:(.*);/iU', $output, $cookie_match)) {

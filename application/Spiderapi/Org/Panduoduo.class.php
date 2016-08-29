@@ -156,7 +156,9 @@ class Panduoduo
 					if($res) {
 						$users = $this->parseUserData($res);
 						$insert_ids = $this->addUser($users, $this->userModel);
-						$this->writeLog(" insert {$insert_ids}");
+						if($insert_ids) {
+							$this->writeLog(" insert {$insert_ids}");
+						}
 					}
 				}else {
 					$this->currError += 1;   
@@ -254,11 +256,18 @@ class Panduoduo
 				$this->writeLog("查询记录 ".count($res)." 执行语句 ".$this->userModel->_sql());
 				if($res) {
 					foreach($res as $key=>$val) {
-						$this->configModel->setValue('CJUSERID', $val['id']);
-						
 						$url = str_replace('{$uid}', $val['uid'], $this->domain.'/u/bd-{$uid}');
 						$pagecontent = $this->http($url);
-						if(empty($pagecontent['content']) || strpos($pagecontent['content'], '找不到这个页面') !== false) {
+						if($pagecontent['httpcode'] == 0 && empty($pagecontent['content'])) {
+							$this->writeLog("{$url} ".var_export($pagecontent,true));
+							continue;
+						}elseif($pagecontent['httpcode'] != 200 || strpos($pagecontent['error'], 'Failed to connect') !== false) {
+							$this->writeLog("{$url} ".var_export($pagecontent,true));
+							continue;
+						}
+						
+						$this->configModel->setValue('CJUSERID', $val['id']);
+						if(strpos($pagecontent['content'], '找不到这个页面') !== false) {
 							$this->writeLog("页面不存在 {$url}");
 							continue;
 						}
@@ -282,6 +291,7 @@ class Panduoduo
 						if(empty($detailUrls)) {
 							continue;
 						}
+						
 						$loop = array_chunk($detailUrls, $this->thread);
 						foreach($loop as $urlArr) {
 							$html = $this->http($urlArr);
@@ -340,6 +350,7 @@ class Panduoduo
 			
 			foreach($html as $key=>$val) {
 				if(empty($val['results'])) {
+					$this->writeLog("错误信息 ".var_export($val,true));
 					continue;
 				}
 				if(preg_match('/<table class=\"list-resource\">(.*)<\/table>/iUs', $val['results'], $match)) {
