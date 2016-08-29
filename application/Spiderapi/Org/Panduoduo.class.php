@@ -254,10 +254,12 @@ class Panduoduo
 						$pagecontent = $this->http($url);
 						if($pagecontent['httpcode'] == 0 && empty($pagecontent['content'])) {
 							$this->writeLog("{$url} ".var_export($pagecontent,true));
+							$this->proxyCurrRequestNum = 0;
 							continue;
 						}elseif($pagecontent['httpcode'] != 200 || strpos($pagecontent['error'], 'Failed to connect') !== false) {
 							unset($pagecontent['content']);
 							$this->writeLog("{$url} ".var_export($pagecontent,true));
+							$this->proxyCurrRequestNum = 0;
 							continue;
 						}
 						
