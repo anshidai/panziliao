@@ -26,7 +26,7 @@ class BaidupanController extends Controller
 		require_once MODULE_PATH.'Org/simple_html_dom.php';
 		import('Spiderapi.Org.Panduoduo');
 		
-		$cj = new \Panduoduo();
+		$cj = new \Panduoduo('user');
 		$cj->logfile = !IS_WIN? "/home/libaoan/panduoduo_user".date('Ym').".txt": '';
         $cj->thread = IS_WIN? 50: 25; //采集多少页
         $cj->delay = 2000;
@@ -52,7 +52,7 @@ class BaidupanController extends Controller
 		require_once MODULE_PATH.'Org/simple_html_dom.php';
 		import('Spiderapi.Org.Panduoduo');
 		
-		$cj = new \Panduoduo();
+		$cj = new \Panduoduo('share');
 		$cj->logfile = !IS_WIN? "/home/libaoan/panduoduo_detail".date('Ym').".txt": '';
         $cj->total = IS_WIN? 100: 1000;
         $cj->thread = 5;
@@ -62,9 +62,11 @@ class BaidupanController extends Controller
 		$cj->init();
 		$cj->allowProxy = true;
 		if($cj->allowProxy) {
+			//$datetime = strtotime('-1 days', time());
+			//$datetime = strtotime(date('Ymd'));
+			//$cj->proxyIP = getRandProxyIp(100, array('addtime'=>array('$gte'=>$datetime)));
+			$cj->proxyIP = getBestProxyIp(100);
 			
-			$datetime = strtotime('-1 days', time());
-			$cj->proxyIP = getRandProxyIp(100, array('addtime'=>array('$gte'=>$datetime)));
 		}
         $cj->writeLog("采集开始start");
 		$cj->cjShareDetail();
