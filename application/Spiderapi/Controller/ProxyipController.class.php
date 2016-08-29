@@ -12,10 +12,17 @@ class ProxyipController extends Controller
 	protected function _initialize()
     {
         header('Content-Type:text/html; charset="utf-8"');
+		
+		$this->configModel = D('Config');
+		
     } 
 	
 	public function cjProxy66ip()
 	{
+		if($this->configModel->getValue('CJPROXYLOCK') == '1') {
+			die(date('Y-m-d H:i:s').' 当前进程还未结束');
+		}
+		
 		require_once MODULE_PATH.'Org/simple_html_dom.php';
 		
 		import('Spiderapi.Org.Proxy66ip');
@@ -31,6 +38,10 @@ class ProxyipController extends Controller
 	
 	public function cjProxyXicidaili()
 	{
+		if($this->configModel->getValue('CJPROXYLOCK') == '1') {
+			die(date('Y-m-d H:i:s').' 当前进程还未结束');
+		}
+		
 		require_once MODULE_PATH.'Org/simple_html_dom.php';
 		
 		import('Spiderapi.Org.ProxyXicidaili');
@@ -46,7 +57,6 @@ class ProxyipController extends Controller
 	
 	public function test()
 	{
-		
 	}
 	
 	

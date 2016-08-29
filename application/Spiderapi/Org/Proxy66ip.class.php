@@ -69,6 +69,8 @@ class Proxy66ip
 	{
 		if($this->cjUrl) {
 			
+			$this->configModel->setValue('CJPROXYLOCK', 1);
+			
 			for($i=1;$i<=count($this->cjUrl); $i++) {
 				$pageurl = $this->cjUrl[$i];
 				$header = $this->getHearder($pageurl);
@@ -91,6 +93,7 @@ class Proxy66ip
 					usleep($this->delay * 1000);
 				}
 			}
+			$this->configModel->setValue('CJPROXYLOCK', 2);
 		}
 	}
 	

@@ -32,4 +32,26 @@ class ProxyipModel extends MongoModel
 		return max($maxid, 1);
 	}
 	
+	public function getBestProxy($num = 100, $map = array())
+	{
+		$res = $this->where($map)->order("{$this->pk} desc")->limit($num)->select();
+		return $res;
+	}
+	
+	/**
+	* 随机获取
+	*/
+	public function getRandProxy($num = 100, $map = array())
+	{
+		$minid = $this->field($this->pk)->where($map)->order("{$this->pk}")->find();
+		$maxid = $this->field($this->pk)->where($map)->order("{$this->pk} desc")->find();
+		
+		$ids = unique_rand($minid['id'], $maxid['id'], $num);
+		$map['id'] = array('$in'=>array_values($ids));
+
+		$res = $this->where($map)->select();
+		return $res;
+	}
+	
+	
 }

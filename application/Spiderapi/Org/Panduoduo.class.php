@@ -8,6 +8,9 @@ use Components\FetchHtml;
 */
 class Panduoduo
 {
+	//采集资源 user-用户  share-分享
+	public $sourceType;
+	
 	//用户表模型
 	private $userModel = null;
 	
@@ -17,14 +20,8 @@ class Panduoduo
 	//配置表模型
 	private $configModel = null;
 	
-	//请求header头
-	private $headers = array();
-	
 	//请求url
 	private $urls = array();
-	
-	//请求用户主页url
-	private $homeUrls = array();
 	
 	//列表页最大页码
 	public $pageMax = 0;
@@ -52,6 +49,21 @@ class Panduoduo
     private $currError = 0;
 	
 	public $domain = 'http://www.panduoduo.net';
+	
+	//是否开启代理 默认不开启	
+    public $allowProxy = false; 
+	
+	//代理ip集合
+	public $proxyIP = array(); 
+	
+	//当前正在使用代理ip
+    private $currProxyIp = ''; 
+	
+	//一个代理ip最多请求多少URL
+	public $proxyMaxRequestNum = 100;
+	
+	//当前代理ip已请求url数量
+	private $proxyCurrRequestNum = 0;
 	
 	public $UserListParam = array(
 		'node' => array(
@@ -99,7 +111,9 @@ class Panduoduo
 		),
 	);
 	
-	public function __construct(){}
+	public function __construct($sourceType){
+		$this->sourceType = $sourceType;
+	}
 	
 	public function init()
 	{
@@ -135,7 +149,7 @@ class Panduoduo
 				}
 				
 				$url = str_replace('{$page}', $page, $urlFormat);
-				$html = Http::curl_http($url, '', '', true);
+				$html = $this->http($url);
 				if($html['content']) {
 					$fetch = new FetchHtml('', $html['content']);
 					$res = $fetch->getNodeAttribute($this->UserListParam);
@@ -168,6 +182,7 @@ class Panduoduo
     public function cjUserPage()
     {
         try{
+			
             $this->configModel->setValue('CJUSERLOCK', 1);
             $urlFormat = $this->domain.'/u/bd/{$page}';
             $pageMax = $this->getMaxPage('USERMAXPAGE');
@@ -182,9 +197,9 @@ class Panduoduo
                     $this->configModel->setValue('CJUSERLOCK', 2);
                     exit; 
                 }
-                
+
                 $url = str_replace('{$page}', $page, $urlFormat);
-                $html = Http::curl_http($url, '', '', true);
+				$html = $this->http($url);
                 if($html['content']) {
                     $fetch = new FetchHtml('', $html['content']);
                     $res = $fetch->getNodeAttribute($this->UserListParam);
@@ -242,7 +257,7 @@ class Panduoduo
 						$this->configModel->setValue('CJUSERID', $val['id']);
 						
 						$url = str_replace('{$uid}', $val['uid'], $this->domain.'/u/bd-{$uid}');
-						$pagecontent = Http::curl_http($url, '', '', true); 
+						$pagecontent = $this->http($url);
 						if(empty($pagecontent['content']) || strpos($pagecontent['content'], '找不到这个页面') !== false) {
 							$this->writeLog("页面不存在 {$url}");
 							continue;
@@ -269,7 +284,7 @@ class Panduoduo
 						}
 						$loop = array_chunk($detailUrls, $this->thread);
 						foreach($loop as $urlArr) {
-							$html = Http::curl_multi($urlArr, '', true);
+							$html = $this->http($urlArr);
 							$data = $this->parseDetailData($html, $val['uid'], $val['uname']);
 							if($data) {
 								$insert_ids = $this->addShare($data, $this->resourceModel);
@@ -317,9 +332,10 @@ class Panduoduo
 			return false;
 		}
 		$this->urls = array();
+		
 		$loop = array_chunk($urls, $this->ListThread);
 		foreach($loop as $urlArr) {
-			$html = Http::curl_multi($urlArr, '', true);
+			$html = $this->http($urlArr);
 			if(empty($html)) return false;
 			
 			foreach($html as $key=>$val) {
@@ -531,7 +547,7 @@ class Panduoduo
 		return $_insert_ids? implode(', ', $_insert_ids): false;
 	}
 	
-	public function writeLog($msg = '')
+	public function writeLog($msg = '', $exit = false)
     {
         $msg = date('Y-m-d H:i:s')." {$msg}\n";
 		if($this->logfile) {
@@ -539,6 +555,54 @@ class Panduoduo
 		}else {
 			echo $msg;
 		}
+		if($exit) exit;
+    }
+	
+	private function http($url, $gzip = true, $header = array())
+	{
+		$proxy = array();
+		
+		if($this->allowProxy) {
+			if(!$this->proxyCurrRequestNum || $this->proxyCurrRequestNum > $this->proxyMaxRequestNum) {
+				$proxy = $this->changeProxy();
+				if(empty($proxy)) {
+					if($this->sourceType === 'user') {
+						$this->configModel->setValue('CJUSERLOCK', 2);
+					}else if($this->sourceType === 'share') {
+						$this->configModel->setValue('CJSHARTLOCK', 2);
+					}
+					$this->writeLog('当前没有可用的代理ip退出', true);
+				}
+			}
+			$this->proxyCurrRequestNum += is_array($url)? count($url): 1;
+		}
+		
+		if(is_array($url)) {
+			$html = Http::curl_multi($url, $header, $gzip, $proxy);
+		}else {
+			$html = Http::curl_http($url, $header, $proxy, $gzip); 
+		}
+		return $html;
+	}
+	
+	/**
+    * 每次获取一个代理ip
+    */
+    private function changeProxy()
+    {
+        //如果有代理ip则删除当前，取下一个
+        if($this->currProxyIp) unset($this->proxyIP[$this->currProxyIp]);
+		
+        if(empty($this->proxyIP)) return '';
+        
+		$data = array();
+        foreach($this->proxyIP as $val) {
+            $data['ip'] = $val['ip'];
+            $data['port'] = $val['port'];
+            $this->writeLog("当前代理ip ".implode(':', $data)."  剩余代理IP数量：".count($this->proxyIP));
+            break;
+        }
+		return !empty($data)? $data: '';
     }
 	
 	

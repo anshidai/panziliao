@@ -130,3 +130,53 @@ function getUrlQuery($url, $separator = '&')
 	}
 	return $params;
 }
+
+/**
+* 获取最新的代理ip
+* @param $num 数量
+* @param $$field 显示数量
+*/
+function getBestProxyIp($num, $map = '')
+{
+	$res = D('Proxyip')->getBestProxy($num, $map);
+	if($res) {
+		foreach($res as $proxy) {
+			$data[$proxy['ip']] = $proxy;
+		}
+	}
+	return $data? $data: '';
+}
+
+function getRandProxyIp($num, $map = '')
+{
+	$res = D('Proxyip')->getRandProxy($num, $map);
+	if($res) {
+		foreach($res as $proxy) {
+			$data[$proxy['ip']] = $proxy;
+		}
+	}
+	return $data? $data: '';
+}
+
+/**
+* 指定数值范围内生成一定数量的不重复随机数
+* @param $min 最小值
+* @param $$max 最大值
+* @param $$num 生成数量
+*/
+function unique_rand($min, $max, $num) 
+{
+	$count = 0;
+	$data = array();
+	if($max-$min+1 <$num) {
+		return $data;
+	}
+	while($count < $num) {
+		$t = mt_rand($min,$max);
+		if(!isset($data[$t])) {
+			$data[$t] = $t;
+			$count++;
+		}
+	}
+	return $data;
+}
