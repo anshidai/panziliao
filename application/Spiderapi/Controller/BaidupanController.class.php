@@ -30,7 +30,7 @@ class BaidupanController extends Controller
 		$cj->logfile = IS_WIN? "./panduoduo_user".date('Ymd').".txt": "/home/libaoan/panduoduo_user".date('Ymd').".txt";
         $cj->thread = IS_WIN? 50: 300; //采集多少页
         $cj->delay = 2000;
-		$cj->pageMax = 4;
+		$cj->pageMax = 20;
 		$cj->init();
         $cj->writeLog("采集开始start");
 		//$cj->cjUserList();

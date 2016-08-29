@@ -242,7 +242,7 @@ class Panduoduo
 						$this->configModel->setValue('CJUSERID', $val['id']);
 						
 						$url = str_replace('{$uid}', $val['uid'], $this->domain.'/u/bd-{$uid}');
-						$pagecontent = Http::curl_http($url, '', '', true);
+						$pagecontent = Http::curl_http($url, '', '', true); 
 						if(empty($pagecontent['content']) || strpos($pagecontent['content'], '找不到这个页面') !== false) {
 							$this->writeLog("页面不存在 {$url}");
 							continue;
