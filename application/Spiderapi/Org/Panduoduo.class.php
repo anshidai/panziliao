@@ -43,7 +43,7 @@ class Panduoduo
 	public $logfile = '';
 	
 	//连续请求出错最大次数
-    public $errorNum = 5;
+    public $errorNum = 10;
     
 	//当前累计错误次数
     private $currError = 0;
@@ -138,7 +138,7 @@ class Panduoduo
 			$pageMax = $this->pageMax;
 			for($page=$pageMax+1,$i=0; $page<=$pageMax + $this->thread; $page++, $i++) {
 				if($this->currError > $this->errorNum) {
-					$this->writeLog('请求过快强制退出');
+					$this->writeLog('连续请求出错超过最大次数限制强制退出');
 					$this->configModel->setValue('CJUSERLOCK', 2);
 					exit;        
 				}
@@ -188,7 +188,7 @@ class Panduoduo
             $pageMax = $this->getMaxPage('USERMAXPAGE');
             for($page=$pageMax+1,$i=0; $page<=$pageMax + $this->thread; $page++, $i++) {
                 if($this->currError > $this->errorNum) {
-                    $this->writeLog('请求过快强制退出');
+                    $this->writeLog('连续请求出错超过最大次数限制强制退出');
                     $this->configModel->setValue('CJUSERLOCK', 2);
                     exit;        
                 }
