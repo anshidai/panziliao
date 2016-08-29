@@ -20,7 +20,7 @@ class BaidupanController extends Controller
 	public function cjPanduoduoUser()
 	{
 		if($this->configModel->getValue('CJUSERLOCK') == '1') {
-			//die(date('Y-m-d H:i:s').' 当前进程还未结束');
+			die(date('Y-m-d H:i:s').' 当前进程还未结束');
 		}
 		
 		require_once MODULE_PATH.'Org/simple_html_dom.php';
@@ -37,16 +37,16 @@ class BaidupanController extends Controller
 		if($cj->allowProxy) {
 			$cj->proxyIP = getBestProxyIp(50);
 		}
-        $cj->writeLog("采集开始start");
+        $cj->writeLog("/**************** 采集开始start ****************/");
 		//$cj->cjUserPage();
         $cj->cjUserList();
-        $cj->writeLog("采集结束end");
+        $cj->writeLog("/**************** 采集结束end ****************/");
 	}
 	
 	public function cjPanduoduoDetail()
 	{
 		if($this->configModel->getValue('CJSHARTLOCK') == '1') {
-			//die(date('Y-m-d H:i:s').'当前进程还未结束');
+			die(date('Y-m-d H:i:s').'当前进程还未结束');
 		}
 		
 		require_once MODULE_PATH.'Org/simple_html_dom.php';
@@ -57,20 +57,20 @@ class BaidupanController extends Controller
         $cj->total = IS_WIN? 100: 1000;
         $cj->thread = 5;
         $cj->ListThread = 3;
-		$cj->delay = 1000;
+		$cj->delay = 2000;
 		$cj->proxyMaxRequestNum = 100;
 		$cj->init();
 		$cj->allowProxy = true;
 		if($cj->allowProxy) {
 			//$datetime = strtotime('-1 days', time());
 			$datetime = strtotime(date('Ymd'));
-			$cj->proxyIP = getRandProxyIp(100, array('addtime'=>array('$gte'=>$datetime)));
+			$cj->proxyIP = getRandProxyIp(200, array('addtime'=>array('$gte'=>$datetime)));
 			//$cj->proxyIP = getBestProxyIp(100);
 			
 		}
-        $cj->writeLog("采集开始start");
+        $cj->writeLog("/**************** 采集开始start ****************/");
 		$cj->cjShareDetail();
-        $cj->writeLog("采集结束end");
+        $cj->writeLog("/**************** 采集结束end ****************/");
 	}
 	
 	public function cjBaiduPanUser()

@@ -256,6 +256,7 @@ class Panduoduo
 							$this->writeLog("{$url} ".var_export($pagecontent,true));
 							continue;
 						}elseif($pagecontent['httpcode'] != 200 || strpos($pagecontent['error'], 'Failed to connect') !== false) {
+							unset($pagecontent['content']);
 							$this->writeLog("{$url} ".var_export($pagecontent,true));
 							continue;
 						}

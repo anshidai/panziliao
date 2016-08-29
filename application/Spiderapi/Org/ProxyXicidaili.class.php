@@ -11,6 +11,9 @@ class ProxyXicidaili
 	//代理表模型
 	private $ProxyipModel = null;
 	
+	//配置表模型
+	private $configModel = null;
+	
 	//采集页面url
 	private $cjUrl = array();
 	
@@ -71,6 +74,7 @@ class ProxyXicidaili
 	public function init()
 	{
 		$this->ProxyipModel = D('Proxyip');
+		$this->configModel = D('Config');
 		
 		for($i=1; $i<=$this->pageMax; $i++) {
 			$this->cjUrl[] = $this->domain."/nn/{$i}";
