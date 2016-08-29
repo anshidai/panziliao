@@ -165,10 +165,7 @@ class Panduoduo
 					$this->writeLog("错误信息 ".var_export($html,true));
 					continue;
 				}
-				unset($html);  
-				if($this->delay) {
-					usleep($this->delay * 1000);
-				}
+				unset($html);
 			}
 			$this->configModel->setValue('CJUSERLOCK', 2);
 		}
@@ -217,10 +214,7 @@ class Panduoduo
                 }
                 
                 unset($html);
-                $this->configModel->setValue('USERMAXPAGE', (int)$page);  
-                if($this->delay) {
-                    usleep($this->delay * 1000);
-                }
+                $this->configModel->setValue('USERMAXPAGE', (int)$page);
             }
             $this->configModel->setValue('CJUSERLOCK', 2);
         }
@@ -589,6 +583,9 @@ class Panduoduo
 			$this->proxyCurrRequestNum += is_array($url)? count($url): 1;
 		}
 		
+		if($this->delay) {
+			usleep($this->delay * 1000);
+		}
 		if(is_array($url)) {
 			$html = Http::curl_multi($url, $header, $gzip, $proxy);
 		}else {

@@ -63,9 +63,9 @@ class BaidupanController extends Controller
 		$cj->allowProxy = true;
 		if($cj->allowProxy) {
 			//$datetime = strtotime('-1 days', time());
-			//$datetime = strtotime(date('Ymd'));
-			//$cj->proxyIP = getRandProxyIp(100, array('addtime'=>array('$gte'=>$datetime)));
-			$cj->proxyIP = getBestProxyIp(100);
+			$datetime = strtotime(date('Ymd'));
+			$cj->proxyIP = getRandProxyIp(100, array('addtime'=>array('$gte'=>$datetime)));
+			//$cj->proxyIP = getBestProxyIp(100);
 			
 		}
         $cj->writeLog("采集开始start");
