@@ -28,14 +28,14 @@ class BaidupanController extends Controller
 		
 		$cj = new \Panduoduo();
 		$cj->logfile = !IS_WIN? "/home/libaoan/panduoduo_user".date('Ym').".txt": '';
-        $cj->thread = IS_WIN? 50: 300; //采集多少页
+        $cj->thread = IS_WIN? 50: 25; //采集多少页
         $cj->delay = 2000;
 		$cj->pageMax = 20;
 		$cj->proxyMaxRequestNum = 50;
 		$cj->init();
 		$cj->allowProxy = true;
 		if($cj->allowProxy) {
-			$cj->proxyIP = getBestProxyIp(100);
+			$cj->proxyIP = getBestProxyIp(50);
 		}
         $cj->writeLog("采集开始start");
 		//$cj->cjUserPage();

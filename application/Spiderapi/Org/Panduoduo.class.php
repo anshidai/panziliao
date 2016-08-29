@@ -160,7 +160,7 @@ class Panduoduo
 					}
 				}else {
 					$this->currError += 1;   
-					$this->writeLog("错误信息 {$html}");
+					$this->writeLog("错误信息 ".var_export($html,true));
 					continue;
 				}
 				unset($html);  
@@ -210,7 +210,7 @@ class Panduoduo
                     }
                 }else {
                     $this->currError += 1;   
-                    $this->writeLog("错误信息 {$html}");
+                    $this->writeLog("错误信息 ".var_export($html,true));
                     continue;
                 }
                 
@@ -573,6 +573,7 @@ class Panduoduo
 					}
 					$this->writeLog('当前没有可用的代理ip退出', true);
 				}
+				$this->proxyCurrRequestNum = 0;
 			}
 			$this->proxyCurrRequestNum += is_array($url)? count($url): 1;
 		}
