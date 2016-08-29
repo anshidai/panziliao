@@ -1,3 +1,4 @@
 application/Common/Conf/config.php
 runtime/*
 *.out
+*.txt

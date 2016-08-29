@@ -21,7 +21,7 @@ class ProxyipController extends Controller
 		import('Spiderapi.Org.Proxy66ip');
 		
 		$cj = new \Proxy66ip();
-		$cj->logfile = IS_WIN? "./Proxy_66ip".date('Ymd').".txt": "/home/libaoan/Proxy_66ip".date('Ymd').".txt";
+		$cj->logfile = IS_WIN? "./Proxy_66ip".date('Ym').".txt": "/home/libaoan/Proxy_66ip".date('Ym').".txt";
 		$cj->delay = 2000;
 		$cj->init();
 		$cj->writeLog("采集开始start");
@@ -36,7 +36,7 @@ class ProxyipController extends Controller
 		import('Spiderapi.Org.ProxyXicidaili');
 		
 		$cj = new \ProxyXicidaili();
-		$cj->logfile = IS_WIN? "./Proxy_xicidaili".date('Ymd').".txt": "/home/libaoan/Proxy_xicidaili".date('Ymd').".txt";
+		$cj->logfile = IS_WIN? "./Proxy_xicidaili".date('Ym').".txt": "/home/libaoan/Proxy_xicidaili".date('Ym').".txt";
 		$cj->delay = 2000;
 		$cj->init();
 		$cj->writeLog("采集开始start");

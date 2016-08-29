@@ -27,7 +27,7 @@ class BaidupanController extends Controller
 		
 		import('Spiderapi.Org.Panduoduo');
 		$cj = new \Panduoduo();
-		$cj->logfile = IS_WIN? "./panduoduo_user".date('Ymd').".txt": "/home/libaoan/panduoduo_user".date('Ymd').".txt";
+		$cj->logfile = IS_WIN? "./panduoduo_user".date('Ym').".txt": "/home/libaoan/panduoduo_user".date('Ym').".txt";
         $cj->thread = IS_WIN? 50: 300; //采集多少页
         $cj->delay = 2000;
 		$cj->pageMax = 20;
@@ -46,7 +46,7 @@ class BaidupanController extends Controller
 		
 		import('Spiderapi.Org.Panduoduo');
 		$cj = new \Panduoduo();
-		$cj->logfile = IS_WIN? "./panduoduo_detail".date('Ymd').".txt": "/home/libaoan/panduoduo_detail".date('Ymd').".txt";
+		$cj->logfile = IS_WIN? "./panduoduo_detail".date('Ym').".txt": "/home/libaoan/panduoduo_detail".date('Ym').".txt";
         $cj->total = IS_WIN? 100: 1000;
         $cj->thread = 5;
         $cj->ListThread = 3;
@@ -66,8 +66,7 @@ class BaidupanController extends Controller
 		import('Spiderapi.Org.BaiduPan');
 		
 		$cj = new \BaiduPan();
-		$cj->logfile = "/home/libaoan/baiduPan_".date('Ymd').".txt";
-		//$cj->logfile = "./baiduPan_".date('Ymd').".txt";
+		$cj->logfile = IS_WIN? "./baidupan_user".date('Ym').".txt": "/home/libaoan/baidupan_user".date('Ym').".txt";
 		$cj->total = 10000;
         $cj->thread = 20;
 		$cj->delay = 2000;
