@@ -21,12 +21,12 @@ class Http
 		curl_setopt($ch, CURLOPT_TIMEOUT, 60); //设置超时 秒 
 		//curl_setopt($ch, CURLOPT_USERAGENT,'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.47 Safari/536.11');
 
-		if($proxy['ip'] && $proxy['port']) {
+		if(!empty($proxy['ip']) && !empty($proxy['port'])) {
 			curl_setopt($ch, CURLOPT_PROXYTYPE, 'HTTP');
 			curl_setopt($ch, CURLOPT_PROXY, $proxy['ip']); //设置代理ip
 			curl_setopt($ch, CURLOPT_PROXYPORT, $proxy['port']); //设置代理端口号
 			
-			if($proxy['loginpwd']) {
+			if(!empty($proxy['loginpwd'])) {
 				curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxy['loginpwd']); //设置代理密码   
 			}
 		}
@@ -100,7 +100,7 @@ class Http
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //将curl_exec()获取的信息以文件流的形式返回，而不是直接输出
 		curl_setopt($ch, CURLOPT_HEADER, 0); //是否取得头信息
-		curl_setopt($ch, CURLOPT_TIMEOUT, 60); //设置超时 秒 
+		curl_setopt($ch, CURLOPT_TIMEOUT, 30); //设置超时 秒 
 		
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
@@ -158,12 +158,12 @@ class Http
 				curl_setopt($ch, CURLOPT_HTTPHEADER, $header[$key]); //设置http请求头信息
 			}
 			
-			if($proxy['ip'] && $proxy['port']) {
-				curl_setopt($ch, CURLOPT_PROXYTYPE, 'HTTP');
+			if(!empty($proxy['ip']) && !empty($proxy['port'])) {
+				//curl_setopt($ch, CURLOPT_PROXYTYPE, 'HTTP');
 				curl_setopt($ch, CURLOPT_PROXY, $proxy['ip']); //设置代理ip
 				curl_setopt($ch, CURLOPT_PROXYPORT, $proxy['port']); //设置代理端口号
 				
-				if($proxy['loginpwd']) {
+				if(!empty($proxy['loginpwd'])) {
 					curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxy['loginpwd']); //设置代理密码   
 				}
 			}
@@ -183,10 +183,11 @@ class Http
 				$responses[$map[(string) $done['handle']]] = compact('error', 'results');
 				curl_multi_remove_handle($queue, $done['handle']);
 				curl_close($done['handle']);
-				unset($results);
+                usleep(1000);
 			}
 			if($active > 0) {
 				curl_multi_select($queue, 0.5);
+                usleep(1000);
 			}
 		}while($active);
 		

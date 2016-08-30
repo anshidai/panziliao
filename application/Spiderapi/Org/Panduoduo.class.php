@@ -47,6 +47,10 @@ class Panduoduo
     
 	//当前累计错误次数
     private $currError = 0;
+    
+    private $data = array();
+    
+    private $currdata = array();
 	
 	public $domain = 'http://www.panduoduo.net';
 	
@@ -57,7 +61,10 @@ class Panduoduo
 	public $proxyIP = array(); 
 	
 	//当前正在使用代理ip
-    private $currProxyIp = ''; 
+    private $currProxyIp = '';
+    
+    //当前正在使用代理ip端口
+    private $currProxyPort = ''; 
 	
 	//一个代理ip最多请求多少URL
 	public $proxyMaxRequestNum = 100;
@@ -224,6 +231,42 @@ class Panduoduo
         }
     }
 	
+    public function getNextUserData()
+    {
+        if($this->data) {
+            $this->currdata = reset($this->data);
+            unset($this->data[$this->currdata['uid']]);        
+        }else {
+            $this->writeLog("待查询的用户信息已用完强制退出", true);    
+        }           
+    }
+    
+    private function initUserData()
+    {
+        $currid = $this->configModel->getValue('CJUSERID');
+        if(!$currid) {
+            $currid = 0;
+        }
+        $map = array('id'=>array('$gt'=>(int)$currid));
+        $total = $this->userModel->where($map)->count();
+        
+        if($total < $this->total) {
+            $this->total = $total;
+        } 
+        $pagemax = ceil($this->total/$this->pagesize);
+        
+        for($page=1; $page<=$pagemax; $page++) {
+            $res = $this->userModel->field('id,uid,uname')->where($map)
+                        ->order('id')->limit(($page-1)*$this->pagesize, $this->pagesize)->select();
+            $this->writeLog("查询记录 ".count($res)." 执行语句 ".$this->userModel->_sql());
+            if($res) {
+                foreach($res as $key=>$val) {
+                    $this->data[$val['uid']] = $val;     
+                }
+            }
+        }   
+    }
+    
 	/**
 	* 采集分享信息
 	*/
@@ -231,79 +274,66 @@ class Panduoduo
 	{
 		try {
 			$this->configModel->setValue('CJSHARTLOCK', 1);
-		
-			$currid = $this->configModel->getValue('CJUSERID');
-			if(!$currid) {
-				$currid = 0;
-			}
-			$map = array('id'=>array('$gt'=>(int)$currid));
-			$total = $this->userModel->where($map)->count();
-			
-			if($total < $this->total) {
-				$this->total = $total;
-			}
-			
-			$pagemax = ceil($this->total/$this->pagesize);
-			for($page=1; $page<=$pagemax; $page++) {
-				$res = $this->userModel->field('id,uid,uname')->where($map)
-						->order('id')->limit(($page-1)*$this->pagesize, $this->pagesize)->select();
-				$this->writeLog("查询记录 ".count($res)." 执行语句 ".$this->userModel->_sql());
-				if($res) {
-					foreach($res as $key=>$val) {
-						$url = str_replace('{$uid}', $val['uid'], $this->domain.'/u/bd-{$uid}');
-						$pagecontent = $this->http($url);
-						if($pagecontent['httpcode'] == 0 && empty($pagecontent['content'])) {
-							$this->writeLog("{$url} ".var_export($pagecontent,true));
-							$this->proxyCurrRequestNum = 0;
-							continue;
-						}elseif($pagecontent['httpcode'] != 200 || strpos($pagecontent['error'], 'Failed to connect') !== false) {
-							unset($pagecontent['content']);
-							$this->writeLog("{$url} ".var_export($pagecontent,true));
-							$this->proxyCurrRequestNum = 0;
-							continue;
-						}
-						
-						$this->configModel->setValue('CJUSERID', $val['id']);
-						if(strpos($pagecontent['content'], '找不到这个页面') !== false) {
-							$this->writeLog("页面不存在 {$url}");
-							continue;
-						}
-						if(strpos($pagecontent['content'], '该用户还没有分享的资源') !== false) {
-							$this->writeLog("该用户还没有分享的资源 {$val['id']} {$val['uid']} {$val['uname']} {$url}");
-							continue;
-						}
-						$listpageMax = $this->cjPageMax($pagecontent['content']);
-						
-						//有分页
-						if($listpageMax) {
-							for($listpage=1; $listpage<=$listpageMax; $listpage++) {
-								$urls[] = $url.'/'.$listpage;
-							}
-							$detailUrls = $this->getDetailUrlMulti($urls);
-						}else {
-							$detailUrls = $this->getDetailUrl($pagecontent['content']);
-						}
-						unset($pagecontent);
-						
-						if(empty($detailUrls)) {
-							continue;
-						}
-						
-						$loop = array_chunk($detailUrls, $this->thread);
-						foreach($loop as $urlArr) {
-							$html = $this->http($urlArr);
-							$data = $this->parseDetailData($html, $val['uid'], $val['uname']);
-							if($data) {
-								$insert_ids = $this->addShare($data, $this->resourceModel);
-								if($insert_ids) {
-									$this->writeLog(" uid:{$val['uid']} insert {$insert_ids}");
-								}
-							}
-							unset($html,$data);
-						}
-					}
-				}
-			}
+            $this->initUserData();
+            $this->getNextUserData();
+            while(true) {
+                $user = $this->currdata;
+
+                $url = str_replace('{$uid}', $user['uid'], $this->domain.'/u/bd-{$uid}');
+                $pagecontent = $this->http($url);
+                if($pagecontent['httpcode'] == 0 && empty($pagecontent['content'])) {
+                    $this->writeLog("{$url} ".var_export($pagecontent,true));
+                    $this->proxyCurrRequestNum = 0;
+                    continue;
+                }elseif($pagecontent['httpcode'] != 200 || strpos($pagecontent['error'], 'Failed to connect') !== false) {
+                    unset($pagecontent['content']);
+                    $this->writeLog("{$url} ".var_export($pagecontent,true));
+                    $this->proxyCurrRequestNum = 0;
+                    continue;
+                }
+                
+                $this->configModel->setValue('CJUSERID', $user['id']);
+                if(strpos($pagecontent['content'], '找不到这个页面') !== false) {
+                    $this->writeLog("页面不存在 {$url}");
+                    $this->getNextUserData();
+                    continue;
+                }
+                if(strpos($pagecontent['content'], '该用户还没有分享的资源') !== false) {
+                    $this->writeLog("该用户还没有分享的资源 {$user['id']} {$user['uid']} {$user['uname']} {$url}");
+                    $this->getNextUserData();
+                    continue;
+                }
+                $listpageMax = $this->cjPageMax($pagecontent['content']);
+                
+                //有分页
+                if($listpageMax) {
+                    for($listpage=1; $listpage<=$listpageMax; $listpage++) {
+                        $urls[] = $url.'/'.$listpage;
+                    }
+                    $detailUrls = $this->getDetailUrlMulti($urls);
+                }else {
+                    $detailUrls = $this->getDetailUrl($pagecontent['content']);
+                }
+                unset($pagecontent);
+                
+                if(empty($detailUrls)) {
+                    continue;
+                }
+                
+                $loop = array_chunk($detailUrls, $this->thread);
+                foreach($loop as $urlArr) {
+                    $html = $this->http($urlArr);
+                    $data = $this->parseDetailData($html, $user['uid'], $user['uname']);
+                    if($data) {
+                        $insert_ids = $this->addShare($data, $this->resourceModel);
+                        if($insert_ids) {
+                            $this->writeLog(" uid:{$user['uid']} insert {$insert_ids}");
+                        }
+                    }
+                    unset($html,$data);
+                }    
+            }
+            
 			$this->configModel->setValue('CJSHARTLOCK', 2);
 			
 		}catch(Exception $e) {
@@ -584,16 +614,24 @@ class Panduoduo
 				$this->proxyCurrRequestNum = 0;
 			}
 			$this->proxyCurrRequestNum += is_array($url)? count($url): 1;
-		}
+		
+            if(empty($proxy)) {
+                $proxy['ip'] = $this->currProxyIp;
+                $proxy['port'] = $this->currProxyPort;
+            }
+        }
 		
 		if($this->delay) {
 			usleep($this->delay * 1000);
 		}
+
 		if(is_array($url)) {
 			$html = Http::curl_multi($url, $header, $gzip, $proxy);
 		}else {
 			$html = Http::curl_http($url, $header, $proxy, $gzip); 
 		}
+        //$this->writeLog('当前使用代理'.implode(':',$proxy));
+        
 		return $html;
 	}
 	
@@ -612,7 +650,8 @@ class Panduoduo
             $data['ip'] = $val['ip'];
             $data['port'] = $val['port'];
 			
-			$this->currProxyIp = $val['ip'];
+            $this->currProxyIp = $val['ip'];
+			$this->currProxyPort = $val['port'];
             break;
         }
 		$this->writeLog("当前代理ip ".implode(':', $data)."  剩余代理IP数量：".count($this->proxyIP));

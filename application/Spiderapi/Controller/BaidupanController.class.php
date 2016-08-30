@@ -31,7 +31,7 @@ class BaidupanController extends Controller
         $cj->thread = IS_WIN? 50: 25; //采集多少页
         $cj->delay = 2000;
 		$cj->pageMax = 20;
-		$cj->proxyMaxRequestNum = 50;
+		$cj->proxyMaxRequestNum = 200;
 		$cj->init();
 		$cj->allowProxy = true;
 		if($cj->allowProxy) {
@@ -58,14 +58,14 @@ class BaidupanController extends Controller
         $cj->thread = 5;
         $cj->ListThread = 3;
 		$cj->delay = 2000;
-		$cj->proxyMaxRequestNum = 100;
+		$cj->proxyMaxRequestNum = 500;
 		$cj->init();
 		$cj->allowProxy = true;
 		if($cj->allowProxy) {
 			//$datetime = strtotime('-1 days', time());
 			$datetime = strtotime(date('Ymd'));
-			$cj->proxyIP = getRandProxyIp(200, array('addtime'=>array('$gte'=>$datetime)));
-			//$cj->proxyIP = getBestProxyIp(100);
+			//$cj->proxyIP = getRandProxyIp(10, array('addtime'=>array('$gte'=>$datetime)));
+			$cj->proxyIP = getBestProxyIp(100);
 			
 		}
         $cj->writeLog("/**************** 采集开始start ****************/");

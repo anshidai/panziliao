@@ -116,7 +116,7 @@ class ProxyXicidaili
 		if($res['ip']) {
 			for($i=0; $i<count($res['ip']); $i++) {
 				
-				if(!empty($res['port'][$i]) && preg_match('/\d+$/iUs',$res['port'][$i])) {
+				if(filter_var($res['ip'][$i], FILTER_VALIDATE_IP) && filter_var($res['port'][$i],FILTER_VALIDATE_INT)) {
 					$data[$i]['ip'] = $res['ip'][$i];
 					$data[$i]['port'] = (int)$res['port'][$i];
 					$data[$i]['proxy_type'] = 1;
@@ -188,7 +188,7 @@ class ProxyXicidaili
 
 		$_insert_ids = '';
 		foreach($data as $val) {
-			if($insert_id = $this->_add($val, $model, array('ip'=>(int)$val['ip']))) {
+			if($insert_id = $this->_add($val, $model, array('ip'=>$val['ip']))) {
 				$_insert_ids[] = $insert_id;
 			}
 		}
