@@ -20,7 +20,7 @@ class BaidupanController extends Controller
 	public function cjPanduoduoUser()
 	{
 		if($this->configModel->getValue('CJUSERLOCK') == '1') {
-			die(date('Y-m-d H:i:s').' 当前进程还未结束');
+			die(date('Y-m-d H:i:s')." 当前进程还未结束\n");
 		}
 		
 		require_once MODULE_PATH.'Org/simple_html_dom.php';
@@ -46,7 +46,7 @@ class BaidupanController extends Controller
 	public function cjPanduoduoDetail()
 	{
 		if($this->configModel->getValue('CJSHARTLOCK') == '1') {
-			die(date('Y-m-d H:i:s').'当前进程还未结束');
+			die(date('Y-m-d H:i:s')." 当前进程还未结束\n");
 		}
 		
 		require_once MODULE_PATH.'Org/simple_html_dom.php';
@@ -76,7 +76,7 @@ class BaidupanController extends Controller
 	public function cjBaiduPanUser()
 	{
 		if($this->configModel->getValue('CJUSERLOCK') == '1') {
-			die('当前进程还未结束');
+			die(date('Y-m-d H:i:s')." 当前进程还未结束\n");
 		}
 		
 		import('Spiderapi.Org.BaiduPan');

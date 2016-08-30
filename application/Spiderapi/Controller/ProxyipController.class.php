@@ -20,7 +20,7 @@ class ProxyipController extends Controller
 	public function cjProxy66ip()
 	{
 		if($this->configModel->getValue('CJPROXYLOCK') == '1') {
-			die(date('Y-m-d H:i:s').' 当前进程还未结束');
+			die(date('Y-m-d H:i:s')." 当前进程还未结束\n");
 		}
 		
 		require_once MODULE_PATH.'Org/simple_html_dom.php';
@@ -39,7 +39,7 @@ class ProxyipController extends Controller
 	public function cjProxyXicidaili()
 	{
 		if($this->configModel->getValue('CJPROXYLOCK') == '1') {
-			die(date('Y-m-d H:i:s').' 当前进程还未结束');
+			die(date('Y-m-d H:i:s')." 当前进程还未结束\n");
 		}
 		
 		require_once MODULE_PATH.'Org/simple_html_dom.php';
