@@ -147,7 +147,7 @@ class Http
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //将curl_exec()获取的信息以文件流的形式返回，而不是直接输出
 			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1); //是否抓取跳转后的页面 
 			curl_setopt($ch, CURLOPT_HEADER, 0); //是否取得头信息
-			curl_setopt($ch, CURLOPT_TIMEOUT, 30); //设置超时 秒 
+			curl_setopt($ch, CURLOPT_TIMEOUT, 60); //设置超时 秒 
 			//curl_setopt($ch, CURLOPT_NOSIGNAL, true);
 			
 			if($gzip) {

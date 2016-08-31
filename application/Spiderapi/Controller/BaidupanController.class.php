@@ -55,10 +55,10 @@ class BaidupanController extends Controller
 		$cj = new \Panduoduo('share');
 		$cj->logfile = !IS_WIN? "/home/libaoan/panduoduo_detail".date('Ym').".txt": "./panduoduo_detail".date('Ym').".txt";
         $cj->total = IS_WIN? 100: 1000;
-        $cj->thread = 5;
+        $cj->thread = 10;
         $cj->ListThread = 3;
 		$cj->delay = 2000;
-		$cj->proxyMaxRequestNum = 500;
+		$cj->proxyMaxRequestNum = 2000;
 		$cj->init();
 		$cj->allowProxy = true;
 		if($cj->allowProxy) {
