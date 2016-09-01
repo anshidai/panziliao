@@ -133,12 +133,13 @@ function getUrlQuery($url, $separator = '&')
 
 /**
 * 获取最新的代理ip
+* @param $model 模型实例
 * @param $num 数量
 * @param $$field 显示数量
 */
-function getBestProxyIp($num, $map = '')
+function getBestProxyIp($model, $num, $map = '')
 {
-	$res = D('Proxyip')->getBestProxy($num, $map);
+	$res = $model->getBestProxy($num, $map);
 	if($res) {
 		foreach($res as $proxy) {
 			$data[$proxy['ip']] = $proxy;
@@ -147,15 +148,42 @@ function getBestProxyIp($num, $map = '')
 	return $data? $data: '';
 }
 
-function getRandProxyIp($num, $map = '')
+/**
+* 随机获取最新的代理ip
+* @param $model 模型实例
+* @param $num 数量
+* @param $$field 显示数量
+*/
+function getRandProxyIp($model, $num, $map = '')
 {
-	$res = D('Proxyip')->getRandProxy($num, $map);
+	$res = $model->getRandProxy($num, $map);
 	if($res) {
 		foreach($res as $proxy) {
 			$data[$proxy['ip']] = $proxy;
 		}
 	}
 	return $data? $data: '';
+}
+
+/**
+* 添加有效代理ip
+* @param $data = array(
+*   'ip' => ip
+*   'port' => 端口
+*   'expires' => 是否有效  1-有效 2-无效
+*   'addtime' => 添加时间
+*   'updatetime' => 更新时间
+* ) 
+*/
+function addActiveProxyIp($data)
+{
+    if(empty($data)) return false;
+    
+    $model = D('ActiveProxyip');
+    if(!$model->where(array('ip'=>$data['ip']))->count()) {
+        $data['id'] = $model->getNextId();
+        return $model->add($data);        
+    }   
 }
 
 /**

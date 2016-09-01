@@ -8,13 +8,15 @@ use Components\HttpProxy;
 
 class BaidupanController extends Controller 
 {
-	private $configModel = null;
+    private $configModel = null;
+	private $proxyModel = null;
 	
 	protected function _initialize()
     {
         header('Content-Type:text/html; charset="utf-8"');
 		
-		$this->configModel = D('Config');
+        $this->configModel = D('Config');
+		$this->proxyModel = D('Proxyip');
     } 
 	
 	public function cjPanduoduoUser()
@@ -35,7 +37,10 @@ class BaidupanController extends Controller
 		$cj->init();
 		$cj->allowProxy = true;
 		if($cj->allowProxy) {
-			$cj->proxyIP = getBestProxyIp(50);
+			//$cj->proxyIP = getBestProxyIp($this->proxyModel, 50);
+            
+            $proxy_ip_1 = HttpProxy::cj_xicidaili_ip(1);
+            $cj->proxyIP = $proxy_ip_1;
 		}
         $cj->writeLog("/**************** 采集开始start ****************/");
 		//$cj->cjUserPage();
@@ -62,10 +67,16 @@ class BaidupanController extends Controller
 		$cj->init();
 		$cj->allowProxy = true;
 		if($cj->allowProxy) {
+            $proxy_ip_1 = HttpProxy::cj_xicidaili_ip(1);
+            //$proxy_ip_2 = HttpProxy::cj_66ip_ip(2);
+            //$proxy_ip = array_merge($proxy_ip_1, $proxy_ip_2);
+            //$proxy_ip = HttpProxy::filter_proxy_ips($proxy_ip, 2);
+            $cj->proxyIP = $proxy_ip_1;
+
 			//$datetime = strtotime('-1 days', time());
-			$datetime = strtotime(date('Ymd'));
-			//$cj->proxyIP = getRandProxyIp(10, array('addtime'=>array('$gte'=>$datetime)));
-			$cj->proxyIP = getBestProxyIp(100);
+			//$datetime = strtotime(date('Ymd'));
+			//$cj->proxyIP = getRandProxyIp($this->proxyModel, 10, array('addtime'=>array('$gte'=>$datetime)));
+			//$cj->proxyIP = getBestProxyIp($this->proxyModel, 100);
 			
 		}
         $cj->writeLog("/**************** 采集开始start ****************/");
