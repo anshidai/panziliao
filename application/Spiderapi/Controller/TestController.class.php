@@ -23,7 +23,7 @@ class TestController extends Controller
             'http://www.panduoduo.net/u/bd-808072626',
             'http://www.panduoduo.net/u/bd-1359690209',
             );
-        $proxy = array('ip'=>'123.97.31.65', 'port'=>'8998');
+        $proxy = array('ip'=>'121.33.226.167', 'port'=>'3128');
         //$proxy = array();
         //$res = Http::curl_http($url, '', $proxy, true);
         $res = Http::curl_multi($url, '', true, $proxy);

@@ -208,3 +208,17 @@ function unique_rand($min, $max, $num)
 	}
 	return $data;
 }
+
+/**
+* 将代理ip数组逆向
+* @param $data ip数组
+*/
+function reverseProxyIp($data)
+{
+    $res = array();
+    foreach($data as $val) {
+        $tmp = array_pop($data);
+        $res[$tmp['ip']] = $tmp;
+    }
+    return $res;
+}
