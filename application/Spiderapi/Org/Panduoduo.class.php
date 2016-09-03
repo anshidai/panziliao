@@ -264,7 +264,8 @@ class Panduoduo
                     $this->data[$val['uid']] = $val;     
                 }
             }
-        }   
+        }
+   
     }
     
 	/**
@@ -340,10 +341,13 @@ class Panduoduo
                         $insert_ids = $this->addShare($data, $this->resourceModel);
                         if($insert_ids) {
                             $this->writeLog(" uid:{$user['uid']} insert {$insert_ids}");
+                        }else {
+                            //$this->writeLog("采集数据 库已存在");    
                         }
                     }
                     unset($html,$data);
-                }    
+                }
+                $this->getNextUserData();    
             }
             
 			$this->configModel->setValue('CJSHARTLOCK', 2);
@@ -592,7 +596,9 @@ class Panduoduo
 		foreach($data as $val) {
 			if($insert_id = $this->_add($val, $model, array('source_id'=>(int)$val['source_id'],'fs_id'=>(int)$val['fs_id']))) {
 				$_insert_ids[] = $insert_id;
-			}
+			}else {
+                $this->writeLog("已存在数据 uid:{$val['uid']} source_id:{$val['source_id']} fs_id:{$val['fs_id']}");    
+            }
 		}
 		return $_insert_ids? implode(', ', $_insert_ids): false;
 	}

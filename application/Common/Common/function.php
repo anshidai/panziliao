@@ -222,3 +222,18 @@ function reverseProxyIp($data)
     }
     return $res;
 }
+
+function ip3366ProxyIp($num = 10)
+{
+    $apiurl = 'http://dae.ip3366.net/api/?key=20160903160007979&getnum='.$num.'&isp=1&anonymoustype=3&filter=1&formats=2&proxytype=0';
+    $content = file_get_contents($apiurl);
+    if($content) {
+        $content = mb_convert_encoding($content,'UTF-8','GBK');
+        $data = json_decode($content,true);
+        foreach($data as $val) {
+            $ips[$val['Ip']]['ip'] = $val['Ip']; 
+            $ips[$val['Ip']]['port'] = $val['Port']; 
+        }
+    }
+    return $ips? $ips: array();
+}

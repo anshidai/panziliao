@@ -65,16 +65,16 @@ class BaidupanController extends Controller
         $cj->thread = 10;
         $cj->ListThread = 3;
 		$cj->delay = 2000;
-		$cj->proxyMaxRequestNum = 2000;
+		$cj->proxyMaxRequestNum = 10000;
 		$cj->init();
-		$cj->allowProxy = false;
+		$cj->allowProxy = true;
 		if($cj->allowProxy) {
-            $proxy_ip_1 = HttpProxy::cj_xicidaili_ip(1);
+            //$proxy_ip_1 = HttpProxy::cj_xicidaili_ip(1);
             //$proxy_ip_2 = HttpProxy::cj_66ip_ip(2);
             //$proxy_ip = array_merge($proxy_ip_1, $proxy_ip_2);
             //$proxy_ip = HttpProxy::filter_proxy_ips($proxy_ip, 2);
-            $cj->proxyIP = $proxy_ip_1;
-            $cj->proxyIP = reverseProxyIp($cj->proxyIP);
+            //$cj->proxyIP = $proxy_ip_1;
+            //$cj->proxyIP = reverseProxyIp($cj->proxyIP);
 
 			//$datetime = strtotime('-1 days', time());
 			//$datetime = strtotime(date('Ymd'));
@@ -82,7 +82,9 @@ class BaidupanController extends Controller
 			//$cj->proxyIP = getBestProxyIp($this->proxyModel, 100);
             
             //$cj->proxyIP = getBestProxyIp($this->activeProxyModel, 50);
-			
+            
+            //$cj->proxyIP = ip3366ProxyIp(10);    
+            $cj->proxyIP = array('122.114.136.239'=>array('ip'=>'122.114.136.239','port'=>16816));	
 		}
         $cj->writeLog("/**************** 采集开始start ****************/");
 		$cj->cjShareDetail();
@@ -101,7 +103,7 @@ class BaidupanController extends Controller
 		$cj->logfile = IS_WIN? "./baidupan_user".date('Ym').".txt": "/home/libaoan/baidupan_user".date('Ym').".txt";
 		$cj->total = 10000;
         $cj->thread = 20;
-		$cj->delay = 2000;
+		$cj->delay = 1000;
 		$cj->allowProxy = true;
 		if($cj->allowProxy) {
 			$proxy_ip_1 = HttpProxy::cj_xicidaili_ip(2);
