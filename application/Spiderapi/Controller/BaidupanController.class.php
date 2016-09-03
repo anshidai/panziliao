@@ -67,7 +67,7 @@ class BaidupanController extends Controller
 		$cj->delay = 2000;
 		$cj->proxyMaxRequestNum = 2000;
 		$cj->init();
-		$cj->allowProxy = true;
+		$cj->allowProxy = false;
 		if($cj->allowProxy) {
             $proxy_ip_1 = HttpProxy::cj_xicidaili_ip(1);
             //$proxy_ip_2 = HttpProxy::cj_66ip_ip(2);

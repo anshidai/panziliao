@@ -292,14 +292,17 @@ class Panduoduo
                     continue;
                 }
                 
-                $actdata = array(
-                    'ip' => $this->currProxyIp,
-                    'port' => $this->currProxyPort,
-                    'expires' => 1,
-                    'addtime' => time(),
-                    'updatetime' => time(),
-                );
-                addActiveProxyIp($actdata);
+                if($this->allowProxy) {
+                    $actdata = array(
+                        'ip' => $this->currProxyIp,
+                        'port' => $this->currProxyPort,
+                        'expires' => 1,
+                        'addtime' => time(),
+                        'updatetime' => time(),
+                    );
+                    addActiveProxyIp($actdata);    
+                }
+                
                 
                 $this->configModel->setValue('CJUSERID', $user['id']);
                 if(strpos($pagecontent['content'], '找不到这个页面') !== false) {
