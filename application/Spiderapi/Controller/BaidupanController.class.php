@@ -101,7 +101,7 @@ class BaidupanController extends Controller
         }
         
         require_once MODULE_PATH.'Org/simple_html_dom.php';
-        import('Spiderapi.Org.Panduoduo');
+        import('Spiderapi.Org.Panduoduo2');
         
         $cj = new \Panduoduo('share');
         $cj->logfile = !IS_WIN? "/home/libaoan/panduoduo_detail_2_".date('Ym').".txt": "./panduoduo_detail_2_".date('Ym').".txt";
@@ -127,7 +127,7 @@ class BaidupanController extends Controller
         }
         
         require_once MODULE_PATH.'Org/simple_html_dom.php';
-        import('Spiderapi.Org.Panduoduo');
+        import('Spiderapi.Org.Panduoduo3');
         
         $cj = new \Panduoduo('share');
         $cj->logfile = !IS_WIN? "/home/libaoan/panduoduo_detail_3_".date('Ym').".txt": "./panduoduo_detail_3_".date('Ym').".txt";
