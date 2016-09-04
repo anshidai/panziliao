@@ -103,7 +103,7 @@ class BaidupanController extends Controller
         require_once MODULE_PATH.'Org/simple_html_dom.php';
         import('Spiderapi.Org.Panduoduo2');
         
-        $cj = new \Panduoduo('share');
+        $cj = new \Panduoduo2('share');
         $cj->logfile = !IS_WIN? "/home/libaoan/panduoduo_detail_2_".date('Ym').".txt": "./panduoduo_detail_2_".date('Ym').".txt";
         $cj->total = IS_WIN? 100: 2000;
         $cj->thread = 20;
@@ -129,7 +129,7 @@ class BaidupanController extends Controller
         require_once MODULE_PATH.'Org/simple_html_dom.php';
         import('Spiderapi.Org.Panduoduo3');
         
-        $cj = new \Panduoduo('share');
+        $cj = new \Panduoduo3('share');
         $cj->logfile = !IS_WIN? "/home/libaoan/panduoduo_detail_3_".date('Ym').".txt": "./panduoduo_detail_3_".date('Ym').".txt";
         $cj->total = IS_WIN? 100: 2000;
         $cj->thread = 20;
