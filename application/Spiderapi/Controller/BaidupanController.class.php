@@ -137,7 +137,7 @@ class BaidupanController extends Controller
         $cj->delay = 2000;
         $cj->proxyMaxRequestNum = 100000;
         $cj->init();
-        $cj->allowProxy = false;
+        $cj->allowProxy = true;
         if($cj->allowProxy) {
             $cj->proxyIP = array('122.114.137.15'=>array('ip'=>'122.114.137.15','port'=>16816));    
         }
