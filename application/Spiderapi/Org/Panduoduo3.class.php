@@ -437,7 +437,7 @@ class Panduoduo3
                 $this->writeLog("已存在数据 uid:{$data['uid']} source_id:{$data['source_id']} fs_id:{$data['fs_id']}");
             }
         }
-        $data['id'] = $model->getNextId();
+        $data['id'] = $this->getNextId();
         return $model->add($data);
     }
     
@@ -549,6 +549,12 @@ class Panduoduo3
         $this->writeLog("当前代理ip ".implode(':', $data)."  剩余代理IP数量：".count($this->proxyIP));
         
         return !empty($data)? $data: '';
+    }
+    
+    private function getNextId()
+    {
+        $maxid = $this->resourceModel->getMongoNextId('id');
+        return max($maxid, 1);
     }
     
     
