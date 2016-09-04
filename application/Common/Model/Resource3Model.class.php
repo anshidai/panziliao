@@ -3,7 +3,7 @@ namespace Common\Model;
 
 use Think\Model\MongoModel;
 
-class Resourc3Model extends MongoModel 
+class Resource3Model extends MongoModel 
 {
     protected $pk = 'id';
     protected $_idType = self::TYPE_INT;
