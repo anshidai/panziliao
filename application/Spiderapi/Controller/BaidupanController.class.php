@@ -32,17 +32,20 @@ class BaidupanController extends Controller
 		
 		$cj = new \Panduoduo('user');
 		$cj->logfile = !IS_WIN? "/home/libaoan/panduoduo_user".date('Ym').".txt": "./panduoduo_user".date('Ym').".txt";
-        $cj->thread = IS_WIN? 50: 25; //采集多少页
+        $cj->thread = IS_WIN? 50: 20; //采集多少页
         $cj->delay = 2000;
 		$cj->pageMax = 20;
-		$cj->proxyMaxRequestNum = 200;
+		$cj->proxyMaxRequestNum = 10000;
 		$cj->init();
 		$cj->allowProxy = true;
 		if($cj->allowProxy) {
-			$cj->proxyIP = getBestProxyIp($this->proxyModel, 50);
+			//$cj->proxyIP = getBestProxyIp($this->proxyModel, 50);
             
             //$proxy_ip_1 = HttpProxy::cj_xicidaili_ip(1);
             //$cj->proxyIP = $proxy_ip_1;
+            
+            //$cj->proxyIP = ip3366ProxyIp(10);
+            $cj->proxyIP = array('122.114.137.15'=>array('ip'=>'122.114.137.15','port'=>16816));    
 		}
         $cj->writeLog("/**************** 采集开始start ****************/");
 		//$cj->cjUserPage();
@@ -61,11 +64,11 @@ class BaidupanController extends Controller
 		
 		$cj = new \Panduoduo('share');
 		$cj->logfile = !IS_WIN? "/home/libaoan/panduoduo_detail".date('Ym').".txt": "./panduoduo_detail".date('Ym').".txt";
-        $cj->total = IS_WIN? 100: 1000;
-        $cj->thread = 10;
+        $cj->total = IS_WIN? 100: 2000;
+        $cj->thread = 20;
         $cj->ListThread = 3;
 		$cj->delay = 2000;
-		$cj->proxyMaxRequestNum = 10000;
+		$cj->proxyMaxRequestNum = 100000;
 		$cj->init();
 		$cj->allowProxy = true;
 		if($cj->allowProxy) {
@@ -84,12 +87,64 @@ class BaidupanController extends Controller
             //$cj->proxyIP = getBestProxyIp($this->activeProxyModel, 50);
             
             //$cj->proxyIP = ip3366ProxyIp(10);    
-            $cj->proxyIP = array('122.114.136.239'=>array('ip'=>'122.114.136.239','port'=>16816));	
+            $cj->proxyIP = array('122.114.137.15'=>array('ip'=>'122.114.137.15','port'=>16816));	
 		}
         $cj->writeLog("/**************** 采集开始start ****************/");
 		$cj->cjShareDetail();
         $cj->writeLog("/**************** 采集结束end ****************/");
 	}
+    
+    public function cjPanduoduoDetail2()
+    {
+        if($this->configModel->getValue('CJSHARTLOCK2') == '1') {
+            die(date('Y-m-d H:i:s')." 当前进程还未结束\n");
+        }
+        
+        require_once MODULE_PATH.'Org/simple_html_dom.php';
+        import('Spiderapi.Org.Panduoduo');
+        
+        $cj = new \Panduoduo('share');
+        $cj->logfile = !IS_WIN? "/home/libaoan/panduoduo_detail_2_".date('Ym').".txt": "./panduoduo_detail_2_".date('Ym').".txt";
+        $cj->total = IS_WIN? 100: 2000;
+        $cj->thread = 20;
+        $cj->ListThread = 3;
+        $cj->delay = 2000;
+        $cj->proxyMaxRequestNum = 100000;
+        $cj->init();
+        $cj->allowProxy = true;
+        if($cj->allowProxy) {
+            $cj->proxyIP = array('122.114.137.15'=>array('ip'=>'122.114.137.15','port'=>16816));    
+        }
+        $cj->writeLog("/**************** 采集开始start ****************/");
+        $cj->cjShareDetail();
+        $cj->writeLog("/**************** 采集结束end ****************/");
+    }
+    
+    public function cjPanduoduoDetail3()
+    {
+        if($this->configModel->getValue('CJSHARTLOCK3') == '1') {
+            die(date('Y-m-d H:i:s')." 当前进程还未结束\n");
+        }
+        
+        require_once MODULE_PATH.'Org/simple_html_dom.php';
+        import('Spiderapi.Org.Panduoduo');
+        
+        $cj = new \Panduoduo('share');
+        $cj->logfile = !IS_WIN? "/home/libaoan/panduoduo_detail_3_".date('Ym').".txt": "./panduoduo_detail_3_".date('Ym').".txt";
+        $cj->total = IS_WIN? 100: 2000;
+        $cj->thread = 20;
+        $cj->ListThread = 3;
+        $cj->delay = 2000;
+        $cj->proxyMaxRequestNum = 100000;
+        $cj->init();
+        $cj->allowProxy = true;
+        if($cj->allowProxy) {
+            $cj->proxyIP = array('122.114.137.15'=>array('ip'=>'122.114.137.15','port'=>16816));    
+        }
+        $cj->writeLog("/**************** 采集开始start ****************/");
+        $cj->cjShareDetail();
+        $cj->writeLog("/**************** 采集结束end ****************/");
+    }
 	
 	public function cjBaiduPanUser()
 	{

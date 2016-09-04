@@ -247,7 +247,8 @@ class Panduoduo
         if(!$currid) {
             $currid = 0;
         }
-        $map = array('id'=>array('$gt'=>(int)$currid));
+        $map['id'] = array('$gt'=>(int)$currid);
+        $map['id'] = array('lt'=>200000);
         $total = $this->userModel->where($map)->count();
         
         if($total < $this->total) {
@@ -356,7 +357,7 @@ class Panduoduo
 			$this->writeLog("【异常】 ".$e->getMessage());
 			$this->configModel->setValue('CJSHARTLOCK', 2);
 		}
-	}
+	}   
 	
 	/**
 	* 获取详情页链接 - 单页
@@ -559,7 +560,9 @@ class Panduoduo
 		if($map) {
 			if($model->where($map)->count()) {
 				return false;
-			}
+			}else {
+                $this->writeLog("已存在数据 uid:{$data['uid']} source_id:{$data['source_id']} fs_id:{$data['fs_id']}");
+            }
 		}
 		$data['id'] = $model->getNextId();
 		return $model->add($data);
@@ -596,9 +599,7 @@ class Panduoduo
 		foreach($data as $val) {
 			if($insert_id = $this->_add($val, $model, array('source_id'=>(int)$val['source_id'],'fs_id'=>(int)$val['fs_id']))) {
 				$_insert_ids[] = $insert_id;
-			}else {
-                $this->writeLog("已存在数据 uid:{$val['uid']} source_id:{$val['source_id']} fs_id:{$val['fs_id']}");    
-            }
+			}
 		}
 		return $_insert_ids? implode(', ', $_insert_ids): false;
 	}
