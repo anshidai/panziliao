@@ -248,7 +248,6 @@ class Panduoduo
             $currid = 0;
         }
         $map['id'] = array('$gt'=>(int)$currid);
-        $map['id'] = array('lt'=>200000);
         $total = $this->userModel->where($map)->count();
         
         if($total < $this->total) {
@@ -262,6 +261,10 @@ class Panduoduo
             $this->writeLog("查询记录 ".count($res)." 执行语句 ".$this->userModel->_sql());
             if($res) {
                 foreach($res as $key=>$val) {
+                    if($val['id']>150000){
+                        $this->configModel->setValue('CJUSERLOCK', 2);
+                        $this->writeLog("超出最大ID限制强制退出", true);
+                    }
                     $this->data[$val['uid']] = $val;     
                 }
             }
@@ -275,7 +278,7 @@ class Panduoduo
 	public function cjShareDetail()
 	{
 		try {
-			$this->configModel->setValue('CJSHARTLOCK', 1);
+			//$this->configModel->setValue('CJSHARTLOCK', 1);
             $this->initUserData();
             $this->getNextUserData();
             while(true) {

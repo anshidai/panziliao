@@ -152,7 +152,6 @@ class Panduoduo3
             $currid = 0;
         }
         $map['id'] = array('$gt'=>(int)$currid);
-        $map['id'] = array('lt'=>400000);
         $total = $this->userModel->where($map)->count();
         
         if($total < $this->total) {

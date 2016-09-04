@@ -152,7 +152,6 @@ class Panduoduo2
             $currid = 0;
         }
         $map['id'] = array('$gt'=>(int)$currid);
-        $map['id'] = array('lt'=>200000);
         $total = $this->userModel->where($map)->count();
         
         if($total < $this->total) {
@@ -166,6 +165,10 @@ class Panduoduo2
             $this->writeLog("查询记录 ".count($res)." 执行语句 ".$this->userModel->_sql());
             if($res) {
                 foreach($res as $key=>$val) {
+                    if($val['id']>300000){
+                        $this->configModel->setValue('CJUSERLOCK', 2);
+                        $this->writeLog("超出最大ID限制强制退出", true);
+                    }
                     $this->data[$val['uid']] = $val;     
                 }
             }
