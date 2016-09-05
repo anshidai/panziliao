@@ -278,7 +278,7 @@ class Panduoduo
 	public function cjShareDetail()
 	{
 		try {
-			//$this->configModel->setValue('CJSHARTLOCK', 1);
+			$this->configModel->setValue('CJSHARTLOCK', 1);
             $this->initUserData();
             $this->getNextUserData();
             while(true) {
