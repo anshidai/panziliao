@@ -666,7 +666,10 @@ class Panduoduo
     */
     private function changeProxy()
     {
-        //如果有代理ip则删除当前，取下一个
+        
+		$this->proxyIP = goubanjiaProxyIp();
+		
+		//如果有代理ip则删除当前，取下一个
         if($this->currProxyIp) unset($this->proxyIP[$this->currProxyIp]);
 		
         if(empty($this->proxyIP)) return '';
