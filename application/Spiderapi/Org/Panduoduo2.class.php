@@ -194,7 +194,11 @@ class Panduoduo2
                     $this->writeLog("{$url} ".var_export($pagecontent,true));
                     $this->proxyCurrRequestNum = 0;
                     continue;
-                }elseif($pagecontent['httpcode'] != 200 || strpos($pagecontent['error'], 'Failed to connect') !== false) {
+                }elseif($pagecontent['httpcode'] == 502) {
+					$this->writeLog("页面502请求异常 {$url}");
+                    $this->getNextUserData();
+                    continue;
+				}elseif($pagecontent['httpcode'] != 200 || strpos($pagecontent['error'], 'Failed to connect') !== false) {
                     unset($pagecontent['content']);
                     $this->writeLog("{$url} ".var_export($pagecontent,true));
                     $this->proxyCurrRequestNum = 0;
@@ -209,7 +213,7 @@ class Panduoduo2
                         'addtime' => time(),
                         'updatetime' => time(),
                     );
-                    addActiveProxyIp($actdata);    
+                    //addActiveProxyIp($actdata);    
                 }
                 
                 
