@@ -667,7 +667,7 @@ class Panduoduo
     private function changeProxy()
     {
         
-		$this->proxyIP = goubanjiaProxyIp();
+		$this->proxyIP = goubanjiaProxyIp('d94671af4429d6d2035838072016edfe');
 		
 		//如果有代理ip则删除当前，取下一个
         if($this->currProxyIp) unset($this->proxyIP[$this->currProxyIp]);
