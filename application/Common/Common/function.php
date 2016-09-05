@@ -237,3 +237,20 @@ function ip3366ProxyIp($num = 10)
     }
     return $ips? $ips: array();
 }
+
+function goubanjiaProxyIp($orderNo, $ttl = false)
+{
+    $apiurl = 'http://dynamic.goubanjia.com/dynamic/get/'+$orderNo+'.html';
+    if($ttl) {
+		$apiurl = $apiurl.'?ttl';
+	}
+	
+	$content = file_get_contents($apiurl);
+    if($content) {
+        $proxy = explode(':', $content);
+		$ips[$proxy[0]]['ip'] = $proxy[0]; 
+         $ips[$proxy[0]]['port'] = $proxy[1];
+    }
+    return $ips? $ips: array();
+}
+
