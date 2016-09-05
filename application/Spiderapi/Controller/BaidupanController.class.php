@@ -45,7 +45,11 @@ class BaidupanController extends Controller
             //$cj->proxyIP = $proxy_ip_1;
             
             //$cj->proxyIP = ip3366ProxyIp(10);
-            $cj->proxyIP = array('122.114.137.15'=>array('ip'=>'122.114.137.15','port'=>16816));    
+            //$cj->proxyIP = array('122.114.137.15'=>array('ip'=>'122.114.137.15','port'=>16816));    
+		
+			$proxy = $this->configModel->getValue('PROXYIP');
+			$proxy = explode(':', $proxy);
+			$cj->proxyIP = array($proxy[0]=>array('ip'=>$proxy[0],'port'=>$proxy[1]));    
 		}
         $cj->writeLog("/**************** 采集开始start ****************/");
 		//$cj->cjUserPage();
@@ -86,8 +90,13 @@ class BaidupanController extends Controller
             
             //$cj->proxyIP = getBestProxyIp($this->activeProxyModel, 50);
             
-            //$cj->proxyIP = ip3366ProxyIp(10);    
-            $cj->proxyIP = array('122.114.137.15'=>array('ip'=>'122.114.137.15','port'=>16816));	
+            //$cj->proxyIP = ip3366ProxyIp(10);  
+			
+            //$cj->proxyIP = array('122.114.137.15'=>array('ip'=>'122.114.137.15','port'=>16816));	
+		
+			$proxy = $this->configModel->getValue('PROXYIP');
+			$proxy = explode(':', $proxy);
+			$cj->proxyIP = array($proxy[0]=>array('ip'=>$proxy[0],'port'=>$proxy[1]));    
 		}
         $cj->writeLog("/**************** 采集开始start ****************/");
 		$cj->cjShareDetail();
@@ -113,8 +122,12 @@ class BaidupanController extends Controller
         $cj->init();
         $cj->allowProxy = true;
         if($cj->allowProxy) {
-            $cj->proxyIP = array('122.114.137.15'=>array('ip'=>'122.114.137.15','port'=>16816));    
-        }
+            //$cj->proxyIP = array('122.114.137.15'=>array('ip'=>'122.114.137.15','port'=>16816));    
+			
+			$proxy = $this->configModel->getValue('PROXYIP');
+			$proxy = explode(':', $proxy);
+			$cj->proxyIP = array($proxy[0]=>array('ip'=>$proxy[0],'port'=>$proxy[1]));    
+		}
         $cj->writeLog("/**************** 采集开始start ****************/");
         $cj->cjShareDetail();
         $cj->writeLog("/**************** 采集结束end ****************/");
@@ -139,8 +152,12 @@ class BaidupanController extends Controller
         $cj->init();
         $cj->allowProxy = false;
         if($cj->allowProxy) {
-            $cj->proxyIP = array('122.114.137.15'=>array('ip'=>'122.114.137.15','port'=>16816));    
-        }
+            //$cj->proxyIP = array('122.114.137.15'=>array('ip'=>'122.114.137.15','port'=>16816));    
+			
+			$proxy = $this->configModel->getValue('PROXYIP');
+			$proxy = explode(':', $proxy);
+			$cj->proxyIP = array($proxy[0]=>array('ip'=>$proxy[0],'port'=>$proxy[1]));    
+		}
         $cj->writeLog("/**************** 采集开始start ****************/");
         $cj->cjShareDetail();
         $cj->writeLog("/**************** 采集结束end ****************/");
