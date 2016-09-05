@@ -240,7 +240,7 @@ function ip3366ProxyIp($num = 10)
 
 function goubanjiaProxyIp($orderNo, $ttl = false)
 {
-    $apiurl = 'http://dynamic.goubanjia.com/dynamic/get/'+$orderNo+'.html';
+    $apiurl = 'http://dynamic.goubanjia.com/dynamic/get/'.$orderNo.'.html';
     if($ttl) {
 		$apiurl = $apiurl.'?ttl';
 	}
