@@ -69,7 +69,7 @@ class BaidupanController extends Controller
 		$cj = new \Panduoduo('share');
 		$cj->logfile = !IS_WIN? "/home/libaoan/panduoduo_detail".date('Ym').".txt": "./panduoduo_detail".date('Ym').".txt";
         $cj->total = IS_WIN? 100: 2000;
-        $cj->thread = 20;
+        $cj->thread = 100;
         $cj->ListThread = 3;
 		$cj->delay = 2000;
 		$cj->proxyMaxRequestNum = 100000;
@@ -115,7 +115,7 @@ class BaidupanController extends Controller
         $cj = new \Panduoduo2('share');
         $cj->logfile = !IS_WIN? "/home/libaoan/panduoduo_detail_2_".date('Ym').".txt": "./panduoduo_detail_2_".date('Ym').".txt";
         $cj->total = IS_WIN? 100: 2000;
-        $cj->thread = 20;
+        $cj->thread = 100;
         $cj->ListThread = 3;
         $cj->delay = 2000;
         $cj->proxyMaxRequestNum = 100000;
@@ -145,7 +145,7 @@ class BaidupanController extends Controller
         $cj = new \Panduoduo3('share');
         $cj->logfile = !IS_WIN? "/home/libaoan/panduoduo_detail_3_".date('Ym').".txt": "./panduoduo_detail_3_".date('Ym').".txt";
         $cj->total = IS_WIN? 100: 2000;
-        $cj->thread = 20;
+        $cj->thread = 100;
         $cj->ListThread = 3;
         $cj->delay = 2000;
         $cj->proxyMaxRequestNum = 100000;
