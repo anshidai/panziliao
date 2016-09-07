@@ -35,21 +35,22 @@ class BaidupanController extends Controller
         $cj->thread = IS_WIN? 50: 20; //采集多少页
         $cj->delay = 2000;
 		$cj->pageMax = 20;
-		$cj->proxyMaxRequestNum = 10000;
+		$cj->proxyMaxRequestNum = 500;
 		$cj->init();
 		$cj->allowProxy = true;
 		if($cj->allowProxy) {
 			//$cj->proxyIP = getBestProxyIp($this->proxyModel, 50);
             
-            //$proxy_ip_1 = HttpProxy::cj_xicidaili_ip(1);
-            //$cj->proxyIP = $proxy_ip_1;
+            $proxy_ip_1 = HttpProxy::cj_xicidaili_ip(1);
+            $cj->proxyIP = $proxy_ip_1;
+			$cj->proxyIP = reverseProxyIp($cj->proxyIP);
             
             //$cj->proxyIP = ip3366ProxyIp(10);
             //$cj->proxyIP = array('122.114.137.15'=>array('ip'=>'122.114.137.15','port'=>16816));    
 		
-			$proxy = $this->configModel->getValue('PROXYIP');
-			$proxy = explode(':', $proxy);
-			$cj->proxyIP = array($proxy[0]=>array('ip'=>$proxy[0],'port'=>$proxy[1],'userpwd'=>'lba8610:9rg4cjuf'));   
+			//$proxy = $this->configModel->getValue('PROXYIP');
+			//$proxy = explode(':', $proxy);
+			//$cj->proxyIP = array($proxy[0]=>array('ip'=>$proxy[0],'port'=>$proxy[1],'userpwd'=>'lba8610:9rg4cjuf'));   
 		}
         $cj->writeLog("/**************** 采集开始start ****************/");
 		//$cj->cjUserPage();
@@ -72,16 +73,16 @@ class BaidupanController extends Controller
         $cj->thread = 100;
         $cj->ListThread = 3;
 		$cj->delay = 2000;
-		$cj->proxyMaxRequestNum = 100000;
+		$cj->proxyMaxRequestNum = 500;
 		$cj->init();
 		$cj->allowProxy = true;
 		if($cj->allowProxy) {
-            //$proxy_ip_1 = HttpProxy::cj_xicidaili_ip(1);
+            $proxy_ip_1 = HttpProxy::cj_xicidaili_ip(1);
             //$proxy_ip_2 = HttpProxy::cj_66ip_ip(2);
             //$proxy_ip = array_merge($proxy_ip_1, $proxy_ip_2);
             //$proxy_ip = HttpProxy::filter_proxy_ips($proxy_ip, 2);
-            //$cj->proxyIP = $proxy_ip_1;
-            //$cj->proxyIP = reverseProxyIp($cj->proxyIP);
+            $cj->proxyIP = $proxy_ip_1;
+            $cj->proxyIP = reverseProxyIp($cj->proxyIP);
 
 			//$datetime = strtotime('-1 days', time());
 			//$datetime = strtotime(date('Ymd'));
@@ -94,9 +95,9 @@ class BaidupanController extends Controller
 			
             //$cj->proxyIP = array('122.114.137.15'=>array('ip'=>'122.114.137.15','port'=>16816));	
 		
-			$proxy = $this->configModel->getValue('PROXYIP');
-			$proxy = explode(':', $proxy);
-			$cj->proxyIP = array($proxy[0]=>array('ip'=>$proxy[0],'port'=>$proxy[1],'userpwd'=>'lba8610:9rg4cjuf')); 
+			//$proxy = $this->configModel->getValue('PROXYIP');
+			//$proxy = explode(':', $proxy);
+			//$cj->proxyIP = array($proxy[0]=>array('ip'=>$proxy[0],'port'=>$proxy[1],'userpwd'=>'lba8610:9rg4cjuf')); 
 		}
         $cj->writeLog("/**************** 采集开始start ****************/");
 		$cj->cjShareDetail();
@@ -118,15 +119,19 @@ class BaidupanController extends Controller
         $cj->thread = 100;
         $cj->ListThread = 3;
         $cj->delay = 2000;
-        $cj->proxyMaxRequestNum = 100000;
+        $cj->proxyMaxRequestNum = 500;
         $cj->init();
         $cj->allowProxy = true;
         if($cj->allowProxy) {
             //$cj->proxyIP = array('122.114.137.15'=>array('ip'=>'122.114.137.15','port'=>16816));    
 			
-			$proxy = $this->configModel->getValue('PROXYIP');
-			$proxy = explode(':', $proxy);
-			$cj->proxyIP = array($proxy[0]=>array('ip'=>$proxy[0],'port'=>$proxy[1],'userpwd'=>'lba8610:9rg4cjuf')); 
+			//$proxy = $this->configModel->getValue('PROXYIP');
+			//$proxy = explode(':', $proxy);
+			//$cj->proxyIP = array($proxy[0]=>array('ip'=>$proxy[0],'port'=>$proxy[1],'userpwd'=>'lba8610:9rg4cjuf')); 
+			
+			$proxy_ip_1 = HttpProxy::cj_xicidaili_ip(1);
+            $cj->proxyIP = $proxy_ip_1;
+			$cj->proxyIP = reverseProxyIp($cj->proxyIP);
 		}
         $cj->writeLog("/**************** 采集开始start ****************/");
         $cj->cjShareDetail();
@@ -148,15 +153,19 @@ class BaidupanController extends Controller
         $cj->thread = 100;
         $cj->ListThread = 3;
         $cj->delay = 2000;
-        $cj->proxyMaxRequestNum = 100000;
+        $cj->proxyMaxRequestNum = 500;
         $cj->init();
         $cj->allowProxy = true;
         if($cj->allowProxy) {
             //$cj->proxyIP = array('122.114.137.15'=>array('ip'=>'122.114.137.15','port'=>16816));    
 			
-			$proxy = $this->configModel->getValue('PROXYIP');
-			$proxy = explode(':', $proxy);
-			$cj->proxyIP = array($proxy[0]=>array('ip'=>$proxy[0],'port'=>$proxy[1],'userpwd'=>'lba8610:9rg4cjuf'));    
+			//$proxy = $this->configModel->getValue('PROXYIP');
+			//$proxy = explode(':', $proxy);
+			//$cj->proxyIP = array($proxy[0]=>array('ip'=>$proxy[0],'port'=>$proxy[1],'userpwd'=>'lba8610:9rg4cjuf'));
+
+			$proxy_ip_1 = HttpProxy::cj_xicidaili_ip(1);
+            $cj->proxyIP = $proxy_ip_1;
+			$cj->proxyIP = reverseProxyIp($cj->proxyIP);
 		}
         $cj->writeLog("/**************** 采集开始start ****************/");
         $cj->cjShareDetail();
