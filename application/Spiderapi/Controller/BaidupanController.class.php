@@ -35,7 +35,7 @@ class BaidupanController extends Controller
         $cj->thread = IS_WIN? 50: 20; //采集多少页
         $cj->delay = 2000;
 		$cj->pageMax = 20;
-		$cj->proxyMaxRequestNum = 500;
+		$cj->proxyMaxRequestNum = 1000;
 		$cj->init();
 		$cj->allowProxy = true;
 		if($cj->allowProxy) {
@@ -73,7 +73,7 @@ class BaidupanController extends Controller
         $cj->thread = 100;
         $cj->ListThread = 3;
 		$cj->delay = 2000;
-		$cj->proxyMaxRequestNum = 500;
+		$cj->proxyMaxRequestNum = 50000;
 		$cj->init();
 		$cj->allowProxy = true;
 		if($cj->allowProxy) {
@@ -118,7 +118,7 @@ class BaidupanController extends Controller
         $cj->thread = 100;
         $cj->ListThread = 3;
         $cj->delay = 2000;
-        $cj->proxyMaxRequestNum = 500;
+        $cj->proxyMaxRequestNum = 50000;
         $cj->init();
         $cj->allowProxy = true;
         if($cj->allowProxy) {
@@ -151,7 +151,7 @@ class BaidupanController extends Controller
         $cj->thread = 100;
         $cj->ListThread = 3;
         $cj->delay = 2000;
-        $cj->proxyMaxRequestNum = 500;
+        $cj->proxyMaxRequestNum = 50000;
         $cj->init();
         $cj->allowProxy = true;
         if($cj->allowProxy) {
