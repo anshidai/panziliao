@@ -72,7 +72,7 @@ class BaidupanController extends Controller
         $cj->total = IS_WIN? 100: 2000;
         $cj->thread = 100;
         $cj->ListThread = 3;
-		$cj->delay = 2000;
+		$cj->delay = 500;
 		$cj->proxyMaxRequestNum = 50000;
 		$cj->init();
 		$cj->allowProxy = true;
@@ -117,7 +117,7 @@ class BaidupanController extends Controller
         $cj->total = IS_WIN? 100: 2000;
         $cj->thread = 100;
         $cj->ListThread = 3;
-        $cj->delay = 2000;
+        $cj->delay = 500;
         $cj->proxyMaxRequestNum = 50000;
         $cj->init();
         $cj->allowProxy = true;
@@ -150,7 +150,7 @@ class BaidupanController extends Controller
         $cj->total = IS_WIN? 100: 2000;
         $cj->thread = 100;
         $cj->ListThread = 3;
-        $cj->delay = 2000;
+        $cj->delay = 500;
         $cj->proxyMaxRequestNum = 50000;
         $cj->init();
         $cj->allowProxy = true;
