@@ -65,6 +65,9 @@ class Panduoduo2
     
     //当前正在使用代理ip端口
     private $currProxyPort = ''; 
+	
+	//当前正在使用代理账号密码
+	private $currProxyUserpwd = '';
     
     //一个代理ip最多请求多少URL
     public $proxyMaxRequestNum = 100;
@@ -518,6 +521,7 @@ class Panduoduo2
             if(empty($proxy)) {
                 $proxy['ip'] = $this->currProxyIp;
                 $proxy['port'] = $this->currProxyPort;
+				$proxy['userpwd'] = $this->currProxyUserpwd;
             }
         }
         
@@ -549,9 +553,11 @@ class Panduoduo2
         foreach($this->proxyIP as $val) {
             $data['ip'] = $val['ip'];
             $data['port'] = $val['port'];
-            
+            $data['userpwd'] = $val['userpwd'];
+			
             $this->currProxyIp = $val['ip'];
-            $this->currProxyPort = $val['port'];
+			$this->currProxyPort = $val['port'];
+			$this->currProxyUserpwd = $val['userpwd'];
             break;
         }
         $this->writeLog("当前代理ip ".implode(':', $data)."  剩余代理IP数量：".count($this->proxyIP));

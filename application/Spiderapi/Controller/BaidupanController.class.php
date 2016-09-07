@@ -49,7 +49,7 @@ class BaidupanController extends Controller
 		
 			$proxy = $this->configModel->getValue('PROXYIP');
 			$proxy = explode(':', $proxy);
-			$cj->proxyIP = array($proxy[0]=>array('ip'=>$proxy[0],'port'=>$proxy[1]));    
+			$cj->proxyIP = array($proxy[0]=>array('ip'=>$proxy[0],'port'=>$proxy[1],'userpwd'=>'lba8610:9rg4cjuf'));   
 		}
         $cj->writeLog("/**************** 采集开始start ****************/");
 		//$cj->cjUserPage();
@@ -96,7 +96,7 @@ class BaidupanController extends Controller
 		
 			$proxy = $this->configModel->getValue('PROXYIP');
 			$proxy = explode(':', $proxy);
-			$cj->proxyIP = array($proxy[0]=>array('ip'=>$proxy[0],'port'=>$proxy[1]));    
+			$cj->proxyIP = array($proxy[0]=>array('ip'=>$proxy[0],'port'=>$proxy[1],'userpwd'=>'lba8610:9rg4cjuf')); 
 		}
         $cj->writeLog("/**************** 采集开始start ****************/");
 		$cj->cjShareDetail();
@@ -126,7 +126,7 @@ class BaidupanController extends Controller
 			
 			$proxy = $this->configModel->getValue('PROXYIP');
 			$proxy = explode(':', $proxy);
-			$cj->proxyIP = array($proxy[0]=>array('ip'=>$proxy[0],'port'=>$proxy[1]));    
+			$cj->proxyIP = array($proxy[0]=>array('ip'=>$proxy[0],'port'=>$proxy[1],'userpwd'=>'lba8610:9rg4cjuf')); 
 		}
         $cj->writeLog("/**************** 采集开始start ****************/");
         $cj->cjShareDetail();
@@ -156,7 +156,7 @@ class BaidupanController extends Controller
 			
 			$proxy = $this->configModel->getValue('PROXYIP');
 			$proxy = explode(':', $proxy);
-			$cj->proxyIP = array($proxy[0]=>array('ip'=>$proxy[0],'port'=>$proxy[1]));    
+			$cj->proxyIP = array($proxy[0]=>array('ip'=>$proxy[0],'port'=>$proxy[1],'userpwd'=>'lba8610:9rg4cjuf'));    
 		}
         $cj->writeLog("/**************** 采集开始start ****************/");
         $cj->cjShareDetail();

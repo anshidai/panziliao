@@ -8,7 +8,7 @@ class Http
 	* curl 提交
 	* $url 请求url地址
 	* $header 请求头信息
-	* $proxy 代理信息 ip=>代理ip, port=>代理端口, loginpwd=>代理密码
+	* $proxy 代理信息 ip=>代理ip, port=>代理端口, userpwd=>代理密码
 	* $gzip 是否需要gzip解压
 	*/
 	public static function curl_http($url, $header = array(), $proxy = array(), $gzip = false, $cookie = '')
@@ -26,8 +26,8 @@ class Http
 			curl_setopt($ch, CURLOPT_PROXY, $proxy['ip']); //设置代理ip
 			curl_setopt($ch, CURLOPT_PROXYPORT, $proxy['port']); //设置代理端口号
 			
-			if(!empty($proxy['loginpwd'])) {
-				curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxy['loginpwd']); //设置代理密码   
+			if(!empty($proxy['userpwd'])) {
+				curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxy['userpwd']); //设置代理密码   
 			}
 		}
 
@@ -110,8 +110,8 @@ class Http
 			curl_setopt($ch, CURLOPT_PROXY, $proxy['ip']); //设置代理ip
 			curl_setopt($ch, CURLOPT_PROXYPORT, $proxy['port']); //设置代理端口号
 			
-			if($proxy['loginpwd']) {
-				curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxy['loginpwd']); //设置代理密码   
+			if($proxy['userpwd']) {
+				curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxy['userpwd']); //设置代理密码   
 			}
 		}
 		
@@ -163,8 +163,8 @@ class Http
 				curl_setopt($ch, CURLOPT_PROXY, $proxy['ip']); //设置代理ip
 				curl_setopt($ch, CURLOPT_PROXYPORT, $proxy['port']); //设置代理端口号
 				
-				if(!empty($proxy['loginpwd'])) {
-					curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxy['loginpwd']); //设置代理密码   
+				if(!empty($proxy['userpwd'])) {
+					curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxy['userpwd']); //设置代理密码   
 				}
 			}
 			
