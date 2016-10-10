@@ -1,7 +1,7 @@
 <?php 
 
 return array(
-    'SHOW_PAGE_TRACE' => true, //是否开启追踪Trace模式 生产环境请勿开启
+    'SHOW_PAGE_TRACE' => false, //是否开启追踪Trace模式 生产环境请勿开启
     
     'URL_HTML_SUFFIX' => 'html', //URL伪静态后缀设置
     

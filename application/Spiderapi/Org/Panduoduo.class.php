@@ -281,7 +281,7 @@ class Panduoduo
 	public function cjShareDetail()
 	{
 		try {
-			$this->configModel->setValue('CJSHARTLOCK', 1);
+			//$this->configModel->setValue('CJSHARTLOCK', 1);
             $this->initUserData();
             $this->getNextUserData();
             while(true) {
@@ -661,7 +661,7 @@ class Panduoduo
 			$html = Http::curl_http($url, $header, $proxy, $gzip); 
 		}
         //$this->writeLog('当前使用代理'.implode(':',$proxy));
-        
+        var_dump($html);exit;
 		return $html;
 	}
 	

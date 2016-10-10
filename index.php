@@ -5,6 +5,8 @@ define('APP_DEBUG', true);
 
 define('__ROOT__', substr(__FILE__, 0 , -10));
 
+define('DOMAIN', 'http://www.panziliao.com');
+
 // 定义应用目录
 define('APP_PATH', __ROOT__.'/application/');
 

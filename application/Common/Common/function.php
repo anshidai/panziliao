@@ -131,6 +131,16 @@ function getUrlQuery($url, $separator = '&')
 	return $params;
 }
 
+/***
+* 获取自增值
+* 
+* @param string $name 表名
+*/
+function getSequenceValue($name)
+{
+    return D('Counters')->getNextSequence($name);    
+}
+
 /**
 * 获取最新的代理ip
 * @param $model 模型实例
@@ -252,5 +262,37 @@ function goubanjiaProxyIp($orderNo, $ttl = false)
          $ips[$proxy[0]]['port'] = $proxy[1];
     }
     return $ips? $ips: array();
+}
+
+/**
+* 组装url
+* @param $app 应用类型 如：user_home...
+* @param $params url参数
+* @param $suffix url是否添加扩展名
+*/
+function build_url($app, $params, $suffix = true)
+{
+    $args = array(
+        'userid' => 0, //用户id
+        'detailid' => 0, //详情页id
+        'cid' => 0, //分类id
+        'page' => 1, //分页
+    );
+    extract(array_merge($args, $params));
+    $url = '';
+    
+    switch($app) {
+        case 'home':
+            $url .= DOMAIN.'/home-'.$userid;
+            break;
+        case 'detail':
+            $url .= DOMAIN.'/detail-'.$detailid;
+            break;                
+    }
+    
+    if($url && $suffix) {
+        $url .= '.'.C('URL_HTML_SUFFIX');
+    }
+    return $url;    
 }
 
