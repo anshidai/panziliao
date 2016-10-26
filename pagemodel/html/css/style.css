@@ -1,0 +1,24 @@
+.search-block .search-form{background: url(img/sprite_ico.png) no-repeat 0 -999em;}
+
+.bg-red{background-color: #D20605;}
+
+.main-block{width:960px;margin: 0 auto;}
+.header-block{height: 100px;margin-top: 10px;}
+.header-block .logo{width: 215px;height: 100px;float: left;display: inline;}
+.header-block .search-block{float:left;margin:20px 0 0 20px;}
+.search-block .search-tips{margin-bottom:8px;font-weight: 700;color: #656565;}
+.search-block .search-tips span{color:#f00;}
+.search-block .search-form{width: 422px;height:32px;background-position: 0 0;}
+.search-block .search-form .input-keyword{width:330px;height:28px;line-height: 28px; float:left;margin:2px 0 0 22px;border: 0 none;
+	overflow:hidden;}
+.search-block .search-form .input-submit{width:70px;height:28px;float:left;margin-top:2px;border: 0 none;cursor: pointer;background: 0 none;
+	text-indent: -999em;}
+.outer-nav-block{height: 40px;}
+.nav{}
+.nav li{height: 40px;line-height: 40px;font-weight: 700; float: left;display:inline-block;font-size: 14px;color:#fff;}
+.nav li a{height: 40px;line-height: 40px;padding:0 20px;text-align: center; display: block;color:#fff;}
+.nav li a.curr,.nav li a:hover{padding:0 20px;background-color: #920403;}
+.daren-block{height:166px;padding-left:2px;border: 1px solid #D50915;background-color: #E9BC9B;}
+.daren-block .userlist{}
+.daren-block .userlist li{margin:10px 0 0 14px;float: left;display: inline-block;}
+.daren-block .userlist li img{border: 1px solid #ccc;padding: 1px;}
