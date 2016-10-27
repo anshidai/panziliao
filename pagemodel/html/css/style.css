@@ -1,4 +1,5 @@
-.search-block .search-form{background: url(img/sprite_ico.png) no-repeat 0 -999em;}
+.search-block .search-form,.table-block .topblock.point ul li{background: url(img/sprite_ico.png) no-repeat 0 -999em;}
+.topblock ul li a:hover{color: #D20605;}
 
 .bg-red{background-color: #D20605;}
 
@@ -18,7 +19,33 @@
 .nav li{height: 40px;line-height: 40px;font-weight: 700; float: left;display:inline-block;font-size: 14px;color:#fff;}
 .nav li a{height: 40px;line-height: 40px;padding:0 20px;text-align: center; display: block;color:#fff;}
 .nav li a.curr,.nav li a:hover{padding:0 20px;background-color: #920403;}
-.daren-block{height:166px;padding-left:2px;border: 1px solid #D50915;background-color: #E9BC9B;}
+.daren-block{padding-left:2px;padding-bottom:8px;border: 1px solid #999;background-color: #E9BC9B;}
 .daren-block .userlist{}
 .daren-block .userlist li{margin:10px 0 0 14px;float: left;display: inline-block;}
 .daren-block .userlist li img{border: 1px solid #ccc;padding: 1px;}
+.ziliao-block{}
+.htitle{height: 30px;border-bottom: 2px solid #999;}
+.htitle .name{padding:0 25px;display: inline-block;height: 30px;line-height: 30px; font-size: 14px;font-weight: 700px;color:#fff;
+	background-color: #BE0028;}
+.htitle .name a{color:#fff;}
+.tabs-block{}
+.tabs-li{border-bottom: 2px solid #D0D0D0;}
+.tabs-li li{float: left;display:inline-block;font-size: 14px;width:85px;height: 40px;position: relative;left:0;}
+.tabs-li li a{position: absolute; font-weight: 700;width:85px;height: 40px;line-height: 40px;display: inline-block;
+	text-align: center;color:#000;}
+.tabs-li li a.curr{border-bottom: 2px solid #D10504;}
+.tabs-li li a:hover{border-bottom: 2px solid #D10504;}
+.table-block{padding-left:10px;}
+.table-block .topblock{width:315px;float: left;display: inline-block;background:url(img/top10-ico.png) no-repeat 0 4px;}
+.topblock ul{background-position: right -43px;margin-left: 28px;}
+.topblock ul li{height: 27px;line-height: 27px;overflow: hidden;}
+.topblock ul li a{color: #0043A5;}
+.table-block .topblock.point{background: 0 none;}
+.table-block .topblock.point ul{margin-left: 0;}
+.table-block .topblock.point ul li{padding-left:12px;background-position: -448px 13px;}
+
+.outer-footer-block{height: 40px;}
+.local-link{line-height: 40px;text-align: center;color: #fff;}
+.local-link a{color: #fff;}
+.copyright-block{margin: 15px 0 30px;}
+.copyright-block p{line-height: 22px; text-align: center;color: #666;}
