@@ -1,5 +1,8 @@
-.search-block .search-form,.table-block .topblock.point ul li{background: url(img/sprite_ico.png) no-repeat 0 -999em;}
-.topblock ul li a:hover{color: #D20605;}
+.search-block .search-form,.table-block .topblock.point ul li,.user-block .user-info a.linkhome,.blue-block .blue-list li,
+.detail-params a.down-btn,.detail-params a.share-btn,.wpan-link a.wplink{background: url(img/sprite_ico.png) no-repeat 0 -999em;}
+.topblock ul li a:hover,.blue-block .blue-list li a:hover,.list-block .ulist li a:hover,.postion-menu a:hover{color: #D20605;}
+
+.ads-block{text-align: center;}
 
 .bg-red{background-color: #D20605;}
 
@@ -49,3 +52,73 @@
 .local-link a{color: #fff;}
 .copyright-block{margin: 15px 0 30px;}
 .copyright-block p{line-height: 22px; text-align: center;color: #666;}
+
+.postion-menu,.postion-menu a{color: #000;}
+.postion-menu .postitle{font-weight: normal;font-size: 12px;display: inline;}
+
+.share-detail-main{}
+.main-left{width: 260px;float: left;}
+.main-right{width: 690px;float: right;}
+
+.main-left .user-block{height:175px;background-color: #FEFF99;border: 1px solid #CD0811;}
+.user-block .avatar{width: 82px;height: 82px;display: inline-block;float: left;margin:15px 0 0 15px;}
+.user-block .avatar img{padding: 1px;border: 1px solid #999;}
+.user-block .user-info{display: inline-block;float: left;width: 140px;margin:25px 0 0 20px;}
+.user-block .user-info .user-name{margin-bottom: 15px;}
+.user-block .user-info .user-name,.user-block .user-info .user-name a{font-size: 12px;color:#000;}
+.user-block .user-info a.linkhome{width: 89px;height: 24px;line-height: 24px;display: inline-block; text-align: center;
+		background-position: -307px -44px;color: #fff;}
+.user-block .user-params{clear: both;height: 48px;margin-top: 10px;}
+.user-block .user-params span{width: 60px;float: left;text-align: center;line-height: 25px; color:#665B45;border-right:1px solid #EDE1CB;}
+.user-block .user-params span b{color:#000;font-weight: normal;}
+
+.blue-block{border: 1px solid #4091D0;border-bottom-width: 3px;}
+.blue-block .htitle{height:35px;background-color: #4091D0;}
+.blue-block .htitle .name{height:35px;line-height: 35px; background: 0 none;padding:0 0 0 10px;}
+
+.blue-block .blue-list{margin: 10px 0 10px 10px;}
+.blue-block .blue-list li{height: 27px;line-height: 27px;padding-left:12px;background-position: -448px 13px; overflow: hidden;}
+.blue-block .blue-list li a{color: #0043A5;}
+
+.htittop{margin-top: 5px;margin-left: 10px;}
+.htittop .title{font-size: 24px;}
+.htittop .tags{margin-top: 10px;color: #8D8D8D;}
+.htittop .tags a{color: #8D8D8D;margin-right: 10px;display: inline-block;}
+.detail-params{margin-left: 10px;}
+.detail-params dd{height:32px;line-height: 32px;}
+.detail-params dd span{display: inline-block;margin-right: 20px;}
+.detail-params dt{margin:20px 0 5px;}
+.detail-params a.down-btn{display: inline-block;text-indent: 18px; font-size:14px;font-weight: bold;width: 137px;height: 34px;line-height: 34px;
+		text-align: center;color:#fff;background-position: 0 -44px;}
+.detail-params a.share-btn{display: inline-block;text-indent: 18px;font-size:14px;font-weight: bold; width: 137px;height: 34px;line-height: 34px;
+		margin-left:20px;text-align: center;color:#fff;background-position: -153px -44px;}
+.related-detail{border:2px solid #080367;border-bottom-width: 3px;padding-bottom: 10px;}
+.related-detail .htitle{height:40px;background-color: #020167;}
+.related-detail .htitle .name{height:40px;line-height: 40px;}
+.related-detail .blue-list li{font-size: 14px;width: 45%;float: left;display: inline-block;overflow:hidden;
+	padding-left: 12px;background:0 none;}
+.daren-block.purple-bg .userlist li{margin-left: 11px;}
+
+.user-head{}
+.user-head .uleft-block{width: 300px;height: 250px;float: left;}
+.user-head .uright-block{width: 300px;height: 250px;float: right;}
+.user-head .user-home-block{width: 338px;height: 248px;float: left;margin-left: 10px;background-color: #FEFF99;border: 1px solid #CC1301;}
+.user-home-block .user-info{margin:25px 0 0 20px;}
+.user-home-block .user-info .user-name{margin-bottom: 15px;font-size: 14px;color:#000;}
+.user-home-block .avatar{width: 82px;height: 82px;display: inline-block;float: left;margin:15px 0 0 15px;}
+.user-home-block .avatar img{padding: 1px;border: 1px solid #999;}
+.user-home-block .user-info a.linkhome{width: 89px;height: 24px;line-height: 24px;display: inline-block; text-align: center;
+		background-position: -307px -44px;color: #fff;}
+.user-home-block .user-params{height: 48px;margin-top: 15px;}
+.user-home-block .user-params span{width: 80px;float: left;text-align: center;line-height: 25px; color:#665B45;border-right:1px solid #EDE1CB;}
+.user-home-block .user-params span b{color:#000;font-weight: normal;}
+.user-home-block .wpan-link{float: left;margin:20px 0 0 20px;}
+.user-home-block .wpan-link .share-time{color:#666;}
+.user-home-block .wpan-link a.wplink{display: inline-block;text-indent: 18px; font-size:14px;font-weight: bold;width: 137px;height: 34px;line-height: 34px;
+		text-align: center;color:#fff;background-position: 0 -44px;}
+
+.list-block{}
+.list-block .ulist li{border-bottom: 1px solid #ccc;padding:20px 0 15px;}
+.list-block .ulist li a{color: #0043A5;font-size: 14px;}
+.list-block .ulist li p{margin-top:10px;color: #656565;line-height: 25px;}
+.list-block .ulist li p span{margin-right: 35px;}
