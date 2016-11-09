@@ -10,6 +10,12 @@ define('DOMAIN', 'http://www.panziliao.com');
 // 定义应用目录
 define('APP_PATH', __ROOT__.'/application/');
 
+//风格模板
+define('SKIN_NAME',  'default');
+
+//模板主题目录
+define('THEMES_PATH', __ROOT__.'/template/'. SKIN_NAME. '/');
+
 /* 绑定访问Front模块  当绑定了后其他模块就不能直接访问 */
 //define('BIND_MODULE', 'Front');
 
