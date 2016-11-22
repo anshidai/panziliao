@@ -2,10 +2,11 @@
 
 namespace Home\Controller;
 
+use Home\Controller\BaseController;
 use Home\Model\BU\BUUser;
 use Home\Model\BU\BUUserDetail;
 
-class IndexController extends CommonController {
+class IndexController extends BaseController {
     
     public function index()
     {

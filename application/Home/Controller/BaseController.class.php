@@ -4,7 +4,7 @@ namespace Home\Controller;
 
 use Think\Controller;
 
-class CommonController extends Controller {
+class BaseController extends Controller {
     
     protected function _initialize()
     {
