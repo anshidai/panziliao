@@ -9,8 +9,9 @@ class IndexController extends CommonController {
     
     public function index()
     {
-        //$res = BUUser::getLastestUser();
-        $res = BUUserDetail::getUserDetailList(1899046725, 2);
-        dump($res);
+        $data['bestUser'] = BUUser::getLastestUser(24);
+        
+        $this->assign('data', $data);
+        $this->display();
     }
 }

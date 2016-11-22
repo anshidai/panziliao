@@ -1,8 +1,20 @@
 <?php 
+
 namespace Home\Model\BU;
+
+use Components\helper\UrlHelper;
 
 class BUUser 
 {
+    private static $models = null;
+    
+    public static function getInstance($modelname)
+    {
+        if(!isset(self::$models[$modelname])) {
+            return self::$models[$modelname] = D($modelname);   
+        }
+        return self::$models[$modelname];               
+    }
     
     /***
     * 获取最新用户信息
@@ -11,11 +23,11 @@ class BUUser
     */
     public static function getLastestUser($num = 10)
     {
-        $resUserModel = D('ResUser');
+        $resUserModel = self::getInstance('ResUser');
         $res = $resUserModel->order('id desc')->limit($num)->select();
         if($res) {
             foreach($res as $key=>$val) {
-                $res[$key]['linkurl'] = build_url('home', array('userid'=>$val['userid']));       
+                $res[$key]['linkurl'] = UrlHelper::url('share_home', $val['userid']);
             }    
         }
         return $res;
@@ -27,10 +39,10 @@ class BUUser
     */
     public static function getUserDetail($userid)
     {
-        $resUserModel = D('ResUser');
+        $resUserModel = self::getInstance('ResUser');
         $res = $resUserModel->where(array('userid'=>$userid))->find();
         if($res) {
-            
+                    
         }
         return $res;    
     }

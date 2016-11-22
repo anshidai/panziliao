@@ -1,5 +1,8 @@
 <?php 
+
 namespace Home\Model\BU;
+
+use Components\helper\UrlHelper;
 
 class BUUserDetail 
 {
@@ -32,12 +35,10 @@ class BUUserDetail
             $obj = $obj->limit($num);    
         }
         $res = $obj->select();
-        
-        //$res = $resDetailModel->where(array('userid'=>$userid))->order("id {$sort}")->select();
         if($res) {
             foreach($res as $key=>$val) {
-                $res[$key]['linkurl'] = build_url('detail', array('detailid'=>$val['id']));
-                $res[$key]['home_linkurl'] = build_url('home', array('userid'=>$val['userid']));
+                $res[$key]['linkurl'] = UrlHelper::url('share_detail', $val['id']);
+                $res[$key]['home_linkurl'] = UrlHelper::url('share_home', $val['userid']);
             }                
         }
         return $res;    
@@ -53,8 +54,8 @@ class BUUserDetail
         $resDetailModel = D('ResDetail');
         $res = $resDetailModel->where(array('id'=>$id))->find();
         if($res) {
-            $res['linkurl'] = build_url('detail', array('detailid'=>$res['id']));
-            $res['home_linkurl'] = build_url('home', array('userid'=>$res['userid']));
+            $res['linkurl'] = UrlHelper::url('share_detail', $res['id']);
+            $res['home_linkurl'] = UrlHelper::url('share_home', $res['userid']);
         }
         return $res;    
     }

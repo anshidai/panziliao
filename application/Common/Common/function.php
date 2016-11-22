@@ -273,6 +273,7 @@ function goubanjiaProxyIp($orderNo, $ttl = false)
 function build_url($app, $params, $suffix = true)
 {
     $args = array(
+        'id' => 0, //id
         'userid' => 0, //用户id
         'detailid' => 0, //详情页id
         'cid' => 0, //分类id
@@ -283,7 +284,7 @@ function build_url($app, $params, $suffix = true)
     
     switch($app) {
         case 'home':
-            $url .= DOMAIN.'/home-'.$userid;
+            $url .= DOMAIN.'/home-'.$id;
             break;
         case 'detail':
             $url .= DOMAIN.'/detail-'.$detailid;

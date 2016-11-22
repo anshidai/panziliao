@@ -16,7 +16,9 @@ return array(
     'DB_PWD'             => '', //数据库密码
     'DB_PORT'             => '27017', //数据库端口号
     'DB_PREFIX'             => 'pre_', //数据库表前缀
-    //'DB_DEBUG'             => true,	
+    //'DB_DEBUG'             => true,
+    
+    'MODULE_ALLOW_LIST' => array('Home', 'Spiderapi'),	
 
 );
 
