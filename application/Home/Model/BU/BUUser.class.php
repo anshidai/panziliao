@@ -21,10 +21,10 @@ class BUUser
     * @param int $num 记录条数
     * @param array
     */
-    public static function getLastestUser($num = 10)
+    public static function getLastestUser($num = 10, $field = '*')
     {
         $resUserModel = self::getInstance('ResUser');
-        $res = $resUserModel->order('id desc')->limit($num)->select();
+        $res = $resUserModel->field($field)->order('id desc')->limit($num)->select();
         if($res) {
             foreach($res as $key=>$val) {
                 $res[$key]['linkurl'] = UrlHelper::url('share_home', $val['userid']);

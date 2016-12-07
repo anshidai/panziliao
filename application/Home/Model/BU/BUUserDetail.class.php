@@ -26,11 +26,11 @@ class BUUserDetail
     * @param string $sort 排序 desc-倒序 asc-升序
     * @return array 
     */
-    public static function getUserDetailList($userid, $num = 0, $sort = 'desc')
+    public static function getUserDetailList($userid, $num = 0, $sort = 'id desc')
     {
         $resDetailModel = D('ResDetail');
         
-        $obj = $resDetailModel->where(array('userid'=>$userid))->order("id {$sort}");
+        $obj = $resDetailModel->where(array('userid'=>$userid))->order($sort);
         if($num) {
             $obj = $obj->limit($num);    
         }

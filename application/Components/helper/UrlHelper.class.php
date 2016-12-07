@@ -52,7 +52,7 @@ class UrlHelper
         }
 
         return $url;
-    }
+    } 
     
     
     

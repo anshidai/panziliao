@@ -7,10 +7,10 @@ namespace Components\helper;
 */
 class ArrayHelper
 {
-	
-	/**
-	* 从数组中删除空白的元素（包括只有空白字符的元素）
-	* 用法：
+    
+    /**
+    * 从数组中删除空白的元素（包括只有空白字符的元素）
+    * 用法：
     * $arr = array('', 'test', '   ');
     * ArrayHelper::removeEmpty($arr);
     * var_dump($hashmap);
@@ -18,13 +18,13 @@ class ArrayHelper
     *   array(
     *      'test'
     *    )
-	 
-	* @param array $arr 要处理的数组
-	* @param boolean $trim 是否对数组元素调用 trim 函数
-	*/
-	public static function removeEmpty(&$arr, $trim = true)
-	{
-		foreach($arr as $key => $val) {
+     
+    * @param array $arr 要处理的数组
+    * @param boolean $trim 是否对数组元素调用 trim 函数
+    */
+    public static function removeEmpty(&$arr, $trim = true)
+    {
+        foreach($arr as $key => $val) {
             if(is_array($val)) {
                 self::removeEmpty($arr[$key]);
             }else {
@@ -36,26 +36,26 @@ class ArrayHelper
                 }
             }
         }
-	}
-	
-	/**
-	* 从一个二维数组中返回指定键的所有值
-	* @param array $arr 数据源
-	* @param string $col 要查询的键
-	* @return array 包含指定键所有值的数组
-	*/
-	public static getCols($arr, $col)
-	{
-		$ret = array();
+    }
+    
+    /**
+    * 从一个二维数组中返回指定键的所有值
+    * @param array $arr 数据源
+    * @param string $col 要查询的键
+    * @return array 包含指定键所有值的数组
+    */
+    public static function getCols($arr, $col)
+    {
+        $ret = array();
         foreach($arr as $val) {
             if(isset($val[$col])) {
                 $ret[] = $val[$col];
             }
         }
         return $ret;
-	}
-	
-	/**
+    }
+    
+    /**
      * 将一个二维数组转换为 HashMap，并返回结果
      *
      * 用法1：
@@ -94,7 +94,7 @@ class ArrayHelper
      * @param string $valueField 对应的键值
      * @return array 转换后的 HashMap 样式数组
      */
-    static function toHashmap($arr, $keyField, $valueField = null)
+    public static function toHashmap($arr, $keyField, $valueField = null)
     {
         $ret = array();
         if($valueField) {
@@ -235,8 +235,8 @@ class ArrayHelper
         eval('array_multisort(' . $sortRule . '$rowset);');
         return $rowset;
     }
-	
-	/**
+    
+    /**
      * 合并两个数组
      * @param array $arr1
      * @param array $arr2
@@ -253,12 +253,12 @@ class ArrayHelper
         }
         return $ret;
     }
-	
-	/**
+    
+    /**
      * 检查个数组中所有元素是否在字符串中出现
      * @param array|string $search 查找内容
      * @param string $text 在该内容中进行查找
-	 * @return boole true:存在 false：不存在
+     * @return boole true:存在 false：不存在
      */
     public static function searchInText($search, $text)
     {
@@ -277,20 +277,49 @@ class ArrayHelper
         }
         return $res;
     }
-	
-	/**
+    
+    /**
      * 不区分大小写的in_array实现
      * @param array|string $value 查找内容
      * @param array $array 在该内容中进行查找
-	 * @return boole true:存在 false：不存在
+     * @return boole true:存在 false：不存在
      */
-	public static function inArrayCase($value, $array)
-	{
-		return in_array(strtolower($value),array_map('strtolower',$array));
-	}
-
-	
-	
-	
-	
+    public static function inArrayCase($value, $array)
+    {
+        return in_array(strtolower($value),array_map('strtolower',$array));
+    }
+    
+    /**
+    * 将一个数组分割成多个数组
+    * @param array $inputArr 输入数组
+    * @param int $size 拆分后单元数组个数
+    */
+    public static function chunkArr($inputArr, $size)
+    {
+        if(empty($inputArr)) return array();
+        
+        if(!is_array($inputArr)) $inputArr = array($inputArr);
+        
+        return array_chunk($inputArr, $size);    
+    }
+    
+    /**
+    * 在现有数组中插入某个元素
+    */
+    public static function addArrayKey($inputArr, $name, $value = '')
+    {
+        if(empty($inputArr)) return array();
+        
+        if(!is_array($inputArr)) $inputArr = array($inputArr);
+    
+        foreach($inputArr as $key=>$val) {
+            $data[$key][$name] = isset($val[$value])? $val[$value]: $val;
+        }
+        
+        return $data;
+    }
+    
+    
+    
+    
 }
