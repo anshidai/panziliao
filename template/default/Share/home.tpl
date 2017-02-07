@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{$data['userinfo']['username']}百度网盘分享你主页 -{$Think.SITE_NAME}</title>
+    <title>{$data['userinfo']['username']}的百度云盘资源下载和分享 - {$Think.SITE_NAME}</title>
+	<meta name="keywords" content="{$data['userinfo']['username']}的百度网盘资源,{$data['userinfo']['username']}的百度云盘资源" />
+    <meta name="description" content="{$data['userinfo']['username']}，网盘搜索神器，收录百度云盘资源。每天更新各类视频，种子，小说，壁纸，音乐等优质网盘资源。是您发现和下载好资源的利器。好资源，尽在{$data['userinfo']['username']}。用网盘，是种生活." />
     <link rel="stylesheet" href="__CSS__/common.css">
     <link rel="stylesheet" href="__CSS__/style.css">
 </head>

@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{$data['detail']['title']} -{$Think.SITE_NAME}</title>
+    <title>{$data['detail']['title']}百度云,百度网盘下载 - {$Think.SITE_NAME}</title>
+	<meta name="keywords" content="{$data['detail']['title']},下载,其它,收藏,分享,资源,百度网盘,百度云盘" />
+    <meta name="description" content="{$data['detail']['title']}百度云下载，收藏和分享" />
+    
     <link rel="stylesheet" href="__CSS__/common.css">
     <link rel="stylesheet" href="__CSS__/style.css">
 </head>

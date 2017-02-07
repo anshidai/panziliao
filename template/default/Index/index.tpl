@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{$Think.SITE_NAME}</title>
+    <title>百度云盘,百度云搜索,百度云盘资源搜索,百度网盘搜索引擎-网盘搜索 - {$Think.SITE_NAME}</title>
+	<meta name="keywords" content="百度云盘,百度云盘搜索,百度云盘资源下载,百度网盘,百度网盘搜索,网盘搜索,下载,资源,分享,收藏" />
+    <meta name="description" content="{$Think.SITE_NAME}，网盘搜索神器，收录百度云盘资源。每天更新各类视频，种子，小说，壁纸，音乐等优质百度网盘资源。是您发现和下载好资源的利器。好资源，尽在{$Think.SITE_NAME}。用网盘，是种生活." />
     <link rel="stylesheet" href="__CSS__/common.css">
     <link rel="stylesheet" href="__CSS__/style.css">
 </head>
