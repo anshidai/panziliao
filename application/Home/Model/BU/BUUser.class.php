@@ -21,7 +21,7 @@ class BUUser
     * @param int $num 记录条数
     * @param array
     */
-    public static function getLastestUser($num = 10, $field = '*')
+    public static function getLastestUser($num = 10, $field = '')
     {
         $resUserModel = self::getInstance('ResUser');
         $res = $resUserModel->field($field)->where(array('status'=>2))->order('id desc')->limit($num)->select();

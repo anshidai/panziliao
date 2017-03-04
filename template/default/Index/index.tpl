@@ -32,11 +32,11 @@ use Components\helper\UrlHelper;
             <span class="blank10"></span>
             <div class="tabs-block">
                 <ul class="tabs-li clearfix">
-                    <li><a href="" class="curr">影视资料</a></li>
-                    <li><a href="">音乐资料</a></li>
-                    <li><a href="">图片|图集</a></li>
-                    <li><a href="">专辑</a></li>
-                    <li><a href="">综合</a></li>
+                    <li><a href="javascript:;" class="curr" rel="nofollow">影视资料</a></li>
+                    <li><a href="#c2" rel="nofollow">音乐资料</a></li>
+                    <li><a href="#c3" rel="nofollow">图片|图集</a></li>
+                    <li><a href="#c4" rel="nofollow">专辑</a></li>
+                    <li><a href="#c5" rel="nofollow">综合</a></li>
                 </ul>
                 <span class="blank10"></span>
                 <div class="table-block">
@@ -58,7 +58,7 @@ use Components\helper\UrlHelper;
             <!--  tabs-block end -->
             
             <span class="blank20"></span>
-            <div class="htitle "><h3 class="name blue-bg">云盘音乐资料</h3></div>
+            <div class="htitle" id="c2"><h3 class="name blue-bg">云盘音乐资料</h3></div>
             <span class="blank10"></span>
             <div class="table-block">
                 <foreach name="data['bestDocument']" item="val">
@@ -75,7 +75,7 @@ use Components\helper\UrlHelper;
             <!-- table-block end -->
             
             <span class="blank20"></span>
-            <div class="htitle"><h3 class="name purple-bg">百度盘图片资料</h3></div>
+            <div class="htitle" id="c3"><h3 class="name purple-bg">百度盘图片资料</h3></div>
             <span class="blank10"></span>
             <div class="table-block">
                 <foreach name="data['bestPicture']" item="val">
@@ -93,7 +93,7 @@ use Components\helper\UrlHelper;
             
             <notempty name="data['bestSpecial']">
             <span class="blank20"></span>
-            <div class="htitle"><h3 class="name purple-bg">专辑学习资料</h3></div>
+            <div class="htitle" id="c4"><h3 class="name purple-bg">专辑学习资料</h3></div>
             <span class="blank10"></span>
             <div class="table-block">
                 <foreach name="data['bestSpecial']" item="val">
@@ -111,7 +111,7 @@ use Components\helper\UrlHelper;
             </notempty>
             
             <span class="blank20"></span>
-            <div class="htitle"><h3 class="name purple-bg">网盘资料分享</h3></div>
+            <div class="htitle" id="c5"><h3 class="name purple-bg">网盘资料分享</h3></div>
             <span class="blank10"></span>
             <div class="table-block">
                 <foreach name="data['bestOther']" item="val">

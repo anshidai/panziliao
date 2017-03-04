@@ -4,7 +4,6 @@ namespace Home\Controller;
 
 use Home\Controller\BaseController;
 use Home\Model\BU\BUUser;
-use Home\Model\BU\BUUserDetail;
 use Home\Model\BU\BUResDetail;
 use Home\Model\BU\BUCommon;
 use Components\helper\UrlHelper;

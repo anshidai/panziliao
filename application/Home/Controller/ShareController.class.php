@@ -4,9 +4,8 @@ namespace Home\Controller;
 
 use Home\Controller\BaseController;
 use Home\Model\BU\BUUser;
-use Home\Model\BU\BUUserDetail;
-use Home\Model\BU\BUResDetail;
 use Home\Model\BU\BUCommon;
+use Home\Model\BU\BUResDetail;
 use Components\helper\UrlHelper;
 
 class ShareController extends BaseController 
@@ -19,8 +18,16 @@ class ShareController extends BaseController
         $id = I('get.id', 0, 'intval');
         $page = I('get.p', 1, 'intval');
         
+        $firstUrl = $baseUrl = UrlHelper::url('share_home', $id);
+        $baseUrl = rtrim($baseUrl, '/').'-p{$page}/';
+        
+        $data['page'] = $page;
         $data['userinfo'] = BUUser::getUserDetail($id);
-        $data['list'] = BUUserDetail::getUserDetailList($data['userinfo']['userid'], $this->pagesize);
+        $userid = $data['userinfo']['userid'];
+        
+        $data['total'] = BUResDetail::getUserDetailTotal($userid);
+        $data['list'] = BUResDetail::getUserDetailList($userid, $this->pagesize, $page);
+        $data['pages'] = BUCommon::getPages($baseUrl, $firstUrl, $data['total'], $page, $this->pagesize);
         
         $this->assign('data', $data);
         $this->display();
@@ -30,10 +37,10 @@ class ShareController extends BaseController
     {
         $id = I('get.id', 0, 'intval'); 
         
-        $data['detail'] = BUUserDetail::getDetail($id);
+        $data['detail'] = BUResDetail::getDetail($id);
         $data['detail']['title'] = str_replace('.'.$data['detail']['filetype'],'', $data['detail']['title']); 
         $data['userinfo'] = BUUser::getUserDetail($data['detail']['userid']);
-        $data['list'] = BUUserDetail::getUserDetailList($data['userinfo']['userid'], 10);
+        $data['list'] = BUResDetail::getUserDetailList($data['userinfo']['userid'], 10);
         
         $data['likeList'] = array();
 
@@ -52,7 +59,7 @@ class ShareController extends BaseController
         $data['catname'] = getCategoryName($cid);
         $data['page'] = $page;
         $data['total'] = BUResDetail::getCatDetailTotal($cid);
-        $data['list'] = BUResDetail::getCatDetailList($cid, $this->pagesize);
+        $data['list'] = BUResDetail::getCatDetailList($cid, $this->pagesize, $page);
         $data['pages'] = BUCommon::getPages($baseUrl, $firstUrl, $data['total'], $page, $this->pagesize);
 
         $this->assign('data', $data);
