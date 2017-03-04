@@ -17,9 +17,11 @@ class UrlHelper
         格式: %s 或 %d, 如: {DOMAIN}/detail-%d.html
     */
     protected static $rules = array(
-        'index' => '{DOMAIN}',
-        'share_home' => '{DOMAIN}/home-%d.html',
-        'share_detail' => '{DOMAIN}/detail/%d.html',
+        'index' => '{DOMAIN}', //首页
+        'share_home' => '{DOMAIN}/u%s/', //用户主页
+        'share_detail' => '{DOMAIN}/detail/%s.html', //资源详情页
+        'category_list' => '{DOMAIN}/c%s/', //列表页
+        'latest_detail' => '{DOMAIN}/latests/', //最新分享资源
     );
     
     /**
