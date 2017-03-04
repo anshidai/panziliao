@@ -34,7 +34,7 @@
                 <!-- user-block end -->
                 <span class="blank10"></span>    
                 <div class="blue-block clearfix">
-                    <div class="htitle"><h3 class="name">Ta的分享资源</h3></div>
+                    <div class="htitle"><h3 class="name">{$data['userinfo']['username']}分享资源</h3></div>
                     <div class="blue-list">
                         <ul>
                             <foreach name="data['list']" item="val">
@@ -54,7 +54,7 @@
             <div class="main-right">
                 <div class="htittop">
                     <h1 class="title">{$data['detail']['title']}</h1>
-                    <p class="tags">标签：<a href="">互联网产品</a><a href="">产品运营</a></p>
+                    <!--<p class="tags">标签：<a href="">互联网产品</a><a href="">产品运营</a></p>-->
                 </div>
                 <span class="blank10"></span>
                 <div class="ads-block">
@@ -109,7 +109,7 @@
 
                 <span class="blank10"></span>
                 <div class="blue-block related-detail clearfix">
-                    <div class="htitle"><h3 class="name">互联网-产品运营全面解析相关资源</h3></div>
+                    <div class="htitle"><h3 class="name">{$data['detail']['title']}相关资源</h3></div>
                     <div class="blue-list">
                         <ul>
                             <li><a href="">CF一键领取道具.rar</a></li>

@@ -26,6 +26,7 @@ class ShareController extends CommonController {
         $id = I('get.id', 0, 'intval'); 
         
         $data['detail'] = BUUserDetail::getDetail($id);
+        $data['detail']['title'] = str_replace('.'.$data['detail']['filetype'],'', $data['detail']['title']); 
         $data['userinfo'] = BUUser::getUserDetail($data['detail']['userid']);
         $data['list'] = BUUserDetail::getUserDetailList($data['userinfo']['userid'], 10);
         

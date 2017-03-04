@@ -16,12 +16,12 @@
     <div class="main-block">
         <ul class="nav">
             <li><a href="{$Think.DOMAIN}" class="curr">首页</a></li>
-            <li><a href="">最新资料</a></li>
             <li><a href="">影视资料</a></li>
             <li><a href="">文档资料</a></li>
             <li><a href="">音乐资料</a></li>
             <li><a href="">图片|图集</a></li>
             <li><a href="">软件</a></li>
+            <li><a href="">最新资料</a></li>
         </ul>
     </div>
 </div>
