@@ -2,12 +2,13 @@
 
 namespace Home\Controller;
 
+use Home\Controller\BaseController;
 use Home\Model\BU\BUUser;
 use Home\Model\BU\BUUserDetail;
 use Home\Model\BU\BUResDetail;
 use Components\helper\ArrayHelper;
 
-class IndexController extends CommonController {
+class IndexController extends BaseController {
     
     public function index()
     {

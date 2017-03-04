@@ -2,10 +2,11 @@
 
 namespace Home\Controller;
 
+use Home\Controller\BaseController;
 use Home\Model\BU\BUUser;
 use Home\Model\BU\BUUserDetail;
 
-class ShareController extends CommonController {
+class ShareController extends BaseController {
     
     private $pagesize = 10;
     
