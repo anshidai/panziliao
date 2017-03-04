@@ -15,8 +15,12 @@ return array(
     'URL_MODEL' => 2, //URL访问模式 默认为PATHINFO 模式 0 (普通模式); 1 (PATHINFO 模式); 2 (REWRITE  模式); 3 (兼容模式)  
     'URL_ROUTER_ON' => true, //开启路由
     'URL_ROUTE_RULES' => array(
-        '/^home\-(\d+)/' => 'Share/home?id=:1',
+        '/^u(\d+)-p(\d+)$/' => 'Share/home?id=:1&p=:2',
+        '/^u(\d+)/' => 'Share/home?id=:1',
         '/^detail\/(\d+)/' => 'Share/detail?id=:1',
+        '/^c(\d+)-p(\d+)$/' => 'Share/lists?cid=:1&p=:2',
+        '/^c(\d+)$/' => 'Share/lists?cid=:1',
+        '/^latests$/' => 'Latest/latests',
     ),    
     
 	//模板相关配置, 在模板中直接使用 如: __STATIC__ 则页面显示 /skin/images

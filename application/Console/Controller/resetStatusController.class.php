@@ -9,9 +9,7 @@ class resetStatusController extends Controller
     public function resetUser()
     {
         $model = D('ResUser');
-        $total = 
         
-                
     }
     
     public function resetDetail()

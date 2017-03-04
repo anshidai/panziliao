@@ -41,6 +41,25 @@ function getFileCategory($type = '')
 	return $cid;
 }
 
+function getCategoryName($cid)
+{
+    switch($cid) {
+        case 1: 
+            $catname = '视频';break; //视频
+        case 2: 
+            $catname = '音乐';break; //音乐
+        case 3: 
+            $catname = '图片';break; //图片
+        case 4: 
+            $catname = '专辑';break; //专辑
+        case 5: 
+            $catname = '综合';break; //其他
+        default: 
+            $catname = '综合';break;
+    }
+    return $catname;
+}
+
 
 /**
 * 

@@ -40,6 +40,7 @@ class ResDetailModel extends MongoModel
         'data', //保存数据集合
         'cj_url', //采集url
         'cj_url_index', //采集url表_id
+        'status', //审核状态 1-未审核 2-已审核
     );
     const counterskey = 'res_detail';
     

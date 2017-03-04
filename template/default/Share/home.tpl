@@ -1,3 +1,6 @@
+<?php 
+use Components\helper\UrlHelper;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

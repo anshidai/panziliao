@@ -24,7 +24,7 @@ class BUUser
     public static function getLastestUser($num = 10, $field = '*')
     {
         $resUserModel = self::getInstance('ResUser');
-        $res = $resUserModel->field($field)->order('id desc')->limit($num)->select();
+        $res = $resUserModel->field($field)->where(array('status'=>2))->order('id desc')->limit($num)->select();
         if($res) {
             foreach($res as $key=>$val) {
                 $res[$key]['linkurl'] = UrlHelper::url('share_home', $val['userid']);

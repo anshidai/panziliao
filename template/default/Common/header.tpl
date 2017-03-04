@@ -15,13 +15,13 @@
 <div class="outer-nav-block bg-red">
     <div class="main-block">
         <ul class="nav">
-            <li><a href="{$Think.DOMAIN}" class="curr">首页</a></li>
-            <li><a href="">影视资料</a></li>
-            <li><a href="">文档资料</a></li>
-            <li><a href="">音乐资料</a></li>
-            <li><a href="">图片|图集</a></li>
-            <li><a href="">软件</a></li>
-            <li><a href="">最新资料</a></li>
+            <li><a href="{$Think.DOMAIN}" <if condition="CONTROLLER_NAME eq 'Index'">class="curr"</if>>首页</a></li>
+            <li><a href="{:UrlHelper::url('category_list',1)}" <if condition="$_GET['cid'] eq 1">class="curr"</if>>影视资料</a></li>
+            <li><a href="{:UrlHelper::url('category_list',2)}" <if condition="$_GET['cid'] eq 2">class="curr"</if>>音乐资料</a></li>
+            <li><a href="{:UrlHelper::url('category_list',3)}" <if condition="$_GET['cid'] eq 3">class="curr"</if>>图片|图集</a></li>
+            <li><a href="{:UrlHelper::url('category_list',4)}" <if condition="$_GET['cid'] eq 4">class="curr"</if>>专辑|软件</a></li>
+            <li><a href="{:UrlHelper::url('category_list',5)}" <if condition="$_GET['cid'] eq 5">class="curr"</if>>综合资源</a></li>
+            <li><a href="{:UrlHelper::url('latest_detail')}">最新分享</a></li>
         </ul>
     </div>
 </div>

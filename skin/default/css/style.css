@@ -122,3 +122,5 @@
 .list-block .ulist li a{color: #0043A5;font-size: 14px;}
 .list-block .ulist li p{margin-top:10px;color: #656565;line-height: 25px;}
 .list-block .ulist li p span{margin-right: 35px;}
+.list-block .latests li{padding:10px 0 15px;}
+.list-block .latests li span{margin-left:10px;color:#666;}

@@ -15,7 +15,7 @@ class BUUserDetail
     public static function getUserDetailTotal($userid)
     {
         $resDetailModel = D('ResDetail');
-        $total = $resDetailModel->where(array('userid'=>$userid))->count();
+        $total = $resDetailModel->where(array('userid'=>$userid,'status'=>2))->count();
         return $total;    
     }
     
@@ -30,7 +30,7 @@ class BUUserDetail
     {
         $resDetailModel = D('ResDetail');
         
-        $obj = $resDetailModel->where(array('userid'=>$userid))->order($sort);
+        $obj = $resDetailModel->where(array('userid'=>$userid, 'status'=>2))->order($sort);
         if($num) {
             $obj = $obj->limit($num);    
         }
@@ -43,6 +43,30 @@ class BUUserDetail
         }
         return $res;    
     }
+    
+    /**
+    * 获取指定分类下最新资源 
+    */
+    public static function getCategoryBestDetail($cid, $num = 0, $sort = 'id desc')
+    {
+        $resDetailModel = D('ResDetail');
+        
+        $obj = $resDetailModel->where(array('catid'=>$cid, 'status'=>2))->order($sort);
+        if($num) {
+            $obj = $obj->limit($num);    
+        }
+        $res = $obj->select();
+        if($res) {
+            foreach($res as $key=>$val) {
+                $res[$key]['linkurl'] = UrlHelper::url('share_detail', $val['id']);
+                $res[$key]['home_linkurl'] = UrlHelper::url('share_home', $val['userid']);
+            }                
+        }
+        
+        return $res;
+                
+    }
+    
     
     /***
     * 获取详细信息
@@ -60,6 +84,21 @@ class BUUserDetail
         return $res;    
     }
     
+    
+    /**
+    * 获取类似数据 
+    */
+    public static function getLikeRes($keyword, $distinctId = 0)
+    {
+        $resDetailModel = D('ResDetail');
+        
+        $map = array();
+        if($distinctId) {
+            $map['id'] = array('neq', $distinctId);        
+        }
+        
+        $res = $resDetailModel->where(array('id'=>$id))->find();
+    }
                 
     
 }

@@ -1,10 +1,13 @@
+<?php 
+use Components\helper\UrlHelper;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{$data['detail']['title']}百度云,百度网盘下载 - {$Think.SITE_NAME}</title>
-	<meta name="keywords" content="{$data['detail']['title']},下载,其它,收藏,分享,资源,百度网盘,百度云盘" />
-    <meta name="description" content="{$data['detail']['title']}百度云下载，收藏和分享" />
+    <title>{$data['detail']['title']}网盘资料分享 - {$Think.SITE_NAME}</title>
+	<meta name="keywords" content="{$data['detail']['title']}" />
+    <meta name="description" content="{$Think.SITE_NAME}为大家收集提供百度网盘学习资料{$data['detail']['title']},每天更新大量百度网盘的资源分享{$data['detail']['title']}" />
     
     <link rel="stylesheet" href="__CSS__/common.css">
     <link rel="stylesheet" href="__CSS__/style.css">
