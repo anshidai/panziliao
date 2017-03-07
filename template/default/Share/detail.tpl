@@ -26,8 +26,8 @@ use Components\helper\UrlHelper;
                 <div class="user-block">
                     <div class="avatar"><img src="{$data['userinfo']['avatar']}" width="80" height="80" alt="头像"></div>
                     <div class="user-info clearfix">
-                        <h3 class="user-name"><a href="{$data['detail']['home_linkurl']}">{$data['userinfo']['username']}</a></h3>
-                        <a href="{$data['detail']['home_linkurl']}" class="linkhome">进入主页</a>    
+                        <h3 class="user-name"><a href="{:UrlHelper::url('share_home',$data['userinfo']['id'])}">{$data['userinfo']['username']}</a></h3>
+                        <a href="{:UrlHelper::url('share_home',$data['userinfo']['id'])}" class="linkhome">进入主页</a>    
                     </div>
                     <div class="clear"></div>
                     <div class="user-params clearfix">
@@ -44,7 +44,7 @@ use Components\helper\UrlHelper;
                     <div class="blue-list">
                         <ul>
                             <foreach name="data['list']" item="val">
-                            <li><a href="{$val['linkurl']}" target="_blank">{$val['title']}</a></li>
+                            <li><a href="{:UrlHelper::url('share_detail',$val['id'])}" target="_blank">{$val['title']}</a></li>
                             </foreach>
                         </ul>
                     </div>
@@ -83,7 +83,7 @@ use Components\helper\UrlHelper;
                     </dd>    
                     <dt>
                         <a href="{$data['detail']['dynamicurl']}" rel="nofollow" class="down-btn" target="_blank">百度网盘下载</a>
-                        <a href="{$data['detail']['home_linkurl']}" class="share-btn">Ta的分享资源</a>
+                        <a href="{:UrlHelper::url('share_home',$data['userinfo']['id'])}" class="share-btn">Ta的分享资源</a>
                     </dt>
                 </dl>
                 <span class="blank5"></span>

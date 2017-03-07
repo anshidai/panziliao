@@ -25,11 +25,7 @@ class BUUser
     {
         $resUserModel = self::getInstance('ResUser');
         $res = $resUserModel->field($field)->where(array('status'=>2))->order('id desc')->limit($num)->select();
-        if($res) {
-            foreach($res as $key=>$val) {
-                $res[$key]['linkurl'] = UrlHelper::url('share_home', $val['userid']);
-            }    
-        }
+		
         return $res;
     }
     
@@ -40,7 +36,7 @@ class BUUser
     public static function getUserDetail($userid)
     {
         $resUserModel = self::getInstance('ResUser');
-        $res = $resUserModel->where(array('userid'=>$userid))->find();
+        $res = $resUserModel->where(array('id'=>$userid))->find();
         if($res) {
                     
         }

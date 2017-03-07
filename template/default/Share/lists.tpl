@@ -29,7 +29,7 @@ use Components\helper\UrlHelper;
                 <ul class="ulist">
                     <foreach name="data['list']" item="vo">
                     <li>
-                        <a href="{$vo['linkurl']}" target="_blank">{$vo['title']}</a>
+                        <a href="{:UrlHelper::url('share_detail',$vo['id'])}" target="_blank">{$vo['title']}</a>
                         <p>
                             <span>文件大小：16.5M</span>
                             <span>扩展名：{$vo['filetype']}</span>

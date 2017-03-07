@@ -44,11 +44,7 @@ class BUResDetail
         $obj = $resDetailModel->field($field)->where(array('catid'=>$catid,'status'=>2))->order($sort);
         $obj = $obj->limit(($page - 1) * $num. ','.$num);
         $res = $obj->select();
-        if($res) {
-            foreach($res as $key=>$val) {
-                $res[$key]['linkurl'] = UrlHelper::url('share_detail', $val['id']);
-            }                
-        }
+        
         return $res;    
     } 
     
@@ -64,12 +60,6 @@ class BUResDetail
             $obj = $obj->limit($num);    
         }
         $res = $obj->select();
-        if($res) {
-            foreach($res as $key=>$val) {
-                $res[$key]['linkurl'] = UrlHelper::url('share_detail', $val['id']);
-                $res[$key]['home_linkurl'] = UrlHelper::url('share_home', $val['userid']);
-            }                
-        }
         
         return $res;
     } 
@@ -83,10 +73,7 @@ class BUResDetail
     {
         $resDetailModel = D('ResDetail');
         $res = $resDetailModel->where(array('id'=>$id))->find();
-        if($res) {
-            $res['linkurl'] = UrlHelper::url('share_detail', $res['id']);
-            $res['home_linkurl'] = UrlHelper::url('share_home', $res['userid']);
-        }
+
         return $res;    
     }
     
@@ -98,7 +85,8 @@ class BUResDetail
     public static function getUserDetailTotal($userid)
     {
         $resDetailModel = D('ResDetail');
-        $total = $resDetailModel->where(array('userid'=>$userid,'status'=>2))->count();
+        $total = $resDetailModel->where(array('res_user_id'=>$userid,'status'=>2))->count();
+		
         return $total;    
     }
     
@@ -115,15 +103,10 @@ class BUResDetail
     {
         $resDetailModel = D('ResDetail');
         
-        $obj = $resDetailModel->where(array('userid'=>$userid, 'status'=>2))->order($sort);
+        $obj = $resDetailModel->where(array('res_user_id'=>$userid, 'status'=>2))->order($sort);
         $obj = $obj->limit(($page - 1) * $num. ','.$num);
         $res = $obj->select();
-        if($res) {
-            foreach($res as $key=>$val) {
-                $res[$key]['linkurl'] = UrlHelper::url('share_detail', $val['id']);
-                $res[$key]['home_linkurl'] = UrlHelper::url('share_home', $val['userid']);
-            }                
-        }
+
         return $res;    
     }
     
