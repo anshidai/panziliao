@@ -3,6 +3,7 @@
 namespace Home\Model\BU;
 
 use Components\helper\UrlHelper;
+use Components\PZL;
 
 class BUResDetail
 {
@@ -124,5 +125,21 @@ class BUResDetail
         
         $res = $resDetailModel->where(array('id'=>$id))->find();
     }  
+	
+	/**
+	* 获取随机
+	*/
+	public static function getRandShareRes($cid, $pagesize = 10)
+	{
+		$key = PZL::getCachekey('category_detail_rand', $cid);
+		$data = PZL::cache('redis')->get($key);
+		if(!$data) {
+			$data = D('ResDetail')->field('id,title')->where(array('res_user_id'=>$userid, 'status'=>2))
+					->order("rand()")->limit($pagesize)->select();
+			PZL::cache('redis')->set($key, $data, 86400*30);
+		}
+		
+		return $data;
+	}
     
 }
