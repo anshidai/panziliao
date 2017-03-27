@@ -8,7 +8,7 @@ if(MODEL_ENV == 'online') {
 	//数据库配置
 	$dbconfig = array(
 		'DB_TYPE' => 'mongo', //数据库类型
-		'DB_HOST' => '10.24.161.157', //数据库地址
+		'DB_HOST' => '10.28.119.136', //数据库地址
 		'DB_NAME' => 'panziliao', //数据库名称
 		'DB_USER' => '', //数据库账号
 		'DB_PWD' => '', //数据库密码
