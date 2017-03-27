@@ -12,7 +12,6 @@
 
 return array(
 
-    
-    
+    'category_detail_rand' => 'category_detail_rand_%s', //指定分类下分享数据
       
 );

@@ -41,7 +41,8 @@ class ShareController extends BaseController
         $data['detail']['title'] = str_replace('.'.$data['detail']['filetype'],'', $data['detail']['title']); 
         $data['userinfo'] = BUUser::getUserDetail($data['detail']['res_user_id']);
         $data['list'] = BUResDetail::getUserDetailList($data['userinfo']['res_user_id'], 10);
-        
+	$data['randDetail'] = BUResDetail::getRandShareRes($data['detail']['catid'], 20);
+        $data['bestUser'] = BUUser::getLastestUser(9);
         $data['likeList'] = array();
 
         $this->assign('data', $data);
