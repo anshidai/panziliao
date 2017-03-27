@@ -45,7 +45,7 @@ use Components\helper\UrlHelper;
                     <div class="topblock">
                         <ul>
                             <foreach name="val" item="item"> 
-                            <li><a href="{:UrlHelper::url('share_detail', $val['id'])}" target="_blank">{$item['title']}</a></li>
+                            <li><a href="{:UrlHelper::url('share_detail', $item['id'])}" target="_blank">{$item['title']}</a></li>
                             </foreach>
                         </ul>
                     </div>
@@ -65,7 +65,7 @@ use Components\helper\UrlHelper;
                 <div class="topblock point">
                     <ul>
                         <foreach name="val" item="item"> 
-                        <li><a href="{:UrlHelper::url('share_detail', $val['id'])}" target="_blank">{$item['title']}</a></li>
+                        <li><a href="{:UrlHelper::url('share_detail', $item['id'])}" target="_blank">{$item['title']}</a></li>
                         </foreach>
                     </ul>
                 </div>
@@ -82,7 +82,7 @@ use Components\helper\UrlHelper;
                 <div class="topblock point">
                     <ul>
                         <foreach name="val" item="item"> 
-                        <li><a href="{:UrlHelper::url('share_detail', $val['id'])}" target="_blank">{$item['title']}</a></li>
+                        <li><a href="{:UrlHelper::url('share_detail', $item['id'])}" target="_blank">{$item['title']}</a></li>
                         </foreach>
                     </ul>
                 </div>
@@ -100,7 +100,7 @@ use Components\helper\UrlHelper;
                 <div class="topblock point">
                     <ul>
                         <foreach name="val" item="item"> 
-                        <li><a href="{:UrlHelper::url('share_detail', $val['id'])}" target="_blank">{$item['title']}</a></li>
+                        <li><a href="{:UrlHelper::url('share_detail', $item['id'])}" target="_blank">{$item['title']}</a></li>
                         </foreach>
                     </ul>
                 </div>
@@ -118,7 +118,7 @@ use Components\helper\UrlHelper;
                 <div class="topblock point">
                     <ul>
                         <foreach name="val" item="item"> 
-                        <li><a href="{:UrlHelper::url('share_detail', $val['id'])}" target="_blank">{$item['title']}</a></li>
+                        <li><a href="{:UrlHelper::url('share_detail', $item['id'])}" target="_blank">{$item['title']}</a></li>
                         </foreach>
                     </ul>
                 </div>

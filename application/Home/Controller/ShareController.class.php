@@ -39,8 +39,8 @@ class ShareController extends BaseController
         
         $data['detail'] = BUResDetail::getDetail($id);
         $data['detail']['title'] = str_replace('.'.$data['detail']['filetype'],'', $data['detail']['title']); 
-        $data['userinfo'] = BUUser::getUserDetail($data['detail']['userid']);
-        $data['list'] = BUResDetail::getUserDetailList($data['userinfo']['userid'], 10);
+        $data['userinfo'] = BUUser::getUserDetail($data['detail']['res_user_id']);
+        $data['list'] = BUResDetail::getUserDetailList($data['userinfo']['res_user_id'], 10);
         
         $data['likeList'] = array();
 

@@ -41,6 +41,7 @@ class ResDetailModel extends MongoModel
         'cj_url', //采集url
         'cj_url_index', //采集url表_id
         'status', //审核状态 1-未审核 2-已审核
+        'res_user_id', //关联pzl_res_user表id
     );
     const counterskey = 'res_detail';
     

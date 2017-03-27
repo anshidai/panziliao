@@ -13,7 +13,7 @@
 */
 
 //域名
-define('DOMAIN', 'http://www.panziliao.com');
+define('DOMAIN', 'http://test.panziliao.com');
 
 //风格模板
 define('SKIN_NAME', 'default');
