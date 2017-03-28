@@ -14,6 +14,37 @@ class ResetStatusController extends Controller
         
     }
 	
+	public function updateStatus()
+	{
+		$this->updateRestUserStatus();
+		$this->updateResetDetailStatus();
+	}
+	
+	/**
+	* 定时审核通过用户信息 status=2
+	*/
+    public function updateRestUserStatus()
+	{
+		$pagesize = 60;
+		$model = D('ResUser');
+		$model->field('id,status')->where(array('status'=>1))->order('id asc')->limit($pagesize)->save(array('status'=>2));
+		
+		echo "updateRestUserStatus complete\n";
+	}
+	
+	
+	 /**
+	* 定时审核通过分享信息 status=2
+	*/
+    public function updateResetDetailStatus()
+    {
+        $pagesize = 30;
+		$model = D('ResDetail');
+		$model->where(array('status'=>1))->order('id asc')->limit($pagesize)->save(array('status'=>2));
+        
+        echo "updateResetDetailStatus complete\n";
+    }  
+	
 	/**
 	* 定时审核通过用户和分享信息 status=2
 	*/
@@ -38,6 +69,7 @@ class ResetStatusController extends Controller
 			}
 		}
 	}
+	
 	
     /**
 	* 批量更新字段值
