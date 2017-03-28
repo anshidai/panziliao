@@ -32,7 +32,7 @@ use Components\helper\UrlHelper;
                         <a href="{:UrlHelper::url('share_detail', $vo['id'])}" target="_blank">{$vo['title']}</a>
                         <span>文件大小：16.5M</span>
                         <span>分享用户：{$vo['username']}</span>
-                        <span class="time">[{$vo['sharetime']|date="Y-m-d",###}]</span>
+                        <span class="time">[{:date('Y-m-d H:i:s')}]</span>
                     </li>
                     </foreach>
                 </ul>
