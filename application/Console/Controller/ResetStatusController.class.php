@@ -26,8 +26,15 @@ class ResetStatusController extends Controller
     public function updateRestUserStatus()
 	{
 		$pagesize = 60;
+		
 		$model = D('ResUser');
-		$model->field('id,status')->where(array('status'=>1))->order('id asc')->limit($pagesize)->save(array('status'=>2));
+		$list = $model->field('id,status')->where(array('status'=>1))->order('id asc')->limit($pagesize)->select();
+		if($list) {
+			foreach($list as $val) {
+				$userids[$val['id']] = $val['id'];
+				$model->where(array('id'=>$val['id']))->save(array('status'=>2));
+			}
+		}
 		
 		echo "updateRestUserStatus complete\n";
 	}
@@ -40,8 +47,15 @@ class ResetStatusController extends Controller
     {
         $pagesize = 30;
 		$model = D('ResDetail');
-		$model->where(array('status'=>1))->order('id asc')->limit($pagesize)->save(array('status'=>2));
-        
+		
+		$list = $model->field('id,status')->where(array('status'=>1))->order('id asc')->limit($pagesize)->select();
+		if($list) {
+			foreach($list as $val) {
+				$userids[$val['id']] = $val['id'];
+				$model->where(array('id'=>$val['id']))->save(array('status'=>2));
+			}
+		}
+		
         echo "updateResetDetailStatus complete\n";
     }  
 	
