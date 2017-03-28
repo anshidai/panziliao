@@ -5,7 +5,7 @@ namespace Console\Controller;
 use Think\Controller;
 
 /**
-* 执行脚本 php index.php Console/ResetStatus/xxx
+* 执行脚本 php index.php Console/ResetStatus/xxx 
 */
 class ResetStatusController extends Controller
 {
