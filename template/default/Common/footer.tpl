@@ -14,3 +14,13 @@
         <p>本站所有资源均来自互联网，本站只负责技术收集和整理，均不承担任何法律责任，如有侵权违规等其它行为请联系我们server@panziliao.com.</p>
     </div>
 </div>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?05455157afb7d22a41b1623372a362c8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
