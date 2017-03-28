@@ -5,6 +5,7 @@ use Components\helper\UrlHelper;
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+	<meta name="baidu-site-verification" content="jO7Dtfq0mO" />
     <title>百度云盘学习资料,百度网盘资源分享,百度网盘资料搜索就上{$Think.SITE_NAME}</title>
     <meta name="Keywords" content="百度云盘学习资料,百度网盘资料搜索,百度网盘下载,百度资源分享,百度网盘云盘下载">
     <meta name="description" content="{$Think.SITE_NAME}提供百度网盘各种学习资料,每天收集大量百度网盘资料,更新各类视频、影视资料、文档资料、图片图集等百度云盘资源分享链接,{$Think.SITE_NAME}打造自己的百度资料分享.">
