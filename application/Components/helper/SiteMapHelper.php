@@ -11,8 +11,6 @@ namespace Components\helper;
 //生成sitemap索引入口文件
 $config = array(
 	'xmlDirPath' => 'xxxx/xxx',
-	'xmlHeader' => "<?xml version='1.0' encoding='UTF-8'?>\r\n<sitemapindex>\r\n",
-	'xmlFooter' => "</sitemapindex>\r\n",
 );
 $sitemap = new SiteMapHelper($config);
 
@@ -72,6 +70,13 @@ class SiteMapHelper
 		
 		//xml结尾
 		'xmlFooter' => "</urlset>\r\n",
+		
+		//xml index 头信息
+		'xmlIndexHeader' => "<?xml version='1.0' encoding='UTF-8'?>\r\n<sitemapindex>\r\n",
+		
+		//xml index 结尾
+		'xmlIndexFooter' => "</sitemapindex>\r\n",
+		
 	);
 	
 	/**
@@ -123,11 +128,11 @@ class SiteMapHelper
 	{
 		if($this->urls) {
 			$handle = fopen(rtrim($this->config['xmlDirPath'], '/') . '/sitemaps.xml', 'w+');
-			fwrite($handle, $this->config['xmlHeader']);
+			fwrite($handle, $this->config['xmlIndexHeader']);
 			for($i = 0; $i< count($this->urls); $i++) {
 				fwrite($handle, $this->xmlIndexUrl($this->urls[$i]));
 			}
-			fwrite($handle, $this->config['xmlFooter']);
+			fwrite($handle, $this->config['xmlIndexFooter']);
 			fclose($handle);
 		}
 		
@@ -149,7 +154,7 @@ class SiteMapHelper
 		while($fileNumber < $maxNumber) {
 			$fileNumber++; //默认序号从第一页开始创建
 			$start = ($fileNumber - 1) * $this->config['maxUrl']; //开始计数值
-			$handle = fopen(rtrim($this->config['xmlDirPath'], '/') . '/' . $this->config['xmlName']. '_' . $fileNumber . '.xml', 'w+');
+			$handle = fopen(rtrim($this->config['xmlDirPath'], '/') . '/' . $this->config['xmlName']. $fileNumber . '.xml', 'w+');
 			fwrite($handle, $this->config['xmlHeader']);
 			for($i = $start; $i < $start + $this->config['maxUrl']; $i++) {
 				if($i > $total - 1) {
