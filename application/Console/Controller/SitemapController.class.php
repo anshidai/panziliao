@@ -40,7 +40,7 @@ class SitemapController extends Controller
 		$config = array(
 			'xmlDirPath' => $this->sitemapDir,
 		);
-		$sitemap = new \SiteMapHelper($config);
+		$sitemap = new SiteMapHelper($config);
 		
 		//详情index xml
 		$total = self::$detailModel->where(array('status'=>1))->count();
@@ -83,7 +83,7 @@ class SitemapController extends Controller
 			'xmlName' => 'detail_',
 			'maxUrl' => $this->maxUrl,
 		);
-		$sitemap = new \SiteMapHelper($config);
+		$sitemap = new SiteMapHelper($config);
 		
 		$map = array('status'=>1);
 		$total = self::$detailModel->where($map)->count();
@@ -117,7 +117,7 @@ class SitemapController extends Controller
 			'xmlName' => 'user_',
 			'maxUrl' => $this->maxUrl,
 		);
-		$sitemap = new \SiteMapHelper($config);
+		$sitemap = new SiteMapHelper($config);
 		
 		$map = array('status'=>1);
 		$total = self::$userModel->where($map)->count();
