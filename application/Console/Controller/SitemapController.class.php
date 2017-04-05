@@ -46,7 +46,7 @@ class SitemapController extends Controller
 		$total = self::$detailModel->where(array('status'=>2))->count();
 		if($total) {
 			$pageMax = ceil($total/$this->maxUrl);
-			for($page = 1; $page < $pageMax; $page++) {
+			for($page = 1; $page <= $pageMax; $page++) {
 				$urls = array(
 					'loc' => "http://www.panziliao.com/sitemap/detail/detail_{$page}.xml",
 					'lastmod' => date('Y-m-d H:i:s'),
@@ -59,7 +59,7 @@ class SitemapController extends Controller
 		$total = self::$userModel->where(array('status'=>2))->count();
 		if($total) {
 			$pageMax = ceil($total/$this->maxUrl);
-			for($page = 1; $page < $pageMax; $page++) {
+			for($page = 1; $page <= $pageMax; $page++) {
 				$urls = array(
 					'loc' => "http://www.panziliao.com/sitemap/user/detail_{$page}.xml",
 					'lastmod' => date('Y-m-d H:i:s'),
