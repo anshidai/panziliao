@@ -61,7 +61,7 @@ class SitemapController extends Controller
 			$pageMax = ceil($total/$this->maxUrl);
 			for($page = 1; $page <= $pageMax; $page++) {
 				$urls = array(
-					'loc' => "http://www.panziliao.com/sitemap/user/detail_{$page}.xml",
+					'loc' => "http://www.panziliao.com/sitemap/user/user_{$page}.xml",
 					'lastmod' => date('Y-m-d H:i:s'),
 				);
 				$sitemap->addUrl($urls);
