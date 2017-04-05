@@ -12,7 +12,7 @@ namespace Components\helper;
 $config = array(
 	'xmlDirPath' => 'xxxx/xxx',
 );
-$sitemap = new SiteMapHelper($config);
+$sitemap = new \SiteMapHelper($config);
 
 $urls = array(
 	'loc' => 'xxx.xml',
@@ -32,7 +32,7 @@ $config = array(
 	'xmlHeader' => 'xxx',
 	'xmlFooter' => 'xxx',
 );
-$sitemap = new SiteMapHelper($config);
+$sitemap = new \SiteMapHelper($config);
 
 $urls = array(
 	'loc' => 'xxx.html',
