@@ -1,3 +1,4 @@
 runtime/*
 *.out
 *.txt
+/sitemap/*.xml
