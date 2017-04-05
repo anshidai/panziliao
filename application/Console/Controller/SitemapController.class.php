@@ -43,7 +43,7 @@ class SitemapController extends Controller
 		$sitemap = new SiteMapHelper($config);
 		
 		//详情index xml
-		$total = self::$detailModel->where(array('status'=>1))->count();
+		$total = self::$detailModel->where(array('status'=>2))->count();
 		if($total) {
 			$pageMax = ceil($total/$this->maxUrl);
 			for($page = 1; $page < $pageMax; $page++) {
@@ -56,7 +56,7 @@ class SitemapController extends Controller
 		}
 		
 		//用户主页index xml
-		$total = self::$userModel->where(array('status'=>1))->count();
+		$total = self::$userModel->where(array('status'=>2))->count();
 		if($total) {
 			$pageMax = ceil($total/$this->maxUrl);
 			for($page = 1; $page < $pageMax; $page++) {
@@ -85,7 +85,7 @@ class SitemapController extends Controller
 		);
 		$sitemap = new SiteMapHelper($config);
 		
-		$map = array('status'=>1);
+		$map = array('status'=>2);
 		$total = self::$detailModel->where($map)->count();
 		$pageMax = ceil($total/$this->pagesize);
 		for($page = 1; $page <= $pageMax; $page++) {
@@ -119,7 +119,7 @@ class SitemapController extends Controller
 		);
 		$sitemap = new SiteMapHelper($config);
 		
-		$map = array('status'=>1);
+		$map = array('status'=>2);
 		$total = self::$userModel->where($map)->count();
 		$pageMax = ceil($total/$this->pagesize);
 		for($page = 1; $page <= $pageMax; $page++) {
