@@ -134,7 +134,7 @@ class BUResDetail
 		$key = PZL::getCachekey('category_detail_rand', $cid);
 		$data = PZL::cache('redis')->get($key);
 		if(!$data) {
-			$data = D('ResDetail')->field('id,title')->where(array('res_user_id'=>$userid, 'status'=>2))
+			$data = D('ResDetail')->field('id,title')->where(array('catid'=>$cid, 'status'=>2))
 					->order("rand()")->limit($pagesize)->select();
 			PZL::cache('redis')->set($key, $data, 86400*30);
 		}

@@ -23,7 +23,7 @@ class ShareController extends BaseController
         
         $data['page'] = $page;
         $data['userinfo'] = BUUser::getUserDetail($id);
-        $userid = $data['userinfo']['userid'];
+        $userid = $data['userinfo']['id'];
         
         $data['total'] = BUResDetail::getUserDetailTotal($userid);
         $data['list'] = BUResDetail::getUserDetailList($userid, $this->pagesize, $page);
@@ -40,7 +40,7 @@ class ShareController extends BaseController
         $data['detail'] = BUResDetail::getDetail($id);
         $data['detail']['title'] = str_replace('.'.$data['detail']['filetype'],'', $data['detail']['title']); 
         $data['userinfo'] = BUUser::getUserDetail($data['detail']['res_user_id']);
-        $data['list'] = BUResDetail::getUserDetailList($data['userinfo']['res_user_id'], 10);
+        $data['list'] = BUResDetail::getUserDetailList($data['userinfo']['id'], 10);
 		$data['randDetail'] = BUResDetail::getRandShareRes($data['detail']['catid'], 20);
         $data['bestUser'] = BUUser::getLastestUser(9);
         $data['likeList'] = array();
