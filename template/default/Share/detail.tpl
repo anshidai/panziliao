@@ -112,7 +112,7 @@ use Components\helper\UrlHelper;
                     <div class="htitle"><h3 class="name">{$data['detail']['title']}相关资源</h3></div>
                     <div class="blue-list">
                         <ul>
-							<foreach name="data['list']" item="vo">
+							<foreach name="data['randDetail']" item="vo">
                             <li><a href="{:UrlHelper::url('share_detail',$vo['id'])}">{$vo['title']}</a></li>
 							</foreach>
                         </ul>
