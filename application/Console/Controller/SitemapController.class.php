@@ -17,7 +17,7 @@ class SitemapController extends Controller
 	private $sitemapDir = '/home/wwwroot/panziliao.com/sitemap';
 	
 	private $pagesize = 1000;
-	private $maxUrl = 50000;
+	private $maxUrl = 20000;
 	
 	protected function _initialize()
     {
